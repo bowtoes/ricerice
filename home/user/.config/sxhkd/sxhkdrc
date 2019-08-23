@@ -1,0 +1,39 @@
+# Basic binds
+super + Return
+    $TERMINAL bash -l
+super + d
+    dmenu_run
+super + r
+    $TERMINAL -e $FILE
+super + shift + w
+    $BROWSER
+super + e
+    $EXPLORER
+super + a
+    $AUDIO
+super + z
+    $EXPLORER & \
+    $AUDIO
+
+super + p
+    octopi
+super + b
+    setbg "$WALLDIR"
+
+# Et cetera...
+super + grave
+    dmenuunicode
+
+# Function keys
+super + F1
+    ducksearch
+super + F4
+    dmenuprompt 'Hibernate computer?' 'sudo systemctl hibernate'
+super + F5
+    dmenuprompt "Shutdown dwm?" "killall dwm"
+super + F6
+    dmenuprompt "Shutdown X?" "killall Xorg"
+super + F7
+    dmenuprompt "Shutdown computer?" "poweroff"
+super + F8
+    dmenuprompt "Reboot computer?" "reboot"

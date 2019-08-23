@@ -1,0 +1,23 @@
+--- surf.c
++++ surf.c
+@@ -129,6 +129,11 @@ typedef struct {
+ } Button;
+ 
+ typedef struct {
++	char *token;
++	char *uri;
++} SearchEngine;
++
++typedef struct {
+ 	const char *uri;
+ 	Parameter config[ParameterLast];
+ 	regex_t re;
+@@ -478,7 +484,7 @@ loaduri(Client *c, const Arg *a)
+ 		url = g_strdup_printf("file://%s", path);
+ 		free(path);
+ 	} else {
+-		url = g_strdup_printf("http://%s", uri);
++		url = parseuri(uri);
+ 	}
+ 
+ 	setatom(c, AtomUri, url);

@@ -1,0 +1,45 @@
+# /etc/profile
+
+# System wide environment variables and startup programs.
+
+# System wide aliases and functions should go in /etc/bashrc.
+# Personal environment variables and startup programs should go into ~/.bash_profile.
+# Personal aliases and functions should go into ~/.bashrc.
+
+# Set our umask
+umask 022
+
+# Append our default paths
+appendpath () {
+    case ":$PATH:" in
+        *:"$1":*)
+            ;;
+        *)
+            PATH="${PATH:+$PATH:}$1"
+    esac
+}
+appendpath "/usr/local/sbin"
+appendpath "/usr/local/bin"
+appendpath "/usr/bin"
+appendpath "/usr/include"
+appendpath "/usr/local/include"
+unset appendpath
+
+export PATH
+
+# Load profiles from /etc/profile.d
+if [ -d "/etc/profile.d/" ] ; then
+	for profile in /etc/profile.d/*.sh ; do
+		[ -r "$profile" ] && . "$profile"
+	done
+	unset profile
+fi
+
+# Source global bash config
+[ "$BASH" ] && [ -z ${POSIXLY_CORRECT+x} ] && [ -r "/etc/bash.bashrc" ] && . "/etc/bash.bashrc"
+
+# Termcap is outdated, old, and crusty, kill it.
+unset TERMCAP
+
+# Man is much better than us at figuring this out
+unset MANPATH

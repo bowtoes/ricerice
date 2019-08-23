@@ -1,0 +1,167 @@
+" Install Vim-Plug if it isn't already
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+"   Load Plugins
+call plug#begin('~/.vim/plugged')
+"Plug 'junegunn/seoul256.vim'
+"Plug 'junegunn/goyo.vim'
+"Plug 'junegunn/limelight.vim'
+"Plug 'liuchengxu/vim-which-key'
+"Plug 'tpope/vim-repeat'
+"Plug 'scrooloose/nerdtree'
+"Plug 'shougo/unite.vim'
+"Plug 'mbbill/undotree'
+"Plug 'valloric/youcompleteme'
+Plug 'raimondi/delimitmate'
+Plug 'tpope/vim-surround'
+Plug 'godlygeek/tabular'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'itchyny/lightline.vim'
+Plug 'rpdelaney/vim-sourcecfg'
+
+" Colorschemes
+Plug 'flazz/vim-colorschemes'
+Plug 'dracula/vim',{'as':'dracula'}
+Plug 'romainl/Apprentice',{'as':'Apprentice'}
+call plug#end()
+
+"   Autocmds
+autocmd BufWritePre * :FixWhitespace
+autocmd BufWritePre * :retab
+autocmd BufWinEnter * normal zR
+autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh setlocal nowrap
+
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+
+" TODO: Cleanup this whole file, please
+
+"   Leader Key
+let mapleader=' '
+
+"   Some Defaults
+syntax enable
+set nocompatible
+set encoding=UTF-8
+"set ruler
+set number relativenumber
+set hidden
+set ttyfast
+set laststatus=2
+set showmode
+set showcmd
+set wildmode=longest,list,full
+
+set listchars=tab:\ \ →,eol:¬,space:·
+set pastetoggle=<F2>
+
+set statusline=
+set statusline+=%#PmenuSel#
+set statusline+=%#LineNr#
+set statusline+=\ %f
+set statusline+=%m\
+set statusline+=%=
+set statusline+=%#CursorColumn#
+set statusline+=\ %y
+set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
+set statusline+=\[%{&fileformat}\]
+set statusline+=\ %p%%
+set statusline+=\ %l:%c
+set statusline+=\ 
+"set statusline=%<%F%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+
+"   Recovery
+set backup
+set writebackup
+set undofile
+set swapfile
+
+"   Whitespace
+set wrap
+"set nowrap
+set textwidth=0
+set tabstop=4
+set shiftwidth=4
+"set softtabstop=4
+set expandtab
+set autoindent
+set smartindent
+
+"   Cursor stuff
+set scrolloff=3
+set matchpairs+=<:> " use % to jump between pairs
+
+"   Searching
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+set showmatch
+
+set foldenable
+set foldmethod=syntax
+set formatoptions=tcqrn1
+let g:sh_fold_enabled=5
+
+"   Bindings
+function! GetCursorChar()
+    return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
+endfunction
+
+map <leader>l :set list!<CR>
+map <leader>/ :let @/=''<CR>
+imap <F2> <C-O>:set invpaste paste?<CR>
+
+nnoremap <F2> :set invpaste paste?<CR>
+nnoremap <silent> <leader>p :setlocal spell!<cr>
+nnoremap <silent> <leader>t :setlocal wrap!<cr>
+nnoremap <silent> <leader><tab> :setlocal expandtab!<cr>
+nnoremap <silent> <leader><C-c> :setlocal cursorline!<CR>
+nnoremap <silent> <leader>cc :echo GetCursorChar()<cr>
+" Toggle folds
+nnoremap <silent> <space><space> @=(foldlevel('.')?'za':"\<space>")<CR>
+nnoremap <silent> <C-f> zM
+nnoremap <leader>f zR
+"vnoremap <space><space> zf
+
+nnoremap <leader>. :source $MYVIMRC<CR>
+
+nnoremap <C-k> VdkP
+nnoremap <C-j> Vdp
+
+nnoremap <C-c> mZVyp`Zj
+nnoremap <C-d> mZVd`Z
+inoremap <C-c> <esc>mZVyp`Z<right>i
+inoremap <C-d> <esc>Vdi
+
+nnoremap <leader>w :w<CR>
+nnoremap <leader>W :w!<CR>
+nnoremap <leader>q :q<CR>
+nnoremap <leader>Q :q!<CR>
+nnoremap <leader>e :e<CR>
+nnoremap <leader>E :e!<CR>
+nnoremap <leader><C-e> :E<CR>
+
+nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<cr>
+
+" Plugin binds
+nnoremap <leader>pi :PlugInstall<CR>
+nnoremap <leader>pc :PlugClean<CR>
+nnoremap <leader>pu :PlugUpdate<CR>
+nnoremap <leader>pU :PlugUpgrade<CR>
+nnoremap <leader>ps :PlugStatus<CR>
+
+"   Colors
+" For 256 color terminals
+set t_Co=256
+set t_ut=
+set background=dark
+colorscheme lapis256
+" Add this to make transparent background
+" Add it to the bottom of the colorscheme file
+"   and it'll work whenever you use that colorscheme
+hi Normal guibg=NONE ctermbg=NONE

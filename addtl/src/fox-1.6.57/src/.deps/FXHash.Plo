@@ -1,0 +1,10 @@
+FXHash.lo: FXHash.cpp /usr/include/stdc-predef.h ../include/fxver.h \
+ ../include/fxdefs.h ../include/FXHash.h
+
+/usr/include/stdc-predef.h:
+
+../include/fxver.h:
+
+../include/fxdefs.h:
+
+../include/FXHash.h:

@@ -1,0 +1,10 @@
+FXException.lo: FXException.cpp /usr/include/stdc-predef.h \
+ ../include/fxver.h ../include/fxdefs.h ../include/FXException.h
+
+/usr/include/stdc-predef.h:
+
+../include/fxver.h:
+
+../include/fxdefs.h:
+
+../include/FXException.h:

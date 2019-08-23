@@ -1,0 +1,48 @@
+#!/bin/sh
+# Global functions available to all users
+
+takeme( )
+{
+    [ -n "$1" ] && cd "$( where "$1" )"
+}
+up( )
+{
+    if [ -z "$1" ] ; then
+        cd ..
+    else
+        if strictlypositive "$1" ; then
+            i=0
+            while [ "$i" -lt "$1" ] ; do
+                if [ "$PWD" = "/" ] ; then break ; fi
+                cd ..
+                echo "$PWD"
+                i="$(( i+1 ))"
+            done
+        fi
+    fi 
+}
+
+#nonnegative( )
+#{
+#    case "$1" in
+#        ''|*[!0-9]*) 
+#            return 1;;
+#        *) return 0;;
+#    esac 
+#}
+#
+#strictlypositive( )
+#{
+#    case "$1" in
+#        ''|*[!0-9]*) 
+#            return 1
+#            ;;
+#        *) 
+#            if [ "$1" -eq 0 ] ; then
+#                return 1
+#            else
+#                return 0
+#            fi
+#            ;;
+#    esac
+#}

@@ -1,0 +1,664 @@
+wizard.o: wizard.cpp /usr/include/stdc-predef.h ../include/fx.h \
+ /usr/include/stdio.h /usr/include/bits/libc-header-start.h \
+ /usr/include/features.h /usr/include/sys/cdefs.h \
+ /usr/include/bits/wordsize.h /usr/include/bits/long-double.h \
+ /usr/include/gnu/stubs.h /usr/include/gnu/stubs-64.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/9.1.0/include/stddef.h \
+ /usr/lib/gcc/x86_64-pc-linux-gnu/9.1.0/include/stdarg.h \
+ /usr/include/bits/types.h /usr/include/bits/timesize.h \
+ /usr/include/bits/typesizes.h /usr/include/bits/time64.h \
+ /usr/include/bits/types/__fpos_t.h /usr/include/bits/types/__mbstate_t.h \
+ /usr/include/bits/types/__fpos64_t.h /usr/include/bits/types/__FILE.h \
+ /usr/include/bits/types/FILE.h /usr/include/bits/types/struct_FILE.h \
+ /usr/include/bits/types/cookie_io_functions_t.h \
+ /usr/include/bits/stdio_lim.h /usr/include/bits/sys_errlist.h \
+ /usr/include/bits/stdio.h /usr/include/c++/9.1.0/stdlib.h \
+ /usr/include/c++/9.1.0/cstdlib \
+ /usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/c++config.h \
+ /usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/os_defines.h \
+ /usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/cpu_defines.h \
+ /usr/include/stdlib.h /usr/include/bits/waitflags.h \
+ /usr/include/bits/waitstatus.h /usr/include/bits/floatn.h \
+ /usr/include/bits/floatn-common.h /usr/include/bits/types/locale_t.h \
+ /usr/include/bits/types/__locale_t.h /usr/include/sys/types.h \
+ /usr/include/bits/types/clock_t.h /usr/include/bits/types/clockid_t.h \
+ /usr/include/bits/types/time_t.h /usr/include/bits/types/timer_t.h \
+ /usr/include/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/bits/endian.h /usr/include/bits/byteswap.h \
+ /usr/include/bits/uintn-identity.h /usr/include/sys/select.h \
+ /usr/include/bits/select.h /usr/include/bits/types/sigset_t.h \
+ /usr/include/bits/types/__sigset_t.h \
+ /usr/include/bits/types/struct_timeval.h \
+ /usr/include/bits/types/struct_timespec.h \
+ /usr/include/bits/pthreadtypes.h /usr/include/bits/thread-shared-types.h \
+ /usr/include/bits/pthreadtypes-arch.h /usr/include/alloca.h \
+ /usr/include/bits/stdlib-bsearch.h /usr/include/bits/stdlib-float.h \
+ /usr/include/c++/9.1.0/bits/std_abs.h /usr/include/c++/9.1.0/math.h \
+ /usr/include/c++/9.1.0/cmath \
+ /usr/include/c++/9.1.0/bits/cpp_type_traits.h \
+ /usr/include/c++/9.1.0/ext/type_traits.h /usr/include/math.h \
+ /usr/include/bits/math-vector.h /usr/include/bits/libm-simd-decl-stubs.h \
+ /usr/include/bits/flt-eval-method.h /usr/include/bits/fp-logb.h \
+ /usr/include/bits/fp-fast.h \
+ /usr/include/bits/mathcalls-helper-functions.h \
+ /usr/include/bits/mathcalls.h /usr/include/bits/mathcalls-narrow.h \
+ /usr/include/bits/iscanonical.h /usr/include/bits/mathinline.h \
+ /usr/include/bits/math-finite.h /usr/include/string.h \
+ /usr/include/strings.h ../include/fxver.h ../include/fxdefs.h \
+ ../include/fxascii.h ../include/fxunicode.h ../include/FXHash.h \
+ ../include/FXException.h ../include/FXThread.h ../include/FXStream.h \
+ ../include/FXIO.h ../include/FXFile.h ../include/FXPipe.h \
+ ../include/FXSocket.h ../include/FXFileStream.h \
+ ../include/FXMemoryStream.h ../include/FXString.h ../include/FXSize.h \
+ ../include/FXPoint.h ../include/FXRectangle.h ../include/FXObject.h \
+ ../include/FXDelegator.h ../include/FXDict.h ../include/FXPath.h \
+ ../include/FXSystem.h ../include/FXStat.h ../include/FXDir.h \
+ ../include/FXDate.h ../include/FXURL.h ../include/FXStringDict.h \
+ ../include/FXSettings.h ../include/FXRegistry.h \
+ ../include/FXObjectList.h ../include/FXAccelTable.h \
+ ../include/FXRecentFiles.h ../include/FXApp.h ../include/FXId.h \
+ ../include/FXVisual.h ../include/FXFont.h ../include/FXCursor.h \
+ ../include/FXGUISignal.h ../include/FXCURCursor.h \
+ ../include/FXGIFCursor.h ../include/FXDrawable.h ../include/FXBitmap.h \
+ ../include/FXImage.h ../include/FXIcon.h ../include/FXGIFImage.h \
+ ../include/FXIFFImage.h ../include/FXBMPImage.h ../include/FXICOImage.h \
+ ../include/FXXBMImage.h ../include/FXXPMImage.h ../include/FXPCXImage.h \
+ ../include/FXTGAImage.h ../include/FXRGBImage.h ../include/FXPPMImage.h \
+ ../include/FXRASImage.h ../include/FXGIFIcon.h ../include/FXIFFIcon.h \
+ ../include/FXBMPIcon.h ../include/FXICOIcon.h ../include/FXXBMIcon.h \
+ ../include/FXXPMIcon.h ../include/FXPCXIcon.h ../include/FXTGAIcon.h \
+ ../include/FXRGBIcon.h ../include/FXPPMIcon.h ../include/FXRASIcon.h \
+ ../include/FXRegion.h ../include/FXDC.h ../include/FXDCWindow.h \
+ ../include/FXDCPrint.h ../include/FXIconSource.h ../include/FXIconDict.h \
+ ../include/FXFileDict.h ../include/FXWindow.h ../include/FXFrame.h \
+ ../include/FXSeparator.h ../include/FXLabel.h ../include/FX7Segment.h \
+ ../include/FXDial.h ../include/FXKnob.h ../include/FXColorBar.h \
+ ../include/FXColorRing.h ../include/FXColorWell.h \
+ ../include/FXColorWheel.h ../include/FXTextField.h ../include/FXButton.h \
+ ../include/FXPicker.h ../include/FXToggleButton.h \
+ ../include/FXTriStateButton.h ../include/FXCheckButton.h \
+ ../include/FXRadioButton.h ../include/FXArrowButton.h \
+ ../include/FXMenuButton.h ../include/FXComposite.h ../include/FXPacker.h \
+ ../include/FXHorizontalFrame.h ../include/FXVerticalFrame.h \
+ ../include/FXSpring.h ../include/FXMatrix.h ../include/FXSpinner.h \
+ ../include/FXRealSpinner.h ../include/FXRootWindow.h \
+ ../include/FXCanvas.h ../include/FXGroupBox.h ../include/FXShell.h \
+ ../include/FXToolTip.h ../include/FXPopup.h ../include/FXTopWindow.h \
+ ../include/FXDialogBox.h ../include/FXMainWindow.h \
+ ../include/FXMenuPane.h ../include/FXScrollPane.h \
+ ../include/FXMenuCaption.h ../include/FXMenuSeparator.h \
+ ../include/FXMenuTitle.h ../include/FXMenuCascade.h \
+ ../include/FXMenuCommand.h ../include/FXMenuCheck.h \
+ ../include/FXMenuRadio.h ../include/FXMenuBar.h ../include/FXToolBar.h \
+ ../include/FXDockBar.h ../include/FXOptionMenu.h ../include/FXSwitcher.h \
+ ../include/FXTabBar.h ../include/FXTabBook.h ../include/FXTabItem.h \
+ ../include/FXScrollBar.h ../include/FXScrollArea.h \
+ ../include/FXScrollWindow.h ../include/FXList.h ../include/FXComboBox.h \
+ ../include/FXListBox.h ../include/FXTreeList.h \
+ ../include/FXTreeListBox.h ../include/FXFoldingList.h \
+ ../include/FXBitmapView.h ../include/FXBitmapFrame.h \
+ ../include/FXImageView.h ../include/FXImageFrame.h ../include/FXTable.h \
+ ../include/FXDragCorner.h ../include/FXStatusBar.h \
+ ../include/FXStatusLine.h ../include/FXChoiceBox.h \
+ ../include/FXMessageBox.h ../include/FXDirList.h ../include/FXSlider.h \
+ ../include/FXRealSlider.h ../include/FXSplitter.h \
+ ../include/FX4Splitter.h ../include/FXHeader.h ../include/FXShutter.h \
+ ../include/FXIconList.h ../include/FXFileList.h ../include/FXDirBox.h \
+ ../include/FXDriveBox.h ../include/FXDirSelector.h \
+ ../include/FXDirDialog.h ../include/FXFileSelector.h \
+ ../include/FXFileDialog.h ../include/FXColorSelector.h \
+ ../include/FXColorDialog.h ../include/FXFontSelector.h \
+ ../include/FXFontDialog.h ../include/FXUndoList.h ../include/FXRex.h \
+ ../include/FXText.h ../include/FXDataTarget.h ../include/FXProgressBar.h \
+ ../include/FXReplaceDialog.h ../include/FXRuler.h \
+ ../include/FXRulerView.h ../include/FXSearchDialog.h \
+ ../include/FXInputDialog.h ../include/FXProgressDialog.h \
+ ../include/FXWizard.h ../include/FXMDIButton.h ../include/FXMDIClient.h \
+ ../include/FXMDIChild.h ../include/FXDocument.h ../include/FXDockSite.h \
+ ../include/FXDockHandler.h ../include/FXDockTitle.h \
+ ../include/FXToolBarGrip.h ../include/FXToolBarShell.h \
+ ../include/FXToolBarTab.h ../include/FXPrintDialog.h \
+ ../include/FXDebugTarget.h ../include/FXSplashWindow.h \
+ ../include/FXPNGImage.h
+
+/usr/include/stdc-predef.h:
+
+../include/fx.h:
+
+/usr/include/stdio.h:
+
+/usr/include/bits/libc-header-start.h:
+
+/usr/include/features.h:
+
+/usr/include/sys/cdefs.h:
+
+/usr/include/bits/wordsize.h:
+
+/usr/include/bits/long-double.h:
+
+/usr/include/gnu/stubs.h:
+
+/usr/include/gnu/stubs-64.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/9.1.0/include/stddef.h:
+
+/usr/lib/gcc/x86_64-pc-linux-gnu/9.1.0/include/stdarg.h:
+
+/usr/include/bits/types.h:
+
+/usr/include/bits/timesize.h:
+
+/usr/include/bits/typesizes.h:
+
+/usr/include/bits/time64.h:
+
+/usr/include/bits/types/__fpos_t.h:
+
+/usr/include/bits/types/__mbstate_t.h:
+
+/usr/include/bits/types/__fpos64_t.h:
+
+/usr/include/bits/types/__FILE.h:
+
+/usr/include/bits/types/FILE.h:
+
+/usr/include/bits/types/struct_FILE.h:
+
+/usr/include/bits/types/cookie_io_functions_t.h:
+
+/usr/include/bits/stdio_lim.h:
+
+/usr/include/bits/sys_errlist.h:
+
+/usr/include/bits/stdio.h:
+
+/usr/include/c++/9.1.0/stdlib.h:
+
+/usr/include/c++/9.1.0/cstdlib:
+
+/usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/c++config.h:
+
+/usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/os_defines.h:
+
+/usr/include/c++/9.1.0/x86_64-pc-linux-gnu/bits/cpu_defines.h:
+
+/usr/include/stdlib.h:
+
+/usr/include/bits/waitflags.h:
+
+/usr/include/bits/waitstatus.h:
+
+/usr/include/bits/floatn.h:
+
+/usr/include/bits/floatn-common.h:
+
+/usr/include/bits/types/locale_t.h:
+
+/usr/include/bits/types/__locale_t.h:
+
+/usr/include/sys/types.h:
+
+/usr/include/bits/types/clock_t.h:
+
+/usr/include/bits/types/clockid_t.h:
+
+/usr/include/bits/types/time_t.h:
+
+/usr/include/bits/types/timer_t.h:
+
+/usr/include/bits/stdint-intn.h:
+
+/usr/include/endian.h:
+
+/usr/include/bits/endian.h:
+
+/usr/include/bits/byteswap.h:
+
+/usr/include/bits/uintn-identity.h:
+
+/usr/include/sys/select.h:
+
+/usr/include/bits/select.h:
+
+/usr/include/bits/types/sigset_t.h:
+
+/usr/include/bits/types/__sigset_t.h:
+
+/usr/include/bits/types/struct_timeval.h:
+
+/usr/include/bits/types/struct_timespec.h:
+
+/usr/include/bits/pthreadtypes.h:
+
+/usr/include/bits/thread-shared-types.h:
+
+/usr/include/bits/pthreadtypes-arch.h:
+
+/usr/include/alloca.h:
+
+/usr/include/bits/stdlib-bsearch.h:
+
+/usr/include/bits/stdlib-float.h:
+
+/usr/include/c++/9.1.0/bits/std_abs.h:
+
+/usr/include/c++/9.1.0/math.h:
+
+/usr/include/c++/9.1.0/cmath:
+
+/usr/include/c++/9.1.0/bits/cpp_type_traits.h:
+
+/usr/include/c++/9.1.0/ext/type_traits.h:
+
+/usr/include/math.h:
+
+/usr/include/bits/math-vector.h:
+
+/usr/include/bits/libm-simd-decl-stubs.h:
+
+/usr/include/bits/flt-eval-method.h:
+
+/usr/include/bits/fp-logb.h:
+
+/usr/include/bits/fp-fast.h:
+
+/usr/include/bits/mathcalls-helper-functions.h:
+
+/usr/include/bits/mathcalls.h:
+
+/usr/include/bits/mathcalls-narrow.h:
+
+/usr/include/bits/iscanonical.h:
+
+/usr/include/bits/mathinline.h:
+
+/usr/include/bits/math-finite.h:
+
+/usr/include/string.h:
+
+/usr/include/strings.h:
+
+../include/fxver.h:
+
+../include/fxdefs.h:
+
+../include/fxascii.h:
+
+../include/fxunicode.h:
+
+../include/FXHash.h:
+
+../include/FXException.h:
+
+../include/FXThread.h:
+
+../include/FXStream.h:
+
+../include/FXIO.h:
+
+../include/FXFile.h:
+
+../include/FXPipe.h:
+
+../include/FXSocket.h:
+
+../include/FXFileStream.h:
+
+../include/FXMemoryStream.h:
+
+../include/FXString.h:
+
+../include/FXSize.h:
+
+../include/FXPoint.h:
+
+../include/FXRectangle.h:
+
+../include/FXObject.h:
+
+../include/FXDelegator.h:
+
+../include/FXDict.h:
+
+../include/FXPath.h:
+
+../include/FXSystem.h:
+
+../include/FXStat.h:
+
+../include/FXDir.h:
+
+../include/FXDate.h:
+
+../include/FXURL.h:
+
+../include/FXStringDict.h:
+
+../include/FXSettings.h:
+
+../include/FXRegistry.h:
+
+../include/FXObjectList.h:
+
+../include/FXAccelTable.h:
+
+../include/FXRecentFiles.h:
+
+../include/FXApp.h:
+
+../include/FXId.h:
+
+../include/FXVisual.h:
+
+../include/FXFont.h:
+
+../include/FXCursor.h:
+
+../include/FXGUISignal.h:
+
+../include/FXCURCursor.h:
+
+../include/FXGIFCursor.h:
+
+../include/FXDrawable.h:
+
+../include/FXBitmap.h:
+
+../include/FXImage.h:
+
+../include/FXIcon.h:
+
+../include/FXGIFImage.h:
+
+../include/FXIFFImage.h:
+
+../include/FXBMPImage.h:
+
+../include/FXICOImage.h:
+
+../include/FXXBMImage.h:
+
+../include/FXXPMImage.h:
+
+../include/FXPCXImage.h:
+
+../include/FXTGAImage.h:
+
+../include/FXRGBImage.h:
+
+../include/FXPPMImage.h:
+
+../include/FXRASImage.h:
+
+../include/FXGIFIcon.h:
+
+../include/FXIFFIcon.h:
+
+../include/FXBMPIcon.h:
+
+../include/FXICOIcon.h:
+
+../include/FXXBMIcon.h:
+
+../include/FXXPMIcon.h:
+
+../include/FXPCXIcon.h:
+
+../include/FXTGAIcon.h:
+
+../include/FXRGBIcon.h:
+
+../include/FXPPMIcon.h:
+
+../include/FXRASIcon.h:
+
+../include/FXRegion.h:
+
+../include/FXDC.h:
+
+../include/FXDCWindow.h:
+
+../include/FXDCPrint.h:
+
+../include/FXIconSource.h:
+
+../include/FXIconDict.h:
+
+../include/FXFileDict.h:
+
+../include/FXWindow.h:
+
+../include/FXFrame.h:
+
+../include/FXSeparator.h:
+
+../include/FXLabel.h:
+
+../include/FX7Segment.h:
+
+../include/FXDial.h:
+
+../include/FXKnob.h:
+
+../include/FXColorBar.h:
+
+../include/FXColorRing.h:
+
+../include/FXColorWell.h:
+
+../include/FXColorWheel.h:
+
+../include/FXTextField.h:
+
+../include/FXButton.h:
+
+../include/FXPicker.h:
+
+../include/FXToggleButton.h:
+
+../include/FXTriStateButton.h:
+
+../include/FXCheckButton.h:
+
+../include/FXRadioButton.h:
+
+../include/FXArrowButton.h:
+
+../include/FXMenuButton.h:
+
+../include/FXComposite.h:
+
+../include/FXPacker.h:
+
+../include/FXHorizontalFrame.h:
+
+../include/FXVerticalFrame.h:
+
+../include/FXSpring.h:
+
+../include/FXMatrix.h:
+
+../include/FXSpinner.h:
+
+../include/FXRealSpinner.h:
+
+../include/FXRootWindow.h:
+
+../include/FXCanvas.h:
+
+../include/FXGroupBox.h:
+
+../include/FXShell.h:
+
+../include/FXToolTip.h:
+
+../include/FXPopup.h:
+
+../include/FXTopWindow.h:
+
+../include/FXDialogBox.h:
+
+../include/FXMainWindow.h:
+
+../include/FXMenuPane.h:
+
+../include/FXScrollPane.h:
+
+../include/FXMenuCaption.h:
+
+../include/FXMenuSeparator.h:
+
+../include/FXMenuTitle.h:
+
+../include/FXMenuCascade.h:
+
+../include/FXMenuCommand.h:
+
+../include/FXMenuCheck.h:
+
+../include/FXMenuRadio.h:
+
+../include/FXMenuBar.h:
+
+../include/FXToolBar.h:
+
+../include/FXDockBar.h:
+
+../include/FXOptionMenu.h:
+
+../include/FXSwitcher.h:
+
+../include/FXTabBar.h:
+
+../include/FXTabBook.h:
+
+../include/FXTabItem.h:
+
+../include/FXScrollBar.h:
+
+../include/FXScrollArea.h:
+
+../include/FXScrollWindow.h:
+
+../include/FXList.h:
+
+../include/FXComboBox.h:
+
+../include/FXListBox.h:
+
+../include/FXTreeList.h:
+
+../include/FXTreeListBox.h:
+
+../include/FXFoldingList.h:
+
+../include/FXBitmapView.h:
+
+../include/FXBitmapFrame.h:
+
+../include/FXImageView.h:
+
+../include/FXImageFrame.h:
+
+../include/FXTable.h:
+
+../include/FXDragCorner.h:
+
+../include/FXStatusBar.h:
+
+../include/FXStatusLine.h:
+
+../include/FXChoiceBox.h:
+
+../include/FXMessageBox.h:
+
+../include/FXDirList.h:
+
+../include/FXSlider.h:
+
+../include/FXRealSlider.h:
+
+../include/FXSplitter.h:
+
+../include/FX4Splitter.h:
+
+../include/FXHeader.h:
+
+../include/FXShutter.h:
+
+../include/FXIconList.h:
+
+../include/FXFileList.h:
+
+../include/FXDirBox.h:
+
+../include/FXDriveBox.h:
+
+../include/FXDirSelector.h:
+
+../include/FXDirDialog.h:
+
+../include/FXFileSelector.h:
+
+../include/FXFileDialog.h:
+
+../include/FXColorSelector.h:
+
+../include/FXColorDialog.h:
+
+../include/FXFontSelector.h:
+
+../include/FXFontDialog.h:
+
+../include/FXUndoList.h:
+
+../include/FXRex.h:
+
+../include/FXText.h:
+
+../include/FXDataTarget.h:
+
+../include/FXProgressBar.h:
+
+../include/FXReplaceDialog.h:
+
+../include/FXRuler.h:
+
+../include/FXRulerView.h:
+
+../include/FXSearchDialog.h:
+
+../include/FXInputDialog.h:
+
+../include/FXProgressDialog.h:
+
+../include/FXWizard.h:
+
+../include/FXMDIButton.h:
+
+../include/FXMDIClient.h:
+
+../include/FXMDIChild.h:
+
+../include/FXDocument.h:
+
+../include/FXDockSite.h:
+
+../include/FXDockHandler.h:
+
+../include/FXDockTitle.h:
+
+../include/FXToolBarGrip.h:
+
+../include/FXToolBarShell.h:
+
+../include/FXToolBarTab.h:
+
+../include/FXPrintDialog.h:
+
+../include/FXDebugTarget.h:
+
+../include/FXSplashWindow.h:
+
+../include/FXPNGImage.h:
