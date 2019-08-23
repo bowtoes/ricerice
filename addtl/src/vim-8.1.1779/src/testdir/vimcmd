@@ -1,0 +1,2 @@
+../vim
+VIMRUNTIME=../../runtime  ../vim -f  -u unix.vim
