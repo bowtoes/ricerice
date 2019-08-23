@@ -1,2 +1,2 @@
 # ricerice
-Arch Linux basic configuration files and useful executables
+My own Arch Linux basic configuration files and useful executables
