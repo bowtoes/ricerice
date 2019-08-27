@@ -12,18 +12,23 @@ call plug#begin('~/.vim/plugged')
 "Plug 'junegunn/limelight.vim'
 "Plug 'liuchengxu/vim-which-key'
 "Plug 'tpope/vim-repeat'
-"Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree'
 "Plug 'shougo/unite.vim'
 "Plug 'mbbill/undotree'
 "Plug 'valloric/youcompleteme'
-Plug 'raimondi/delimitmate'
-Plug 'tpope/vim-surround'
-Plug 'godlygeek/tabular'
+"Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'itchyny/lightline.vim'
 Plug 'rpdelaney/vim-sourcecfg'
+"Plug 'godlygeek/tabular'
+Plug 'raimondi/delimitmate'
+Plug 'scrooloose/syntastic'
+Plug 'itchyny/lightline.vim'
+Plug 'valloric/youcompleteme'
+"Plug 'craigemery/vim-autotag'
+"Plug 'abudden/taghighlight-automirror'
 
 " Colorschemes
+Plug 'ErichDonGubler/vim-sublime-monokai'
 Plug 'flazz/vim-colorschemes'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'romainl/Apprentice',{'as':'Apprentice'}
@@ -43,10 +48,40 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
 "   Leader Key
 let mapleader=' '
 
+
+"   Plugin Config
+let delimitMate_matchpairs="(:),[:],{:}"
+set tags+=$HOME/.cache/vim/ctags
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" open NERDTree automatically when vim starts up on opening a directory
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+map <silent> <F5> :NERDTreeToggle<CR>
+
+" ycm
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_global_ycm_extra_conf = '$HOME/.vim/plugged/youcompleteme/third_party/ycmd/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf=0
+let g:ycm_collect_identifiers_from_tag_files = 1
+set completeopt=longest,menu
+
 "   Some Defaults
 syntax enable
 set nocompatible
 set encoding=UTF-8
+set exrc
+set secure
 "set ruler
 set number relativenumber
 set hidden
@@ -160,6 +195,9 @@ nnoremap <leader>ps :PlugStatus<CR>
 set t_Co=256
 set t_ut=
 set background=dark
+let g:lightline = {
+            \ 'colorscheme': 'material'
+            \ }
 colorscheme lapis256
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
