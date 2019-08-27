@@ -24,6 +24,7 @@ Plug 'raimondi/delimitmate'
 Plug 'scrooloose/syntastic'
 Plug 'itchyny/lightline.vim'
 Plug 'valloric/youcompleteme'
+Plug 'tikhomirov/vim-glsl'
 "Plug 'craigemery/vim-autotag'
 "Plug 'abudden/taghighlight-automirror'
 
