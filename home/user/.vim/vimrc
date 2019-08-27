@@ -151,6 +151,9 @@ map <leader>l :set list!<CR>
 map <leader>/ :let @/=''<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 
+nnoremap <C-h> <i{<CR>
+nnoremap <C-l> >i{<CR>
+
 nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <silent> <leader>p :setlocal spell!<cr>
 nnoremap <silent> <leader>t :setlocal wrap!<cr>
@@ -203,3 +206,6 @@ colorscheme lapis256
 " Add it to the bottom of the colorscheme file
 "   and it'll work whenever you use that colorscheme
 hi Normal guibg=NONE ctermbg=NONE
+hi YcmWarningLine    ctermbg = 229
+hi YcmWarningSign    ctermbg = 229
+hi YcmWarningSection ctermbg = 229
