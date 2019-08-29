@@ -1,3 +1,0 @@
-#!/bin/sh
-
-free -b | awk '/^Mem:/ {print 100 * $3/$2}'

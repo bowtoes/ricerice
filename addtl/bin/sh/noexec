@@ -1,8 +1,0 @@
-#!/bin/sh
-
-types=".*\.\(ttf\|fon\|fnt\|otf\|woff\|png\|jpg\|jpeg\|smx\|txt\|cfg\|vpk\|vdf\|inf\|vtf\|bsp\|conf\|cnf\|config\|vmf\|dll\)"
-if [ -d $1 ] ; then
-    find "$1" -type f -regex $types -exec chmod -x -- {} +
-elif [ -f $1 ] ; then
-    chmod -x $1
-fi

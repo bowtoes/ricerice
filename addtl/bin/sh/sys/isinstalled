@@ -1,5 +1,0 @@
-#!/bin/sh
-
-if installed $1 ; then
-    echo "$1 is installed at "$(where $1)""
-fi

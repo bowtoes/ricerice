@@ -5,6 +5,7 @@ set meta-flag on
 set input-meta on
 set convert-meta off
 set output-meta on
+# This little thing here fixes st in my case(s)
 set enable-keypad on
 
 $if mode=emacs
