@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# i3blocks module for pacman upgrades.
+# Displays number of upgradeable packages.
+# For this to work, have a `pacman -Sy` command run in the background as a
+# cronjob every so often as root. This script will then read those packages.
+# When clicked, it will run an upgrade via pacman.
+
+sudo pacman -Syy > /dev/null
+pacman -Qu | grep -v "\[ignored\]" | wc -l | sed -e "s/^0$//g"

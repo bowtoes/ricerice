@@ -1,0 +1,11 @@
+#!/bin/bash
+clear
+for t in {0..3}; do
+    for f in {30..37}; do
+        for b in {40..47}; do
+            echo -ne "\e[$t;$f;$b""m[$t:$f:$b]""\e[0;37;40m"
+        done
+        echo
+    done
+done
+echo ""
