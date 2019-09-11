@@ -4,5 +4,6 @@
 [ -r "$HOME/.Xprofile" ] && . "$HOME/.Xprofile"
 [ -r "$HOME/.Xmodmap" ] && xmodmap "$HOME/.Xmodmap"
 nvidia-settings --load-config-only
-startdwm "$HOME/.log/dwm_log"
+xfce4-session > $LOGDIR/xfce4 2>&1
+#startdwm "$LOGDIR/dwm_log"
 #exec dwm

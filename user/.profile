@@ -29,6 +29,7 @@ appendrecurse ()
     fi
 }
 
+append "$HOME/.gem/ruby/2.6.0/bin"
 appendrecurse "$HOME/.local/bin"
 appendrecurse "$HOME/bin"
 appendrecurse "$HOME/scripts"
@@ -44,12 +45,14 @@ export EDITOR="vim"
 export TERMINAL="st"
 export BROWSER="brave"
 export AUDIO="vlc"
-export EXPLORER="xfe"
-export WALLDIR="$HOME/wallpapers"
+export EXPLORER="thunar"
+export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
 export SRC="/addtl/src"
 
 export NNN_USE_EDITOR=1
+
+export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export TERMCOLS="$HOME/.config/termcolors"
 export DIRCOLS="$HOME/.config/dircolors"
