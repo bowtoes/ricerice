@@ -1,0 +1,24 @@
+alias claer="clear"
+alias bashp=". ~/.bash_profile"
+
+alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
+
+alias ls="ls -hNF --color=auto --group-directories-first"
+alias l="ls"
+alias L="ls -1"
+alias la="ls -As"
+alias ll="ls -lAs"
+alias Ls="ls -1"
+alias La="la -1"
+alias Ll="ll -1"
+
+alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
+alias hibernate="date ; systemctl hibernate"
+
+alias tmux="tmux -2"
+alias patch="patch -b"
+alias ka="killall"
+alias du="du -cs --si"
+alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
+
+alias procfind="ps -ef | grep -i"
