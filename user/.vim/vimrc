@@ -13,6 +13,7 @@ call plug#begin('~/.vim/plugged')
 "Plug 'liuchengxu/vim-which-key'
 "Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 "Plug 'shougo/unite.vim'
 "Plug 'mbbill/undotree'
 "Plug 'valloric/youcompleteme'
@@ -23,7 +24,6 @@ Plug 'rpdelaney/vim-sourcecfg'
 Plug 'raimondi/delimitmate'
 Plug 'scrooloose/syntastic'
 Plug 'itchyny/lightline.vim'
-Plug 'valloric/youcompleteme'
 Plug 'tikhomirov/vim-glsl'
 "Plug 'craigemery/vim-autotag'
 "Plug 'abudden/taghighlight-automirror'
@@ -67,6 +67,10 @@ let g:syntastic_check_on_wq = 0
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+
+" open NERDTree when no files are specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 map <silent> <F5> :NERDTreeToggle<CR>
 
@@ -156,15 +160,15 @@ nnoremap <C-h> <i{<CR>
 nnoremap <C-l> >i{<CR>
 
 nnoremap <F2> :set invpaste paste?<CR>
-nnoremap <silent> <leader>p :setlocal spell!<cr>
-nnoremap <silent> <leader>t :setlocal wrap!<cr>
+nnoremap <silent> <leader>p     :setlocal spell!<cr>
+nnoremap <silent> <leader>g     :setlocal wrap!<cr>
 nnoremap <silent> <leader><tab> :setlocal expandtab!<cr>
 nnoremap <silent> <leader><C-c> :setlocal cursorline!<CR>
-nnoremap <silent> <leader>cc :echo GetCursorChar()<cr>
+nnoremap <silent> <leader>cc    :echo GetCursorChar()<cr>
 " Toggle folds
-nnoremap <silent> <space><space> @=(foldlevel('.')?'za':"\<space>")<CR>
+nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
 nnoremap <silent> <C-f> zM
-nnoremap <leader>f zR
+nnoremap <leader>F zR
 "vnoremap <space><space> zf
 
 nnoremap <leader>. :source $MYVIMRC<CR>
@@ -185,6 +189,11 @@ nnoremap <leader>e :e<CR>
 nnoremap <leader>E :e!<CR>
 nnoremap <leader><C-e> :E<CR>
 
+" Tabs
+nnoremap <silent> <leader><C-Right> :tabnext
+nnoremap <silent> <leader><C-Left>  :tabprevious
+nnoremap <silent> <leader><C-w>     :tabclose
+
 nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<cr>
 
 " Plugin binds
@@ -193,6 +202,7 @@ nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>pU :PlugUpgrade<CR>
 nnoremap <leader>ps :PlugStatus<CR>
+map      <leader>t  :NERDTreeToggle<CR>
 
 "   Colors
 " For 256 color terminals
@@ -207,6 +217,6 @@ colorscheme lapis256
 " Add it to the bottom of the colorscheme file
 "   and it'll work whenever you use that colorscheme
 hi Normal guibg=NONE ctermbg=NONE
-hi YcmWarningLine    ctermbg = 229
-hi YcmWarningSign    ctermbg = 229
-hi YcmWarningSection ctermbg = 229
+"hi YcmWarningLine    ctermbg = 229
+"hi YcmWarningSign    ctermbg = 229
+"hi YcmWarningSection ctermbg = 229

@@ -28,7 +28,7 @@ super + grave
 super + F1
     ducksearch
 super + F4
-    dmenuprompt 'Hibernate computer?' 'sudo systemctl hibernate'
+    dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
 super + F5
     dmenuprompt "Shutdown dwm?" "killall dwm"
 super + F6
