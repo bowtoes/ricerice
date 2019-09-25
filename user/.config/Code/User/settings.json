@@ -107,10 +107,10 @@
         }
     ],
     "workbench.colorTheme": "Darkside Light (rainglow)",
-    "workbench.colorCustomizations": 
+    "workbench.colorCustomizations":
     {
-      "[Darkside Light (rainglow)]": 
-      { 
+      "[Darkside Light (rainglow)]":
+      {
         "foreground":"#111212",
         "editor.background": "#d5d5d5",
         "editorCursor.foreground": "#222222",
@@ -265,7 +265,7 @@
         "sideBarSectionHeader.foreground": "#111212",
         "widget.shadow":"#adadad55",
         "tab.activeForeground":"#111212",
-        "tab.inactiveForeground":"#86898c", 
+        "tab.inactiveForeground":"#86898c",
         "tab.border":"#c1c1c1",
         "editor.selectionBackground": "#ff4e5033",
         "panel.background":"#d6d6d6",
@@ -301,62 +301,62 @@
         "peekViewResult.lineForeground":"#606366"
       }
     },
-    "editor.tokenColorCustomizations": 
+    "editor.tokenColorCustomizations":
     {
-      "[Darkside Light (rainglow)]": 
+      "[Darkside Light (rainglow)]":
       {
-        "textMateRules": 
+        "textMateRules":
         [
-          {
+          { // entity.name.type
             "scope": "entity.name.type",
             "settings": {
               "foreground": "#ff2d6c",
-              "fontStyle": "bold",
+              "fontStyle": "bold"
             }
           },
-          {
+          { // constant.numeric
             "scope": "constant.numeric",
             "settings": {
               "foreground": "#5522EE",
               "fontStyle": ""
             }
           },
-          {
+          { // variable
             "scope": "variable",
             "settings": {
               "foreground": "#b412ac",
               "fontStyle": "italic bold"
             }
           },
-          {
+          { // variable.parameter
             "scope": "variable.parameter",
             "settings": {
               "foreground": "#b412ac",
               "fontStyle": "italic bold"
             }
           },
-          {
+          { // entity.name.function
             "scope": "entity.name.function",
             "settings": {
                 "fontStyle": "",
                 "foreground": "#b43232"
             }
           },
-          { // "storage.type"
+          { // storage.type
             "scope": "storage.type",
             "settings": {
               "foreground": "#014de6",
               "fontStyle": ""
             }
           },
-          {
+          { // storage.modifier
             "scope": "storage.modifier",
             "settings": {
               "foreground": "#4b889c",
               "fontStyle": "bold"
             }
           }
-        ],
+        ]
       }
-    },
+    }
 }
