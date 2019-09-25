@@ -44,7 +44,8 @@
     "gitlens.codeLens.enabled": false,
     "workbench.settings.editor": "json",
     "editor.folding": true,
-    "better-comments.tags": [
+    "better-comments.tags":
+    [
         {
           "tag": "!",
           "color": "#FF2D00",
@@ -65,21 +66,27 @@
         },
         {
           "tag": "todo",
-          "color": "#FF8C00",
+          "color": "#cc8000",
           "strikethrough": false,
           "backgroundColor": "transparent"
         },
         {
             "tag": "note",
-            "color": "#3d7899",
+            "color": "#d5d5d5",
             "strikethrough": false,
-            "backgroundColor": "transparent"
+            "backgroundColor": "#3d7899"
         },
         {
             "tag": "static",
             "color": "#6b2d9e",
             "strikethrough": false,
             "backgroundColor": "transparent"
+        },
+        {
+          "tag": "instance",
+          "color": "#2c9e6a",
+          "strikethrough": false,
+          "backgroundColor": "transparent"
         },
         {
             "tag": "public",
