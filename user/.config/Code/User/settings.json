@@ -32,7 +32,7 @@
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.statusBar.visible": true,
-    "workbench.activityBar.visible": false,
+    "workbench.activityBar.visible": true,
     "editor.minimap.enabled": false,
     "workbench.tree.renderIndentGuides": "always",
     "workbench.startupEditor": "none",
@@ -51,6 +51,12 @@
           "color": "#FF2D00",
           "strikethrough": false,
           "backgroundColor": "transparent"
+        },
+        {
+          "tag": ".",
+          "color": "#d5d5d5",
+          "strikethrough": false,
+          "backgroundColor": "#66002d"
         },
         {
           "tag": "?",
@@ -365,5 +371,8 @@
           }
         ]
       }
+    },
+    "[cpp]": {
+      "editor.defaultFormatter": "ms-vscode.cpptools"
     }
 }
