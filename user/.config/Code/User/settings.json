@@ -334,6 +334,19 @@
               "fontStyle": "bold"
             }
           },
+          { // keyword.control
+            "scope": "keyword.control",
+            "settings": {
+              "foreground": "#c59d2e",
+              "fontStyle": "bold"
+            }
+          },
+          { // keyword.operator
+            "scope": "string",
+            "settings": {
+              "fontStyle": "italic bold"
+            }
+          },
           { // comment
             "scope": "comment",
             "settings": {
@@ -364,7 +377,7 @@
           { // entity.name.function
             "scope": "entity.name.function",
             "settings": {
-                "fontStyle": "",
+                "fontStyle": "bold",
                 "foreground": "#b43232"
             }
           },
