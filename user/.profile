@@ -43,7 +43,7 @@ export PS1='\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e
 
 export EDITOR="vim"
 export TERMINAL="st"
-export BROWSER="brave"
+export BROWSER="surf"
 export AUDIO="vlc"
 export EXPLORER="thunar"
 export WALLDIR="$HOME/wallpapers/include"
