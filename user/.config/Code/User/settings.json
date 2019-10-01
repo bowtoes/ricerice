@@ -356,8 +356,8 @@
           { // constant.numeric
             "scope": "constant.numeric",
             "settings": {
-              "foreground": "#5522EE",
-              "fontStyle": ""
+              "foreground": "#8501dd",
+              "fontStyle": "bold"
             }
           },
           { // variable
