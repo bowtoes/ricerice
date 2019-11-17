@@ -1,7 +1,6 @@
 {
     "telemetry.enableCrashReporter": false,
     "telemetry.enableTelemetry": false,
-    "editor.fontSize": 12,
     "gitlens.defaultDateStyle": "absolute",
     "gitlens.defaultDateFormat": "MM/DD/YY, hh:mm:ss a",
     "gitlens.blame.heatmap.enabled": false,
@@ -15,25 +14,28 @@
     "gitlens.codeLens.scopes": [
         "document",
         "containers"
-    ],
-    "gitlens.heatmap.toggleMode": "window",
+      ],
+      "gitlens.heatmap.toggleMode": "window",
     "gitlens.recentChanges.toggleMode": "window",
     "gitlens.recentChanges.highlight.locations": [
-        "gutter",
-        "line",
-        "overview"
+      "gutter",
+      "line",
+      "overview"
     ],
     "editor.fontFamily": "'monospace', 'monospace2', monospace2, 'Droid Sans Fallback'",
+    "editor.fontSize": 11.5,
+    "editor.minimap.scale": 2,
+    "editor.minimap.maxColumn": 60,
     "C_Cpp.intelliSenseEngine": "Tag Parser",
     "breadcrumbs.enabled": false,
     "window.menuBarVisibility": "default",
-    "window.zoomLevel": -0.75,
-    "workbench.editor.showTabs": true,
+    "window.zoomLevel": -1,
+    "workbench.editor.showTabs": false,
     "workbench.editor.enablePreview": false,
     "workbench.editor.enablePreviewFromQuickOpen": false,
     "workbench.statusBar.visible": true,
     "workbench.activityBar.visible": true,
-    "editor.minimap.enabled": false,
+    "editor.minimap.enabled": true,
     "workbench.tree.renderIndentGuides": "always",
     "workbench.startupEditor": "none",
     "workbench.enableExperiments": false,
@@ -44,6 +46,7 @@
     "gitlens.codeLens.enabled": false,
     "workbench.settings.editor": "json",
     "editor.folding": true,
+    "editor.codeLens": false,
     "better-comments.tags":
     [
         {
@@ -119,7 +122,7 @@
           "backgroundColor": "transparent"
         }
     ],
-    "workbench.colorTheme": "Darkside Light (rainglow)",
+    "workbench.colorTheme": "Century Colors",
     "workbench.colorCustomizations":
     {
       "[Darkside Light (rainglow)]":
@@ -398,7 +401,9 @@
         ]
       }
     },
-    "[cpp]": {
+    "[cpp]":
+    {
       "editor.defaultFormatter": "ms-vscode.cpptools"
-    }
+    },
+    "vsicons.dontShowNewVersionMessage": true
 }

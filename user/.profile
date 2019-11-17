@@ -43,7 +43,7 @@ export PS1='\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e
 
 export EDITOR="vim"
 export TERMINAL="st"
-export BROWSER="surf"
+export BROWSER="brave"
 export AUDIO="vlc"
 export EXPLORER="thunar"
 export WALLDIR="$HOME/wallpapers/include"
@@ -53,6 +53,8 @@ export SRC="/addtl/src"
 export NNN_USE_EDITOR=1
 
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
+
+export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
 
 export TERMCOLS="$HOME/.config/termcolors"
 export DIRCOLS="$HOME/.config/dircolors"

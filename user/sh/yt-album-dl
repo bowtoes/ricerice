@@ -1,0 +1,3 @@
+#!/bin/sh
+
+youtube-dl -cix --audio-format vorbis -o "%(playlist_index)s - %(title)s.%(ext)s" $1
