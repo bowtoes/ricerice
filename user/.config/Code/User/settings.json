@@ -122,7 +122,6 @@
           "backgroundColor": "transparent"
         }
     ],
-    "workbench.colorTheme": "Century Colors",
     "workbench.colorCustomizations":
     {
       "[Darkside Light (rainglow)]":
@@ -405,5 +404,9 @@
     {
       "editor.defaultFormatter": "ms-vscode.cpptools"
     },
-    "vsicons.dontShowNewVersionMessage": true
+    "vsicons.dontShowNewVersionMessage": true,
+    "workbench.colorTheme": "Century Colors",
+    "files.associations": {
+      "*.shader": "hlsl"
+    }
 }
