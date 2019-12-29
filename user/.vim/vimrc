@@ -104,8 +104,7 @@ set statusline+=%#PmenuSel#
 set statusline+=%#LineNr#
 set statusline+=\ %f
 set statusline+=%m\
-set statusline+=%=
-set statusline+=%#CursorColumn#
+set statusline+=%=%#CursorColumn#
 set statusline+=\ %y
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
@@ -160,10 +159,15 @@ nnoremap <C-h> <i{<CR>
 nnoremap <C-l> >i{<CR>
 
 nnoremap <F2> :set invpaste paste?<CR>
+"Spellcheck toggle
 nnoremap <silent> <leader>p     :setlocal spell!<cr>
+"Linewrap toggle
 nnoremap <silent> <leader>g     :setlocal wrap!<cr>
+"Toggle between inserting tabs and spaces
 nnoremap <silent> <leader><tab> :setlocal expandtab!<cr>
+"Toggle cursorline
 nnoremap <silent> <leader><C-c> :setlocal cursorline!<CR>
+"Show charcode under cursor
 nnoremap <silent> <leader>cc    :echo GetCursorChar()<cr>
 " Toggle folds
 nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
@@ -171,14 +175,21 @@ nnoremap <silent> <C-f> zM
 nnoremap <leader>F zR
 "vnoremap <space><space> zf
 
+"Reread vimrc
 nnoremap <leader>. :source $MYVIMRC<CR>
 
+"Move line up
 nnoremap <C-k> VdkP
+"Move line down
 nnoremap <C-j> Vdp
 
+"Copy line below
 nnoremap <C-c> mZVyp`Zj
+"Delete line
 nnoremap <C-d> mZVd`Z
+"Copy in insert mode
 inoremap <C-c> <esc>mZVyp`Z<right>i
+"Delete in insert mode
 inoremap <C-d> <esc>Vdi
 
 nnoremap <leader>w :w<CR>
@@ -190,9 +201,9 @@ nnoremap <leader>E :e!<CR>
 nnoremap <leader><C-e> :E<CR>
 
 " Tabs
-nnoremap <silent> <leader><C-Right> :tabnext
-nnoremap <silent> <leader><C-Left>  :tabprevious
-nnoremap <silent> <leader><C-w>     :tabclose
+nnoremap <silent> <leader><C-Right> :tabnext<CR>
+nnoremap <silent> <leader><C-Left>  :tabprevious<CR>
+nnoremap <silent> <leader><C-w>     :tabclose<CR>
 
 nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<cr>
 
@@ -212,11 +223,9 @@ set background=dark
 let g:lightline = {
             \ 'colorscheme': 'material'
             \ }
-colorscheme lapis256
+colorscheme firewatch
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
 "   and it'll work whenever you use that colorscheme
 hi Normal guibg=NONE ctermbg=NONE
-"hi YcmWarningLine    ctermbg = 229
-"hi YcmWarningSign    ctermbg = 229
-"hi YcmWarningSection ctermbg = 229
+
