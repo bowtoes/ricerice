@@ -35,8 +35,57 @@ Plug 'dracula/vim',{'as':'dracula'}
 Plug 'romainl/Apprentice',{'as':'Apprentice'}
 call plug#end()
 
+"   Functions(?)
+
+" This is all taken from the vim fandom wiki
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    silent :e " this will reload the file without trickeries
+              "(DOS line endings will be shown entirely )
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
+
 "   Autocmds
-autocmd BufWritePre * :FixWhitespace
+augroup fixWhitespace
+    autocmd!
+    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+augroup END
 autocmd BufWritePre * :retab
 autocmd BufWinEnter * normal zR
 autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh setlocal nowrap
@@ -71,8 +120,6 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 " open NERDTree when no files are specified
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-map <silent> <F5> :NERDTreeToggle<CR>
 
 " ycm
 let g:ycm_seed_identifiers_with_syntax=1
@@ -160,20 +207,23 @@ nnoremap <C-l> >i{<CR>
 
 nnoremap <F2> :set invpaste paste?<CR>
 "Spellcheck toggle
-nnoremap <silent> <leader>p     :setlocal spell!<cr>
+nnoremap <silent> <leader>p :setlocal spell!<cr>
 "Linewrap toggle
-nnoremap <silent> <leader>g     :setlocal wrap!<cr>
+nnoremap <silent> <leader>g :setlocal wrap!<cr>
 "Toggle between inserting tabs and spaces
 nnoremap <silent> <leader><tab> :setlocal expandtab!<cr>
 "Toggle cursorline
 nnoremap <silent> <leader><C-c> :setlocal cursorline!<CR>
 "Show charcode under cursor
-nnoremap <silent> <leader>cc    :echo GetCursorChar()<cr>
+nnoremap <silent> <leader>cc :echo GetCursorChar()<cr>
 " Toggle folds
 nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
 nnoremap <silent> <C-f> zM
 nnoremap <leader>F zR
 "vnoremap <space><space> zf
+
+"Toggle whitespace fix on file write
+nnoremap <F4> :let g:whitespacefix = !get(g:, 'whitespacefix', 1)<CR>
 
 "Reread vimrc
 nnoremap <leader>. :source $MYVIMRC<CR>
@@ -192,6 +242,9 @@ inoremap <C-c> <esc>mZVyp`Z<right>i
 "Delete in insert mode
 inoremap <C-d> <esc>Vdi
 
+"Toggle Hexmode
+nnoremap <leader><C-h> :Hexmode<CR>
+
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :w!<CR>
 nnoremap <leader>q :q<CR>
@@ -204,6 +257,12 @@ nnoremap <leader><C-e> :E<CR>
 nnoremap <silent> <leader><C-Right> :tabnext<CR>
 nnoremap <silent> <leader><C-Left>  :tabprevious<CR>
 nnoremap <silent> <leader><C-w>     :tabclose<CR>
+
+" Splits
+nnoremap <silent> <C-L> <C-W>l
+nnoremap <silent> <C-H> <C-W>h
+nnoremap <silent> <C-K> <C-W>k
+nnoremap <silent> <C-J> <C-W>j
 
 nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<cr>
 
@@ -221,11 +280,11 @@ set t_Co=256
 set t_ut=
 set background=dark
 let g:lightline = {
-            \ 'colorscheme': 'material'
+            \ 'colorscheme': 'molokai'
             \ }
-colorscheme firewatch
+colorscheme molokai
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
 "   and it'll work whenever you use that colorscheme
-hi Normal guibg=NONE ctermbg=NONE
+"hi Normal guibg=NONE ctermbg=NONE
 
