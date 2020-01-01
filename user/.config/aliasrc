@@ -15,6 +15,7 @@ alias Ll="ll -1"
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 alias hibernate="date ; systemctl hibernate"
 
+alias feh="feh --force-aliasing --keep-zoom-vp"
 alias tmux="tmux -2"
 alias patch="patch -b"
 alias ka="killall"
