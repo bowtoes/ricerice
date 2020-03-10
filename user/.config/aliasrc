@@ -24,6 +24,7 @@ alias df="df --si"
 alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 alias utdl="youtube-dl -ci"
 
+alias feh="feh --zoom-fill"
 alias bandcamp="bandcamp-dl -ry"
 
 alias procfind="ps -ef | grep -i"

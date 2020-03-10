@@ -27,6 +27,8 @@
     "editor.fontSize": 11.5,
     "editor.minimap.scale": 2,
     "editor.minimap.maxColumn": 60,
+    "files.trimTrailingWhitespace": true,
+    "C_Cpp.intelliSenseEngine": "Tag Parser",
     "breadcrumbs.enabled": false,
     "window.menuBarVisibility": "default",
     "window.zoomLevel": -1,
