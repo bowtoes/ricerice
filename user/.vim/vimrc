@@ -252,6 +252,7 @@ nnoremap <leader>Q :q!<CR>
 nnoremap <leader>e :e<CR>
 nnoremap <leader>E :e!<CR>
 nnoremap <leader><C-e> :E<CR>
+nnoremap Q :q!<CR>
 
 " Tabs
 nnoremap <silent> <leader><C-Right> :tabnext<CR>
