@@ -18,7 +18,9 @@ appendrecurse ()
     fi
 }
 append        "/addtl/include"
-appendrecurse "/addtl/bin"
+append        "/addtl/bin"
+appendrecurse "/addtl/bin/sh"
+append        "/addtl/bin/python"
 appendrecurse "/addtl/sbin"
 unset append
 unset appendrecurse

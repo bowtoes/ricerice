@@ -8,6 +8,7 @@ alias cp="cp -iv"
 alias ln="ln -iv"
 alias rm="rm -Iv"
 alias mkdir="mkdir -pv"
+alias rename="renamue -iv"
 
 alias chmod="chmod -v --preserve-root"
 alias chown="chown -v --preserve-root"
