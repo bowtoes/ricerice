@@ -1,0 +1,31 @@
+#!/bin/sh
+
+convertfile ( )
+{
+    ft=$(ftype $1)
+    case $ft in
+        *[Cc][Uu][Rr])
+            FROM=$1
+            TO="$(fname $1).png"
+            printf "%s\n" "Converting $FROM to $TO"
+            magick "$FROM" "$TO"
+            ;;
+        *)
+            printf "%s\n" "Invalid filetype "$ft" of "$1" for conversion, skipping."
+            ;;
+    esac
+}
+
+while [ "$#" -ne 0 ] ; do
+    if [ -f $1 ] ; then
+        convertfile $1
+    elif [ -d $1 ] ; then
+        for f in $(find $1 -type f) ; do
+            convertfile $f
+        done
+    fi
+    shift 1
+done
+echo "Done"
+unset convertfile
+

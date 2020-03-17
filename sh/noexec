@@ -27,5 +27,7 @@ types="${types}\|mp2"
 types="${types}\|mp4"
 types="${types}\|mp4"
 types="${types}\|swf"
+types="${types}\|cur"
+types="${types}\|ani"
 
 find "$1" -type f -regex ".*\.\($types\)" -exec chmod -x -- {} +
