@@ -78,7 +78,7 @@
         },
         {
           "tag": "todo",
-          "color": "#cc8000",
+          "color": "#44ffe6",
           "strikethrough": false,
           "backgroundColor": "transparent"
         },
@@ -90,7 +90,7 @@
         },
         {
             "tag": "static",
-            "color": "#6b2d9e",
+            "color": "#ba44ff",
             "strikethrough": false,
             "backgroundColor": "transparent"
         },
@@ -102,13 +102,13 @@
         },
         {
             "tag": "public",
-            "color": "#99411e",
+            "color": "#ffcd44",
             "strikethrough": false,
             "backgroundColor": "transparent"
         },
         {
             "tag": "private",
-            "color": "#a52182",
+            "color": "#d3ff44",
             "strikethrough": false,
             "backgroundColor": "transparent"
         },
@@ -150,4 +150,8 @@
     "C_Cpp.experimentalFeatures": "Enabled",
     "C_Cpp.intelliSenseEngineFallback": "Enabled",
     "editor.showFoldingControls": "always",
+    "sync.gist": "b49b505d2f27b82773790c260a662ccb",
+    "sync.removeExtensions": false,
+    "sync.quietSync": true,
+    "sync.autoUpload": true,
 }
