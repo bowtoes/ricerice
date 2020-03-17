@@ -1,0 +1,131 @@
+#!/bin/sh
+# Apparently printf is safer than echo? idk
+
+helptext( )
+{
+    printf "%s\\n" "Made by BowToes <bow.toes@mailfence.com>"
+    printf "%s\\n" "'Designed by me, built by me' -- The Engineer"
+    printf "%s\\n" "+++Repeat a command a number of times+++"
+    printf "%s\\n" " 1: First argument is the command itself with no arguments."
+    printf "%s\\n" " 2: Second argument are optional command parameters."
+    printf "%s\\n" "    In order to pass no arguments, input empty double quotes (\"\")"
+    printf "%s\\n" "    (surround them in quotes for the least breakage)"
+    printf "%s\\n" "-----------Options-----------"
+    printf "%s\\n" "  -h"
+    printf "%s\\n" "      Show this help text and quit"
+    printf "%s\\n" "  -n number"
+    printf "%s\\n" "      Repetition count"
+    printf "%s\\n" "      Default is to repeat indefinitely"
+    printf "%s\\n" "  -o file"
+    printf "%s\\n" "      Redirect stdout to an optional file"
+    printf "%s\\n" "      If no file is specified, defaults to /dev/null"
+    printf "%s\\n" "  -e file"
+    printf "%s\\n" "      Redirect stderr to an optional file"
+    printf "%s\\n" "      If no file is specified, defaults to the file -r uses if that's specified"
+    printf "%s\\n" "      Otherwise defaults to /dev/null"
+    printf "%s\\n" "  -t time"
+    printf "%s\\n" "      Seconds to pause pause between repetitions"
+    printf "%s\\n" "      Defaults to 1"
+    printf "%s\\n" "      Overrides -T option if given afterwards"
+    printf "%s\\n" "  -T"
+    printf "%s\\n" "      Disable pause times"
+    printf "%s\\n" "      Overrides -t option if given afterwards"
+    exit
+}
+
+ismyoption( )
+{
+    case "$1" in
+        -h) helptext ;;
+        -n|-o|-e|-t|-T) return 0 ;;
+        *) return 1 ;;
+    esac
+}
+
+shiftcount=1
+cmd="$1"
+params=""
+stdout=""
+stderr=""
+rdrct=""
+count=-1
+time=1
+
+if [ -n "$cmd" ] ; then
+    [ "$cmd" = "-h" ] && helptext
+    params="$2"
+    shift 2
+    echo "$*"
+    while [ "$#" -gt 0 ] ; do
+        if ismyoption "$1" ; then
+            if [ "$1" = "-n" ] ; then
+                if strictlypositive "$2" ; then
+                    count="$2"
+                else
+                    printf "%s\\n" "Error parsing repition count: Must be integer greater than 0"
+                    exit
+                fi
+            # Output redirect
+            elif [ "$1" = "-o" ] ; then
+                if ismyoption "$2" ; then
+                    stdout="/dev/null"
+                    shift 1
+                    continue
+                else
+                    stdout="$2"
+                fi
+            # Error redirect
+            elif [ "$1" = "-e" ] ; then
+                if ismyoption "$2" ; then
+                    if [ -n "$stdout" ] ; then stderr="$stdout"
+                    else stderr="/dev/null"
+                    fi
+                shift 1
+                continue
+                else
+                    stderr="$2"
+                fi
+            # pause time
+            elif [ "$1" = "-t" ] ; then
+                if strictlypositive "$2" ; then time="$2" ; fi
+            # no pause time
+            elif [ "$1" = "-T" ] ; then
+                time=0
+                shift 1
+                continue
+            else
+                printf "%s\\n" "This code shouldn't have run"
+                exit
+            fi
+            shift 2
+        else
+            printf "%s\\n" "$1 is not a recognized option. Use '-h' for help."
+            exit
+        fi
+    done
+    i=0
+    [ -n "$stdout" ] && (touch "$stdout" || printf "%s\\n" "Could not write to stdout redirect file" ; exit)
+    [ -n "$stderr" ] && (touch "$stderr" || printf "%s\\n" "Could not write to stderr redirect file" ; exit)
+
+    # Assembly of rdrct string
+    if [ "$stdout" = "$stderr" ] ; then
+        if [ -n "$stdout" ] ; then
+            rdrct=">> $stdout 2>&1"
+        fi
+    else
+        if [ -n "$stdout" ] ; then
+            rdrct=">> $stdout"
+        fi
+        if [ -n "$stderr" ] ; then
+            rdrct="$rdrct 2>> $stderr"
+        fi
+    fi
+    ttl="${cmd} ${params}${rdrct}"
+    printf "%s\\n" "$ttl"
+
+    while [ "$i" -lt "$count" ] || [ "$count" -lt 0 ] ; do
+        i=$((i+1))
+        "$cmd $params $rdrct"
+        strictlypositive "$time" && sleep "$time"
+    done
+fi

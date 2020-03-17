@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Get the name of the file
+# Meaning get the text before the first '.'
+# Also known as the complement of ftype
+while [ ! -z "$1" ]; do
+    echo "$1" | cut -f 1 -d "."
+    shift 1
+done

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+time="$(clock)"
+uptime="$(getuptime)"
+#mem="$(mempercent | xargs printf "%3.3s%%")"
+mem="$(memfraction)"
+cpu="$(cpupercent)"
+#cpu="$(cpuavg)"
+#xsetroot -name ""
+xsetroot -name "$cpu%|$mem|$uptime|$time"

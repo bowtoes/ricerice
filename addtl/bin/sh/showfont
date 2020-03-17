@@ -1,0 +1,6 @@
+#!/bin/sh
+
+printf "%s\n" "abcdefghijklmnopqrstuvwxyz"
+printf "%s\n" "ABCDEFGHJIKLMNOPQRSTUVWXYZ"
+printf "%s\n" "0123456789!@#$%^&*()-=_+\\"
+printf "%s\n" "|[]{};:'\",<.>/?"

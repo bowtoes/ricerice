@@ -1,0 +1,19 @@
+#!/bin/sh
+
+[ "$#" -eq 0 ] && echo "Please input a png file to convert, or put -h for more info" && exit
+if [ -f "$1" ]; then
+    case "$1" in
+        *.png)
+            FROM="$1"
+            TO=$(fname "$1")".jpg"
+            echo "$FROM will be converted to $TO"
+            prompt "Do you wish to continue (y/n)?"
+            echo "Converting '$FROM' to '$TO'"
+            magick "$FROM" "$TO"
+            ;;
+        *)
+            echo "$1 is not a png file, not converting."
+            exit
+            ;;
+    esac
+fi
