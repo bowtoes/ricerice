@@ -56,6 +56,8 @@ export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
 
+export RICEDIR="/addtl/dev/other/ricerice/"
+
 export TERMCOLS="$HOME/.config/termcolors"
 export DIRCOLS="$HOME/.config/dircolors"
 [ -f "$TERMCOLS" ] && . "$TERMCOLS"

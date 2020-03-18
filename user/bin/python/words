@@ -1,0 +1,17 @@
+#!/bin/python
+
+import sys
+import re
+
+def count(a: str):
+    return [x for x in re.split(r'\W+', a) if x]
+
+def __main__():
+    if len(sys.argv) <= 1: return 0
+    x = [i for i in sys.argv[1:]]
+    #print(x)
+    output = count(' '.join(x))
+    print(output)
+    print(len(output))
+
+if __name__ == '__main__': __main__()
