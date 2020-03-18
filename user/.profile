@@ -22,8 +22,8 @@ append () {
 
 appendrecurse ()
 {
-    if [ -d $1 ] ; then
-        for d in $(find $1 -type d) ; do
+    if [ -d "$(realpath "$1")" ] ; then
+        for d in $(find -L "$(realpath "$1")" -type d -not -path '*.git*') ; do
             append $d
         done
     fi

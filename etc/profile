@@ -11,7 +11,7 @@
 umask 022
 
 # Append our default paths
-appendpath () {
+append () {
     case ":$PATH:" in
         *:"$1":*)
             ;;
@@ -19,21 +19,35 @@ appendpath () {
             PATH="${PATH:+$PATH:}$1"
     esac
 }
-appendpath "/usr/local/sbin"
-appendpath "/usr/local/bin"
-appendpath "/usr/bin"
-appendpath "/usr/include"
-appendpath "/usr/local/include"
-unset appendpath
+
+appendrecurse ()
+{
+    if [ -d "$(realpath "$1")" ] ; then
+        for d in $(find -L "$(realpath "$1")" -type d -not -path '*.git*') ; do
+            append $d
+        done
+    fi
+}
+
+
+append "/usr/local/sbin"
+append "/usr/local/bin"
+append "/usr/bin"
+append "/usr/include"
+append "/usr/local/include"
+appendrecurse "/addtl/bin"
+
+unset append
+unset appendrecurse
 
 export PATH
 
 # Load profiles from /etc/profile.d
 if [ -d "/etc/profile.d/" ] ; then
-	for profile in /etc/profile.d/*.sh ; do
-		[ -r "$profile" ] && . "$profile"
-	done
-	unset profile
+    for profile in /etc/profile.d/*.sh ; do
+        [ -r "$profile" ] && . "$profile"
+    done
+    unset profile
 fi
 
 # Source global bash config
