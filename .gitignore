@@ -1,3 +1,5 @@
 .gitconfig
 /user/.themes/*
 /user/.local/share/icons/hicolor/
+/user/.vim/autoload
+/user/.vim/plugged
