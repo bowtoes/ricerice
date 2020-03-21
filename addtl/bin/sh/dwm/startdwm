@@ -3,12 +3,12 @@
 # It works, but it somehow conflicts with the statusbar loop
 # so it ends blinking constantly
 
-FILE="/addtl/log/dwmlog"
+FILE="$LOGDIR/dwmlog"
 [ -n "$1" ] && FILE="$1"
-
+echo "" > "$FILE"
 while true; do
     # Log stderror to a file
-    dwm > "$FILE" 2>&1
+    dwm >> "$FILE" 2>&1
     # No error logging
     #dwm >/dev/null 2>&1
 done

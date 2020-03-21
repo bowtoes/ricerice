@@ -243,7 +243,7 @@ inoremap <C-c> <esc>mZVyp`Z<right>i
 inoremap <C-d> <esc>Vdi
 
 "Toggle Hexmode
-nnoremap <leader><C-h> :Hexmode<CR>
+nnoremap <leader>H :Hexmode<CR>
 
 nnoremap <leader>w :w<CR>
 nnoremap <leader>W :w!<CR>
@@ -260,10 +260,10 @@ nnoremap <silent> <leader><C-Left>  :tabprevious<CR>
 nnoremap <silent> <leader><C-w>     :tabclose<CR>
 
 " Splits
-nnoremap <silent> <C-L> <C-W>l
-nnoremap <silent> <C-H> <C-W>h
-nnoremap <silent> <C-K> <C-W>k
-nnoremap <silent> <C-J> <C-W>j
+nnoremap <silent> <leader><C-L> <C-W>l
+nnoremap <silent> <leader><C-H> <C-W>h
+nnoremap <silent> <leader><C-K> <C-W>k
+nnoremap <silent> <leader><C-J> <C-W>j
 
 nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<cr>
 
