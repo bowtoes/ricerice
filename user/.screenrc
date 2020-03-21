@@ -1,0 +1,67 @@
+# the following two lines give a two-line status, with the current window highlighted
+hardstatus alwayslastline
+#hardstatus string '%{= kW}:%H%u%? %1`%?::%= %-w%{+B rW}%n*%t%?(%u)%?%{-}%+w %=::%{Y}%D, %d %M%{-}::%{C}%C.%s %A%{-}:'
+hardstatus string '%{= kW}|%{Y}%D, %d %M%{-} %{C}%C:%s %A%{-}|%{kb}%-w%{-}%{+s rk}%n::%t%{-}%{kb}%+w%{-}|'
+
+#pow_detach_msg "Screen session of \$LOGNAME \$:cr:\$:nl:ended."
+
+# huge scrollback buffer
+defscrollback 5000
+
+# no welcome message
+startup_message off
+
+# 256 colors
+#attrcolor b ".I"
+#termcapinfo xterm 'Co#256:AB=\E[48;5;%dm:AF=\E[38;5;%dm'
+#defbce on
+
+# mouse tracking allows to switch region focus by clicking
+mousetrack on
+vbell off
+# get rid of silly xoff stuff
+bind s split
+
+# default windows
+screen -t Shell1  1 bash
+screen -t Shell2  2 bash
+screen -t Lynx    3 bash
+screen -t Other   4 bash
+
+select 0
+
+bind c screen 1 # window numbering starts at 1 not 0
+bind 0 select 10
+
+# layouts
+layout autosave on
+layout new one
+select 1
+
+# navigating regions with ctrl+num_arrowkeys
+bindkey "[t" focus left
+bindkey "[v" focus right
+bindkey "[x" focus up
+bindkey "[r" focus down
+
+# switch windows with crtl+left_arrow (prev) and crtl+right_arrow (next)
+bindkey "[D" prev
+bindkey "[C" next
+
+# switch layouts with ctrl+num_zero (prev layout) and ctrl+num_period (next)
+bindkey "^[[p" layout prev
+bindkey "^[[n" layout next
+
+# resize horizontally with crtl+num_divide and crtl+num_multiply
+bindkey "[Q" resize -h -1
+bindkey "[R" resize -h +1
+# resize vertically with crtl+num_subtract and crtl+num_add
+bindkey "[S" resize -v -1
+bindkey "[l" resize -v +1
+
+# split horizontally with ctrl+r
+bindkey "" split
+# split vertically with ctrl+e
+bindkey "" split -v
+# kill region with ctrl+w
+bindkey "" remove
