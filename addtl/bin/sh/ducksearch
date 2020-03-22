@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Gives a dmenu prompt to search DuckDuckGo.
 # Without input, will open DuckDuckGo.com.
 # URLs will be directly handed to the browser.
@@ -7,9 +7,9 @@ browser=${BROWSER:-firefox}
 
 pgrep -x dmenu && exit
 
-choice=$(echo "🦆" | dmenu -i -p "Search DuckDuckGo:") || exit 1
+choice=$(echo "duckduckgo.com" | dmenu -i -p "Search DuckDuckGo:") || exit 1
 
-if [ "$choice" = "🦆"  ]; then
+if [ "$choice" = "duckduckgo.com"  ]; then
     $browser "https://duckduckgo.com"
 else
     if echo "$choice" | grep "^(http:\/\/|https:\/\/)?[a-zA-Z0-9]+\.[a-zA-Z]+(/)?.*$"; then

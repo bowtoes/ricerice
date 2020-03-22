@@ -1,0 +1,20 @@
+#!/bin/sh -e
+
+cd "$(dirname "$0")"
+
+COMPDIR="./bin"
+test -e "$COMPDIR" || mkdir "$COMPDIR"
+
+if [ "$#" -ne 0 ] ; then
+    files=$@
+else
+    files=*.sp
+fi
+
+for sourcefile in $files
+do
+    smxfile="$(echo "$sourcefile" | sed -e 's/\.sp$/\.smx/')"
+    echo "Compiling "$sourcefile" ..."
+    ./spcomp "$sourcefile" -o "$COMPDIR"/"$smxfile"
+    echo "Compiled "$smxfile" ."
+done

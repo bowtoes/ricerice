@@ -1,0 +1,53 @@
+#!/bin/sh
+
+# $1 - input directory or .sp file
+# $2 - output directory; defaults to "$PWD/compiled"
+
+input=""
+outdir="${PWD}/compiled"
+errfile="errors"
+
+# First arg
+if [ -n "$1" ] ; then
+    if [ -e "$1" ] ; then
+        input="$(realpath $1)"
+    else
+        printf "%s\n" "$1: No such file or directory"
+        exit 1
+    fi
+else
+    printf "%s\n" "No file or directory passed"
+    exit 2
+fi
+
+# Second arg
+if [ -n "$2" ] ; then
+    outdir="$(realpath -m $2)"
+fi
+# Output directory verification
+printf "%s\n" "Output directory: $outdir"
+if [ ! -e $outdir ] ; then
+    if mkdir $outdir ; then
+        printf "%s\n" "Created directory: $outdir"
+    else
+        printf "%s\n" "Error creating directory $outdir"
+        exit 3
+    fi
+fi
+# Compilation
+# TODO: Turn the compilation step into a function
+#       Also consider making it so compiling a directory
+#           replicates the directory structure in the build directory
+if [ -d $input ] ; then
+    for sourcefile in $input/*.sp ; do
+        smxfile="$(printf "%s" "$(basename $sourcefile).smx" | sed 's/\(.*\)\.sp/\1/')"
+        outfile="${outdir}/${smxfile}"
+        printf "%s\n" "Compilling $(basename $sourcefile) to $(basename $outfile)"
+        spcomp $sourcefile -o$outfile
+    done
+else
+    smxfile="$(printf "%s" "$(basename $input).smx" | sed 's/\(.*\)\.sp/\1/')"
+    outfile="${outdir}/${smxfile}"
+    printf "%s\n" "Compilling $(basename $input) to $(basename $outfile)"
+    spcomp $input -o$outfile
+fi
