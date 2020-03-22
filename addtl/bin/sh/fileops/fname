@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Get the name of the file
 # Meaning get the text before the first '.'

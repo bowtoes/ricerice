@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 clear
 for t in {0..3}; do
     for f in {30..37}; do

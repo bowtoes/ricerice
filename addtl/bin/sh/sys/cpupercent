@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 MAX=0
 MIN=0

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 #
 # surf_linkselect.sh:
 #  Usage:

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Get directory of given executable
 
 [ ! -z "$(command -v "$1")" ] && dirname "$(command -v "$1")"

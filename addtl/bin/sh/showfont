@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 printf "%s\n" "abcdefghijklmnopqrstuvwxyz"
 printf "%s\n" "ABCDEFGHJIKLMNOPQRSTUVWXYZ"

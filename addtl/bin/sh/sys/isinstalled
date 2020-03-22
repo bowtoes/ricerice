@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 if installed $1 ; then
     echo "$1 is installed at "$(where $1)""

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 [ "$#" -eq 0 ] && echo "Please input a png file to convert, or put -h for more info" && exit
 if [ -f "$1" ]; then

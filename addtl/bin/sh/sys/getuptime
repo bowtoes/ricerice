@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # doing '% 1' removes the integer
 # component of the number

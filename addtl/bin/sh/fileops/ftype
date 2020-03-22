@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 
 # Get the type of the file
 # Meaning get all the text after the first '.'

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Apparently printf is safer than echo? idk
 
 helptext( )
