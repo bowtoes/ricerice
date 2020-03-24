@@ -22,9 +22,10 @@ append () {
 
 appendrecurse ()
 {
-    if [ -d "$(realpath "$1")" ] ; then
-        for d in $(find -L "$(realpath "$1")" -type d -not -path '*.git*') ; do
-            append $d
+    rp="$(realpath "$1")"
+    if [ -d "$rp" ] ; then
+        for d in $(find -L "$rp" -type d -not -path '*.git*') ; do
+            append "$d"
         done
     fi
 }
@@ -50,10 +51,14 @@ export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
 export SRC="/addtl/src"
 
+export LPASS_DISABLE_PINENTRY=1
+
 export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
+if [ -n "$(command -v dotnet)" ] ; then
+    export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
+fi
 
 export RICEDIR="/addtl/dev/other/ricerice/"
 export TERMCOLS="$HOME/.config/termcolors"
