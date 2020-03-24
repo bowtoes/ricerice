@@ -50,8 +50,9 @@ export EXPLORER="thunar"
 export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
 export SRC="/addtl/src"
+export GPG_TTY=$(tty)
 
-export LPASS_DISABLE_PINENTRY=1
+export LPASS_PINENTRY="pinentry-curses"
 
 export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
