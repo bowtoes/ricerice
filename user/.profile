@@ -39,7 +39,7 @@ unset appendrecurse
 PATH="$(echo $PATH | sed "s/::/:/g")"
 export PATH
 
-export PS1='\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e[0;39;49m\]\$ '
+export PS1="\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e[0;39;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)\$ "
 
 export EDITOR="vim"
 export TERMINAL="st"
@@ -51,13 +51,11 @@ export LOGDIR="$HOME/.log"
 export SRC="/addtl/src"
 
 export NNN_USE_EDITOR=1
-
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
 
 export RICEDIR="/addtl/dev/other/ricerice/"
-
 export TERMCOLS="$HOME/.config/termcolors"
 export DIRCOLS="$HOME/.config/dircolors"
 [ -f "$TERMCOLS" ] && . "$TERMCOLS"

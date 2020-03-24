@@ -27,6 +27,7 @@ Plug 'itchyny/lightline.vim'
 Plug 'tikhomirov/vim-glsl'
 "Plug 'craigemery/vim-autotag'
 "Plug 'abudden/taghighlight-automirror'
+Plug 'withgod/vim-sourcepawn'
 
 " Colorschemes
 Plug 'ErichDonGubler/vim-sublime-monokai'
@@ -90,6 +91,9 @@ autocmd BufWritePre * :retab
 autocmd BufWinEnter * normal zR
 autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh setlocal nowrap
 
+autocmd BufRead,BufNewFile *.inc set filetype=include
+autocmd BufRead,BufNewFile *.inc set syntax=sourcepawn
+
 autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
 
@@ -103,30 +107,21 @@ let mapleader=' '
 let delimitMate_matchpairs="(:),[:],{:}"
 set tags+=$HOME/.cache/vim/ctags
 
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
 
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 
 " open NERDTree when no files are specified
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd StdinReadPre * let s:std_in=1
+"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 " ycm
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_global_ycm_extra_conf = '$HOME/.vim/plugged/youcompleteme/third_party/ycmd/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf=0
-let g:ycm_collect_identifiers_from_tag_files = 1
-set completeopt=longest,menu
+"let g:ycm_seed_identifiers_with_syntax=1
+"let g:ycm_global_ycm_extra_conf = '$HOME/.vim/plugged/youcompleteme/third_party/ycmd/.ycm_extra_conf.py'
+"let g:ycm_confirm_extra_conf=0
+"let g:ycm_collect_identifiers_from_tag_files = 1
+"set completeopt=longest,menu
 
 "   Some Defaults
 syntax enable
@@ -149,16 +144,110 @@ set pastetoggle=<F2>
 set statusline=
 set statusline+=%#PmenuSel#
 set statusline+=%#LineNr#
-set statusline+=\ %f
+set statusline+=\ %f\ A
 set statusline+=%m\
 set statusline+=%=%#CursorColumn#
-set statusline+=\ %y
+set statusline+=\ %y\ AAAA " Filetype
 set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
 set statusline+=\[%{&fileformat}\]
 set statusline+=\ %p%%
-set statusline+=\ %l:%c
+set statusline+=\ %L:%c " Current line:Current char
 set statusline+=\ 
 "set statusline=%<%F%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
+
+" Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" Lightline
+let g:lightline = { }
+let g:lightline.enable = { 'statusline': 1, 'tabline': 1 }
+let g:lightline.separator = { 'left': '', 'right': '' }
+let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+let g:lightline.tabline_separator = g:lightline.separator
+let g:lightline.tabline_subseparator = g:lightline.subseparator
+let g:lightline.active = {
+    \ 'left':  [[ 'mode', 'paste' ],
+    \           [ 'readonly', 'filename', 'modified' ]],
+    \ 'right': [[ 'lineinfo', 'charinfo' ], [ 'percent' ],
+    \           [ 'fileformat', 'fileencoding', 'filetype' ]],
+    \ }
+let g:lightline.inactive = {
+    \ 'left':  [[ 'filename' ]],
+    \ 'right': [[ 'lineinfo' ],
+    \           [ 'percent' ]],
+    \ }
+let g:lightline.tabline = {
+    \ 'left': [ [ 'tabs' ] ],
+    \ 'right': [ [ 'close' ] ] }
+let g:lightline.tab = {
+    \ 'active': [ 'tabnum', 'filename', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+
+" Statusline/tabline components.
+let g:lightline.component = {
+    \ 'mode': '%{lightline#mode()}',
+    \ 'absolutepath': '%F',
+    \ 'relativepath': '%f',
+    \ 'filename': '%t',
+    \ 'modified': '%M',
+    \ 'bufnum': '%n',
+    \ 'paste': '%{&paste?"PASTE":""}',
+    \ 'readonly': '%R',
+    \ 'charvalue': '%b',
+    \ 'charvaluehex': '%B',
+    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+    \ 'fileformat': '%{&ff}',
+    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
+    \ 'percent': '%p%%',
+    \ 'percentwin': '%P',
+    \ 'spell': '%{&spell?&spelllang:""}',
+    \ 'lineinfo': '%3l/%-3L',
+    \ 'charinfo': '%3v:%03b:%03B',
+    \ 'line': '%l',
+    \ 'column': '%c',
+    \ 'close': '%999X X ',
+    \ 'winnr': '%{winnr()}',
+    \ }
+let g:lightline.component_visible_condition = {
+    \ 'modified': '&modified||!&modifiable',
+    \ 'readonly': '&readonly',
+    \ 'paste': '&paste',
+    \ 'spell': '&spell',
+    \ }
+let g:lightline.component_function = {}
+let g:lightline.component_function_visible_condition = {}
+let g:lightline.component_expand = {
+    \ 'tabs': 'lightline#tabs' }
+let g:lightline.component_type = {
+    \ 'tabs': 'tabsel',
+    \ 'close': 'raw' }
+let g:lightline.component_raw = {}
+let g:lightline.tab_component = {}
+let g:lightline.tab_component_function = {
+      \ 'filename': 'lightline#tab#filename',
+      \ 'modified': 'lightline#tab#modified',
+      \ 'readonly': 'lightline#tab#readonly',
+      \ 'tabnum': 'lightline#tab#tabnum' }
+let g:lightline.mode_map = {
+    \ 'n' : 'NORMAL',
+    \ 'i' : 'INSERT',
+    \ 'R' : 'REPLACE',
+    \ 'v' : 'VISUAL',
+    \ 'V' : 'V-LINE',
+    \ "\<C-v>": 'V-BLOCK',
+    \ 'c' : 'COMMAND',
+    \ 's' : 'SELECT',
+    \ 'S' : 'S-LINE',
+    \ "\<C-s>": 'S-BLOCK',
+    \ 't': 'TERMINAL',
+    \ }
 
 "   Recovery
 set backup
@@ -198,6 +287,7 @@ function! GetCursorChar()
     return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
+" Show whitespace characters
 map <leader>l :set list!<CR>
 map <leader>/ :let @/=''<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
@@ -280,9 +370,7 @@ map      <leader>t  :NERDTreeToggle<CR>
 set t_Co=256
 set t_ut=
 set background=dark
-let g:lightline = {
-            \ 'colorscheme': 'molokai'
-            \ }
+let g:lightline.colorscheme = 'molokai'
 colorscheme molokai
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file

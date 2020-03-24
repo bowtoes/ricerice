@@ -1,4 +1,5 @@
 #!/bin/sh
+#fixhdmi
 [ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
 [ -r "$HOME/.Xcolor" ] && xrdb -merge "$HOME/.Xcolor"
 [ -r "$HOME/.Xprofile" ] && . "$HOME/.Xprofile"
