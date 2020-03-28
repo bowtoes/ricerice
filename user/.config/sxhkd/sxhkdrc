@@ -1,12 +1,16 @@
 # Basic binds
 super + Return
     $TERMINAL bash -l
+super + shift + Return
+    tabbed -r 2 $TERMINAL -w '' -e bash -l
 super + d
     dmenu_run
 super + r
     $TERMINAL -e $FILE
 super + shift + w
     $BROWSER
+super + ctrl + w
+    tabbed $BROWSER -e
 super + e
     $EXPLORER
 super + a
