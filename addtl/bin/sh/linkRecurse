@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# $1 = parent directory whose files will be linked to
+# $2 = destination directory of links
+
+for f in $(find $1 -type f) ; do
+    d=$(realpath --relative-to $PWD $f)
+    ln -s $1/$d $2/$d
+done
+

@@ -1,0 +1,233 @@
+#!/usr/bin/env sh
+
+# Usage:
+#  SPCompile.sh [-o BINDIR=./bin/] [-i INCLUDES ...] [<directory>|<file> ...]
+#
+# Compile the given sourcepawn scripts into BINDIR with any number of additional
+# include directories.
+#
+# Options:
+#  -[oO], --output <directory>        specifies the output directory; subsequent
+#                                     -o's will overwrite each other
+#  -[iI], --include <directory>       specifies an include directory to use for
+#                                     compiling; can specify multiple -i options
+#  -[wW], --walk                      tells the script to walk subdirectories of
+#                                     input directories
+#  -[hH], --help                      show this helptext and exit
+#
+# Passing directories as input will find all *.sp files contained in them, and if
+# -w is specified, all subdirectories. If no directories or files are passed for
+# input, this script will use PWD as a default input.
+#
+#
+# Give this script a set of *.sp files or directories containing *.sp files
+# to compile them into *.smx's.
+# Pass -i to specify a custom include directory, or multiple.
+# Pass -o to specify a custom output directory; default is "$PWD/.bin/".
+# Pass -w to tell the program to walk subdirectories.
+#
+#
+# This script works in two passes:
+#   First pass parses the $@ arguments, grabbing all files to
+#    be compiled, gathering include dirs, and setting output dir.
+#   Second pass compiles all files with the included dirs and
+#    specified output dir.
+
+# TODO: Make walk depth an option; default to walk all subdirs.
+# TODO: Add verbose log levels; default to log all.
+
+#cd "$(dirname "$0")"
+
+BINDIR=""
+INCLUDES=""
+FILES=""
+COMMON=""
+WALK=1
+VERBOSE=0
+DRYRUN=0
+
+helptext ()
+{
+    printf "
+Usage:
+ SPCompile [-o BINDIR=./bin/] [-i INCLUDES ...] [<directory>|<file> ...]
+
+Compile the given sourcepawn scripts into BINDIR with any number of additional
+include directories.
+
+Options:
+ -[oO], --output <directory>        specifies the output directory; subsequent
+                                    -o's will overwrite previous ones.
+ -[iI], --include <directory>       specifies an include directory to use for
+                                    compiling; can specify multiple -i options
+ -w, --walk                         walk input subdirectories
+                                    Note: Only applies to directories passed
+                                    after this flag. The same is true for -W
+ -W, --nowalk                       do not walk input subdirectories
+ -v, --verbose                      show verbose output
+ -V, --noverbose                    do not show verbose output
+ -n, --dry-run                      print the compile command to be run, don't
+                                    actually compile anything
+ -[hH], --help                      show this helptext and exit
+"
+}
+logverbose ()
+{
+    # Arg 1 is verbose log level, i.e. 1, or 2, or 30
+    # Args 2+ is printf string to log.
+    if [ $VERBOSE -ge $1 ] ; then
+        shift
+        printf "$@"
+    fi
+}
+
+include ()
+{
+    # Arg 1 is dir to include
+    if [ -d "$1" ] ; then
+        if [ -r "$1" -a -x "$1" ] ; then
+            INCLUDES="$INCLUDES -i "$(realpath "$1")""
+        else
+            printf "include: cannot open directory '%s': Permission denied\\n" "$1"
+            exit 233
+        fi
+    else
+        printf "include: cannot access '%s': No such directory exists\\n" "$1"
+        exit 233
+    fi
+}
+output ()
+{
+    # Arg 1 is dir to set as output
+    dn="$(dirname "$1")"
+    if [ -d "$1" ] ; then
+        if [ -w "$1" -a -x "$1" ] ; then
+            BINDIR="$(realpath "$1")"
+        else
+            printf "output: cannot write to output directory '%s': Permission denied\\n" "$1"
+            exit 234
+        fi
+    else
+        logverbose 1 "output: creating output directory '%s'\\n" "$1"
+        mkdir -p "$1"
+        BINDIR="$(realpath "$1")"
+    fi
+}
+getoutputpath ()
+{
+    # Output path is $BINDIR/{dirname of input relative to $PWD
+    if [ -n "$1" ] ; then
+        relpath=$(realpath "$1" | sed -e "s@"$COMMON"@@" -e "s/.sp$/.smx/")
+        echo "$BINDIR$relpath"
+    fi
+}
+addfile ()
+{
+    # Arg 1 is a file (duh)
+    if [ -f "$1" ] ; then
+        if [ -r "$1" ] ; then
+            case "$1" in
+                *.[sS][pP])
+                    printf "Adding file %s\\n" "$1"
+                    COMMON="$(commondir "$COMMON" "$1")"
+                    logverbose 1 "Common path is '%s'\\n" "$COMMON"
+                    FILES="$FILES "$1""
+                    ;; # Add to FILES
+                *)
+                    logverbose 1 "'%s' is not a sourcepawn file\\n" "$1"
+                    ;; # Invalid file, ignore
+            esac
+        else
+            logverbose 1 "addfile: cannot access '%s': Permission denied\\n"
+        fi
+    else
+        logverbose 1 "addfile: cannot access '%s': No such file exists\\n" "$1"
+    fi
+}
+adddirectory ()
+{
+    # Arg 1 is a directory (duh)
+    if [ -d "$1" ] ; then
+        if [ -r "$1" -a -x "$1" ] ; then
+            rp=$(realpath "$1")
+            test $WALK -eq 0 && mp="-maxdepth 1"
+            for f in $(find "$rp" $md -type f) ; do
+                addfile $(realpath "$f")
+            done
+        else
+            logverbose 1 "adddirectory: cannot access '%s': Permssion denied\\n" "$1"
+        fi
+    else
+        logverbose 1 "adddirectory: cannot access '%s': No such directory exists\\n" "$1"
+    fi
+}
+
+while [ $# -ne 0 ] ;
+do
+    # Do parsing
+    case "$1" in
+        -[hH]|--help)
+            helptext
+            exit 0
+            ;; # Show help text
+        -[iI]|--include)
+            shift
+
+            if [ -n "$1" ] ; then
+                include "$1"
+            else
+                printf "Missing directory for -i flag. Use '-h' or '--help' to show usage\\n"
+                exit 235
+            fi
+            ;;
+        -[oO]|--output)
+            shift
+
+            if [ -n "$1" ] ; then
+                output "$1"
+            else
+                printf "Missing directory for -o assignment. Use '-h' or '--help' to show usage\\n"
+                exit 235
+            fi
+            ;; # Set output directory
+        -w|--walk)      WALK=1 ;;
+        -W|--nowalk)    WALK=0 ;;
+        -v|--verbose)   VERBOSE=1 ;;
+        -V|--noverbose) VERBOSE=0 ;;
+        -n|--dry-run)   DRYRUN=1 ;;
+        -*)
+            printf "Error: %s is not a valid flag. Pass -h or --help to show usage\\n"
+            exit 236
+            ;; # Invalid flag
+        *)
+            #d="$(realpath $1)"
+            if [ -f "$1" ] ; then
+                addfile "$1"
+            elif [ -d "$1" ] ; then
+                adddirectory "$1"
+            else
+                printf "SPCompile: cannot access '%s': no such file or directory\\n" "$d"
+            fi
+            ;; # Add files
+    esac
+    shift
+done
+if [ -n "$FILES" ] ; then
+    if [ -z "$BINDIR" ] ; then
+        output "$PWD/bin"
+    fi
+    for f in $FILES ; do
+        out="$(getoutputpath "$f")"
+        printf "Compiling %s\\n" "$out"
+        if [ $DRYRUN -eq 0 ] ; then
+            spcomp $f $INCLUDES -o $out
+        else
+            printf "spcomp $f $INCLUDES -o $out\\n"
+        fi
+    done
+    logverbose 1 "Output directory set to '%s'\\n" "$BINDIR"
+    logverbose 1 "Common directory is '%s'\\n" "$COMMON"
+else
+    printf "No valid files specified to compile, exiting\\n"
+    exit 0
+fi
