@@ -12,6 +12,8 @@ alias Ls="ls -1"
 alias La="la -1"
 alias Ll="ll -1"
 
+alias diff="diff -up"
+
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 alias hibernate="date ; systemctl hibernate"
 

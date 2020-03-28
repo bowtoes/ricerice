@@ -7,7 +7,39 @@
 # System wide aliases and functions are in /etc/bashrc.
 
 # Personal environment variables
-umask 022
+#
+# File permissions table
+# This TUG syntax is not valid for any permissions command such as chmod
+# It's only used for convenience in this file
+#
+# T = sticky bit
+# U = SUID
+# G = SGID
+# (s)pecial
+# (u)ser
+# (g)roup
+# (o)ther
+# sugo
+# 0--- = ---
+# 1--- = --T
+# 2--- = -G-
+# 3--- = -GT
+# 4--- = U--
+# 5--- = U-T
+# 6--- = UG-
+# 7--- = UGT
+# sugo
+# -0xx = ---
+# -1xx = --x
+# -2xx = -w-
+# -3xx = -wx
+# -4xx = r--
+# -5xx = r-x
+# -6xx = rw-
+# -7xx = rwx
+
+# Each new file/directory has '0777 - umask' permissions
+umask 0002
 
 shopt -s autocd
 
@@ -49,7 +81,7 @@ export AUDIO="vlc"
 export EXPLORER="thunar"
 export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
-export SRC="/addtl/src"
+export DEV="/addtl/dev"
 export GPG_TTY=$(tty)
 
 export LPASS_PINENTRY="pinentry-curses"
