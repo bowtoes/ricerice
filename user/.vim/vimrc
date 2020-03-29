@@ -1,11 +1,11 @@
 " Install Vim-Plug if it isn't already
 if empty(glob('~/.vim/autoload/plug.vim'))
-	silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-		\ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-	autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-"	Load Plugins
+" Load Plugins
 call plug#begin('~/.vim/plugged')
 "Plug 'junegunn/seoul256.vim'
 "Plug 'junegunn/goyo.vim'
@@ -36,7 +36,7 @@ Plug 'dracula/vim',{'as':'dracula'}
 Plug 'romainl/Apprentice',{'as':'Apprentice'}
 call plug#end()
 
-"	Functions(?)
+" Functions(?)
 
 " This is all taken from the vim fandom wiki
 " ex command for toggling hex mode - define mapping if desired
@@ -44,67 +44,64 @@ command -bar Hexmode call ToggleHex()
 
 " helper function to toggle hex mode
 function ToggleHex()
-  " hex mode should be considered a read-only operation
-  " save values for modified and read-only for restoration later,
-  " and clear the read-only flag for now
-  let l:modified=&mod
-  let l:oldreadonly=&readonly
-  let &readonly=0
-  let l:oldmodifiable=&modifiable
-  let &modifiable=1
-  if !exists("b:editHex") || !b:editHex
-	" save old options
-	let b:oldft=&ft
-	let b:oldbin=&bin
-	" set new options
-	setlocal binary " make sure it overrides any textwidth, etc.
-	silent :e " this will reload the file without trickeries
-			  "(DOS line endings will be shown entirely )
-	let &ft="xxd"
-	" set status
-	let b:editHex=1
-	" switch to hex editor
-	%!xxd
-  else
-	" restore old options
-	let &ft=b:oldft
-	if !b:oldbin
-	  setlocal nobinary
-	endif
-	" set status
-	let b:editHex=0
-	" return to normal editing
-	%!xxd -r
-  endif
-  " restore values for modified and read only state
-  let &mod=l:modified
-  let &readonly=l:oldreadonly
-  let &modifiable=l:oldmodifiable
+    " hex mode should be considered a read-only operation
+    " save values for modified and read-only for restoration later,
+    " and clear the read-only flag for now
+    let l:modified=&mod
+    let l:oldreadonly=&readonly
+    let &readonly=0
+    let l:oldmodifiable=&modifiable
+    let &modifiable=1
+    if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    silent :e " this will reload the file without trickeries
+                "(DOS line endings will be shown entirely )
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+    else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+        setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+    endif
+    " restore values for modified and read only state
+    let &mod=l:modified
+    let &readonly=l:oldreadonly
+    let &modifiable=l:oldmodifiable
 endfunction
 
-"	Autocmds
-if !exists("autocmds_loaded")
-	let autocmds_loaded = 1
-	augroup fixWhitespace
-		au!
-		au BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-	augroup END
-	au BufWinEnter * normal zR
-	au FileType c,h,hpp,cpp,diff,cs,python,vim,sh setlocal nowrap
+" Autocmds
+augroup fixWhitespace
+    au!
+    au BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+augroup END
+au BufWinEnter * normal zR
+au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
-	au BufRead,BufNewFile *.inc set filetype=include
-	au BufRead,BufNewFile *.inc set syntax=sourcepawn
+au BufRead,BufNewFile *.inc set filetype=include
+au BufRead,BufNewFile *.inc set syntax=sourcepawn
 
-	au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-		\| exe "normal! g'\"" | endif
-endif
-" TODO: Cleanup this whole file, please
+au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+    \| exe "normal! g'\"" | endif
+"TODO: Cleanup this whole file, please
 
-"	Leader Key
+"Leader Key
 let mapleader=' '
 
 
-"	Plugin Config
+"Plugin Config
 let delimitMate_matchpairs="(:),[:],{:}"
 set tags+=$HOME/.cache/vim/ctags
 
@@ -124,7 +121,7 @@ autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in
 "let g:ycm_collect_identifiers_from_tag_files = 1
 "set completeopt=longest,menu
 
-"	Some Defaults
+" Some Defaults
 syntax enable
 set nocompatible
 set encoding=UTF-8
@@ -167,8 +164,8 @@ let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
 let g:syntastic_mode_map = { 'mode': 'passive',
-      \                      'active_filetypes': [],
-      \                      'passive_filetypes': [] }
+            \                'active_filetypes': [],
+            \                'passive_filetypes': [] }
 " Lightline
 let g:lightline = { }
 let g:lightline.enable = { 'statusline': 1, 'tabline': 1 }
@@ -177,93 +174,93 @@ let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 let g:lightline.tabline_separator = g:lightline.separator
 let g:lightline.tabline_subseparator = g:lightline.subseparator
 let g:lightline.active = {
-	\ 'left':  [[ 'mode', 'paste' ],
-	\			[ 'readonly', 'filename', 'modified' ],
-	\			['synwarn', 'synstatus']],
-	\ 'right': [[ 'lineinfo', 'charinfo' ], [ 'percent' ],
-	\			[ 'fileformat', 'fileencoding', 'filetype' ]],
-	\ }
+    \ 'left':  [[ 'mode', 'paste' ],
+    \           [ 'readonly', 'filename', 'modified' ],
+    \           ['synwarn', 'synstatus']],
+    \ 'right': [[ 'lineinfo', 'charinfo' ], [ 'percent' ],
+    \           [ 'fileformat', 'fileencoding', 'filetype' ]],
+    \ }
 let g:lightline.inactive = {
-	\ 'left':  [[ 'filename' ]],
-	\ 'right': [[ 'lineinfo' ],
-	\			[ 'percent' ]],
-	\ }
+    \ 'left':  [[ 'filename' ]],
+    \ 'right': [[ 'lineinfo' ],
+    \           [ 'percent' ]],
+    \ }
 let g:lightline.tabline = {
-	\ 'left': [ [ 'tabs' ] ],
-	\ 'right': [ [ 'close' ] ] }
+    \ 'left': [ [ 'tabs' ] ],
+    \ 'right': [ [ 'close' ] ] }
 let g:lightline.tab = {
-	\ 'active': [ 'tabnum', 'filename', 'modified' ],
-	\ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
+    \ 'active': [ 'tabnum', 'filename', 'modified' ],
+    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
 
 " Statusline/tabline components.
 let g:lightline.component = {
-	\ 'synwarn': '%warningmsg',
-	\ 'mode': '%{lightline#mode()}',
-	\ 'absolutepath': '%F',
-	\ 'relativepath': '%f',
-	\ 'filename': '%t',
-	\ 'modified': '%M',
-	\ 'bufnum': '%n',
-	\ 'paste': '%{&paste?"PASTE":""}',
-	\ 'readonly': '%R',
-	\ 'charvalue': '%b',
-	\ 'charvaluehex': '%B',
-	\ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
-	\ 'fileformat': '%{&ff}',
-	\ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
-	\ 'percent': '%p%%',
-	\ 'percentwin': '%P',
-	\ 'spell': '%{&spell?&spelllang:""}',
-	\ 'lineinfo': '%3l/%-3L',
-	\ 'charinfo': '%3c%3V:%03b:%03B',
-	\ 'line': '%l',
-	\ 'column': '%c',
-	\ 'close': '%999X X ',
-	\ 'winnr': '%{winnr()}',
-	\ }
+    \ 'synwarn': '%warningmsg',
+    \ 'mode': '%{lightline#mode()}',
+    \ 'absolutepath': '%F',
+    \ 'relativepath': '%f',
+    \ 'filename': '%t',
+    \ 'modified': '%M',
+    \ 'bufnum': '%n',
+    \ 'paste': '%{&paste?"PASTE":""}',
+    \ 'readonly': '%R',
+    \ 'charvalue': '%b',
+    \ 'charvaluehex': '%B',
+    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
+    \ 'fileformat': '%{&ff}',
+    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
+    \ 'percent': '%p%%',
+    \ 'percentwin': '%P',
+    \ 'spell': '%{&spell?&spelllang:""}',
+    \ 'lineinfo': '%3l/%-3L',
+    \ 'charinfo': '%3c%3V:%03b:%03B',
+    \ 'line': '%l',
+    \ 'column': '%c',
+    \ 'close': '%999X X ',
+    \ 'winnr': '%{winnr()}',
+    \ }
 let g:lightline.component_visible_condition = {
-	\ 'modified': '&modified||!&modifiable',
-	\ 'readonly': '&readonly',
-	\ 'paste': '&paste',
-	\ 'spell': '&spell',
-	\ }
+    \ 'modified': '&modified||!&modifiable',
+    \ 'readonly': '&readonly',
+    \ 'paste': '&paste',
+    \ 'spell': '&spell',
+    \ }
 let g:lightline.component_function = {
-	\ 'synflag': 'SyntasticStatusFlag',
-	\ }
+    \ 'synflag': 'SyntasticStatusFlag',
+    \ }
 let g:lightline.component_function_visible_condition = {}
 let g:lightline.component_expand = {
-	\ 'tabs': 'lightline#tabs' }
+    \ 'tabs': 'lightline#tabs' }
 let g:lightline.component_type = {
-	\ 'tabs': 'tabsel',
-	\ 'close': 'raw' }
+    \ 'tabs': 'tabsel',
+    \ 'close': 'raw' }
 let g:lightline.component_raw = {}
 let g:lightline.tab_component = {}
 let g:lightline.tab_component_function = {
-	  \ 'filename': 'lightline#tab#filename',
-	  \ 'modified': 'lightline#tab#modified',
-	  \ 'readonly': 'lightline#tab#readonly',
-	  \ 'tabnum': 'lightline#tab#tabnum' }
+        \ 'filename': 'lightline#tab#filename',
+        \ 'modified': 'lightline#tab#modified',
+        \ 'readonly': 'lightline#tab#readonly',
+        \ 'tabnum': 'lightline#tab#tabnum' }
 let g:lightline.mode_map = {
-	\ 'n' : 'NORMAL',
-	\ 'i' : 'INSERT',
-	\ 'R' : 'REPLACE',
-	\ 'v' : 'VISUAL',
-	\ 'V' : 'V-LINE',
-	\ "\<C-v>": 'V-BLOCK',
-	\ 'c' : 'COMMAND',
-	\ 's' : 'SELECT',
-	\ 'S' : 'S-LINE',
-	\ "\<C-s>": 'S-BLOCK',
-	\ 't': 'TERMINAL',
-	\ }
+    \ 'n' : 'NORMAL',
+    \ 'i' : 'INSERT',
+    \ 'R' : 'REPLACE',
+    \ 'v' : 'VISUAL',
+    \ 'V' : 'V-LINE',
+    \ "\<C-v>": 'V-BLOCK',
+    \ 'c' : 'COMMAND',
+    \ 's' : 'SELECT',
+    \ 'S' : 'S-LINE',
+    \ "\<C-s>": 'S-BLOCK',
+    \ 't': 'TERMINAL',
+    \ }
 
-"	Recovery
+" Recovery
 set backup
 set writebackup
 set undofile
 set swapfile
 
-"	Whitespace
+" Whitespace
 set wrap
 "set nowrap
 set textwidth=0
@@ -274,11 +271,11 @@ set expandtab
 set autoindent
 set smartindent
 
-"	Cursor stuff
+" Cursor stuff
 set scrolloff=3
 set matchpairs+=<:> " use % to jump between pairs
 
-"	Searching
+" Searching
 set hlsearch
 set incsearch
 set ignorecase
@@ -290,9 +287,9 @@ set foldmethod=syntax
 set formatoptions=tcqrn1
 let g:sh_fold_enabled=5
 
-"	Bindings
+" Bindings
 function! GetCursorChar()
-	return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
+    return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
 map <leader>/ :let @/=''<CR>
@@ -303,13 +300,13 @@ nnoremap <C-l> >i{<CR>
 
 nnoremap <F2> :set invpaste paste?<CR>
 "Spellcheck toggle
-nnoremap <silent> <leader>p :setlocal spell!<CR>
+nnoremap <silent> <leader>p :set spell!<CR>
 "Linewrap toggle
-nnoremap <silent> <leader>g :setlocal wrap!<CR>
+nnoremap <silent> <leader>g :set wrap!<CR>
 "Toggle between inserting tabs and spaces
 nnoremap <silent> <leader><tab> :setlocal expandtab!<CR>
 "Toggle cursorline
-nnoremap <silent> <leader><C-c> :setlocal cursorline!<CR>
+nnoremap <silent> <leader><C-c> :set cursorline!<CR>
 "Show charcode under cursor
 nnoremap <silent> <leader>cc :echo GetCursorChar()<CR>
 " Show whitespace characters
@@ -354,8 +351,8 @@ nnoremap Q :q!<CR>
 
 " Tabs
 nnoremap <silent> <leader><C-Right> :tabnext<CR>
-nnoremap <silent> <leader><C-Left>	:tabprevious<CR>
-nnoremap <silent> <leader><C-w>		:tabclose<CR>
+nnoremap <silent> <leader><C-Left>  :tabprevious<CR>
+nnoremap <silent> <leader><C-w>     :tabclose<CR>
 
 " Splits
 nnoremap <silent> <leader><C-L> <C-W>l
@@ -371,9 +368,9 @@ nnoremap <leader>pc :PlugClean<CR>
 nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>pU :PlugUpgrade<CR>
 nnoremap <leader>ps :PlugStatus<CR>
-map		 <leader>t	:NERDTreeToggle<CR>
+map      <leader>t  :NERDTreeToggle<CR>
 
-"	Colors
+" Colors
 " For 256 color terminals
 set t_Co=256
 set t_ut=
@@ -382,6 +379,6 @@ let g:lightline.colorscheme = 'molokai'
 colorscheme molokai
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
-"	and it'll work whenever you use that colorscheme
+" and it'll work whenever you use that colorscheme
 "hi Normal guibg=NONE ctermbg=NONE
 
