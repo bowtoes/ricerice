@@ -270,7 +270,8 @@ set shiftwidth=4
 set expandtab
 set autoindent
 set smartindent
-
+"Show whitespace chars
+set list
 " Cursor stuff
 set scrolloff=3
 set matchpairs+=<:> " use % to jump between pairs
