@@ -27,6 +27,8 @@ super + b
 # Et cetera...
 super + grave
     dmenuunicode
+super + shift + e
+    $EDITOR
 
 # Function keys
 super + F1
