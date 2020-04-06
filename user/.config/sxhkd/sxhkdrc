@@ -16,7 +16,7 @@ super + e
 super + a
     $AUDIO
 super + z
-    $EXPLORER & \
+    $EXPLORER "$MUSICDIR" & \
     $AUDIO
 
 super + p

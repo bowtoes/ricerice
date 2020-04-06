@@ -1,0 +1,26 @@
+# ~/.defines
+
+# Personal environment variables
+
+export EDITOR="vim"
+export TERMINAL="st"
+export BROWSER="brave"
+export AUDIO="vlc"
+export EXPLORER="thunar"
+
+export WALLDIR="$HOME/wallpapers/include"
+export LOGDIR="$HOME/.log"
+export RESOURCES="$HOME/Desktop/resources"
+export MUSICDIR="$RESOURCES/01 Content/Music"
+
+export TERMCOLS="$HOME/.config/termcolors"
+export DIRCOLS="$HOME/.config/dircolors"
+[ -f "$TERMCOLS" ] && . "$TERMCOLS"
+[ -f "$DIRCOLS" ] && . "$DIRCOLS"
+
+export DEV="/addtl/dev"
+export RICEDIR="/addtl/dev/other/ricerice/"
+
+export XRESOURCES="$HOME/.config/xconf/Xresources"
+export XMODMAP="$HOME/.config/xconf/Xmodmap"
+export XPROFILE="$HOME/.config/xconf/Xprofile"

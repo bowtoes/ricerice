@@ -34,6 +34,7 @@ Plug 'ErichDonGubler/vim-sublime-monokai'
 Plug 'flazz/vim-colorschemes'
 Plug 'dracula/vim',{'as':'dracula'}
 Plug 'romainl/Apprentice',{'as':'Apprentice'}
+Plug 'morhetz/gruvbox'
 call plug#end()
 
 " Functions(?)
@@ -137,7 +138,6 @@ set showcmd
 set wildmode=longest,list,full
 
 set listchars=tab:\ \ →,eol:¬,space:·
-set pastetoggle=<F2>
 
 set statusline=
 set statusline+=%#PmenuSel#
@@ -267,7 +267,7 @@ set textwidth=0
 set tabstop=4
 set shiftwidth=4
 "set softtabstop=4
-set expandtab
+set noexpandtab
 set autoindent
 set smartindent
 "Show whitespace chars
@@ -293,25 +293,36 @@ function! GetCursorChar()
     return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
-map <leader>/ :let @/=''<CR>
+" Recording & Replaying
+nnoremap <F3> @q
+nnoremap <F4> @w
+nnoremap <F5> @e
+
+" Paste Mode
+set pastetoggle=<F2>
+nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 
+"Clear search string
+map <silent> <leader>/ :let @/=''<CR>
+
+"Decrease scope indent
 nnoremap <C-h> <i{<CR>
+"Increase scope indent
 nnoremap <C-l> >i{<CR>
 
-nnoremap <F2> :set invpaste paste?<CR>
 "Spellcheck toggle
 nnoremap <silent> <leader>p :set spell!<CR>
 "Linewrap toggle
 nnoremap <silent> <leader>g :set wrap!<CR>
 "Toggle between inserting tabs and spaces
-nnoremap <silent> <leader><tab> :setlocal expandtab!<CR>
+nnoremap <silent> <leader><tab> :setlocal expandtab! <bar> :echo "Expandtab" &expandtab ? "on" : "off"<CR>
 "Toggle cursorline
 nnoremap <silent> <leader><C-c> :set cursorline!<CR>
 "Show charcode under cursor
-nnoremap <silent> <leader>cc :echo GetCursorChar()<CR>
+nnoremap <silent> <leader>cc :echo "Charcode:" GetCursorChar()<CR>
 " Show whitespace characters
-map <leader>l :set list!<CR>
+map <silent> <leader>l :set list!<CR>
 " Toggle folds
 nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
 nnoremap <silent> <C-f> zM
@@ -319,7 +330,7 @@ nnoremap <leader>F zR
 "vnoremap <space><space> zf
 
 "Toggle whitespace fix on file write
-nnoremap <silent> <F4> :let g:whitespacefix = !get(g:, 'whitespacefix', 1)<CR>
+nnoremap <silent> <F1> :let g:whitespacefix = !get(g:, 'whitespacefix', 1) <bar> :echo "Whitespace fix" get(g:, 'whitespacefix', 1) ? "on" : "off"<CR>
 
 "Reread vimrc
 nnoremap <silent> <leader>. :source $MYVIMRC<CR>
@@ -362,6 +373,7 @@ nnoremap <silent> <leader><C-K> <C-W>k
 nnoremap <silent> <leader><C-J> <C-W>j
 
 nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<CR>
+nnoremap <leader>Y :hi Normal guibg=gruvbox ctermbg=235<CR>
 
 " Plugin binds
 nnoremap <leader>pi :PlugInstall<CR>
@@ -376,10 +388,10 @@ map      <leader>t  :NERDTreeToggle<CR>
 set t_Co=256
 set t_ut=
 set background=dark
-let g:lightline.colorscheme = 'molokai'
-colorscheme molokai
+let g:lightline.colorscheme = 'gruvbox'
+colorscheme gruvbox
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
 " and it'll work whenever you use that colorscheme
-"hi Normal guibg=NONE ctermbg=NONE
+hi Normal guibg=NONE ctermbg=NONE
 

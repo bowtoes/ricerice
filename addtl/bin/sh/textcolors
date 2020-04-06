@@ -1,11 +1,78 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 clear
-for t in {0..3}; do
-    for f in {30..37}; do
-        for b in {40..47}; do
-            echo -ne "\e[$t;$f;$b""m[$t:$f:$b]""\e[0;37;40m"
+gettext ()
+{
+    # $1 = type
+    # $2 = FMT
+    # $3 = FG
+    # $4 = BG
+
+    # Default
+    A=" [$2;$3;$4] "
+
+    # Human readable
+      if [ $2 -eq  0 ] ; then FTS="NRM"
+    elif [ $2 -eq  1 ] ; then FTS="BLD"
+    elif [ $2 -eq  2 ] ; then FTS="DIM"
+    elif [ $2 -eq  3 ] ; then FTS="ITX"
+    else FTS="IVD"
+    fi
+      if [ $3 -eq 30 ] ; then FGS="BLK"
+    elif [ $3 -eq 31 ] ; then FGS="RED"
+    elif [ $3 -eq 32 ] ; then FGS="GRN"
+    elif [ $3 -eq 33 ] ; then FGS="YLW"
+    elif [ $3 -eq 34 ] ; then FGS="BLU"
+    elif [ $3 -eq 35 ] ; then FGS="MGT"
+    elif [ $3 -eq 36 ] ; then FGS="CYN"
+    elif [ $3 -eq 37 ] ; then FGS="WHT"
+    else FGS="IVD"
+    fi
+      if [ $4 -eq 40 ] ; then BGS="BLK"
+    elif [ $4 -eq 41 ] ; then BGS="RED"
+    elif [ $4 -eq 42 ] ; then BGS="GRN"
+    elif [ $4 -eq 43 ] ; then BGS="YLW"
+    elif [ $4 -eq 44 ] ; then BGS="BLU"
+    elif [ $4 -eq 45 ] ; then BGS="MGT"
+    elif [ $4 -eq 46 ] ; then BGS="CYN"
+    elif [ $4 -eq 47 ] ; then BGS="WHT"
+    else BGS="IVD"
+    fi
+    B="$FTS $FGS $BGS"
+
+    # Output
+    if [ $1 -eq 0 ] ; then printf "$A"
+    else printf "$B"
+    fi
+}
+
+# $1 = mode
+#  0 = default, show numbers
+#  1 = human readable
+#  anything else = both
+if [ ! "$1" = "2" ] ; then
+    for FMT in 0 1 2 3; do
+        for FG in 30 31 32 33 34 35 36 37; do
+            for BG in 40 41 42 43 44 45 46 47; do
+                if [ -z "$1" ] ; then
+                    A=`gettext 0 $FMT $FG $BG`
+                elif [ $1 -eq 0 -o $1 -eq 1 ] ; then
+                    A=`gettext $1 $FMT $FG $BG`
+                fi
+                printf "\033[$FMT;$FG;$BG""m"" %11s " "$A"
+            done
+        printf "\033[0;37;40m\n"
         done
-        echo
     done
-done
-echo ""
+else
+    for FMT in 0 1 2 3; do
+        for FG in 30 31 32 33 34 35 36 37; do
+            for i in 1 0 ; do
+                for BG in 40 41 42 43 44 45 46 47; do
+                    A=`gettext $i $FMT $FG $BG`
+                    printf "\033[$FMT;$FG;$BG""m"" %11s " "$A"
+                done
+            printf "\033[0;37;40m\n"
+            done
+        done
+    done
+fi

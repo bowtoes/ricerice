@@ -141,7 +141,7 @@
     "workbench.iconTheme": "vs-nomo-dark",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "workbench.colorTheme": "Century Colors",
+    "workbench.colorTheme": "Gruvbox Dark (Soft)",
     "editor.renderWhitespace": "none",
     "C_Cpp.default.cppStandard": "c++20",
     "C_Cpp.default.cStandard": "c11",

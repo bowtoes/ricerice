@@ -5,7 +5,8 @@
 # 3 = patch name
 
 c=$PWD
-cd $1
-o=$c/"$2-$3-`date +%Y%m%d`-`git rev-parse --short HEAD`.diff"
+cd $1 || exit 1
+k=`git rev-parse --short HEAD` || exit 1
+o=$c/"$2-$3-`date +%Y%m%d`-$k.diff"
 printf "%s\\n" "$o"
 git diff > $o

@@ -1,9 +1,8 @@
 #!/bin/sh
 #fixhdmi
-[ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
-[ -r "$HOME/.Xcolor" ] && xrdb -merge "$HOME/.Xcolor"
-[ -r "$HOME/.Xprofile" ] && . "$HOME/.Xprofile"
-[ -r "$HOME/.Xmodmap" ] && xmodmap "$HOME/.Xmodmap"
+[ -r "$XMODMAP"    ] && xmodmap "$XMODMAP"
+[ -r "$XRESOURCES" ] && xrdb "$XRESOURCES"
+[ -r "$XPROFILE"   ] && . "$XPROFILE"
 #nvidia-settings --load-config-only
 xfce4-session > $LOGDIR/xfce4 2>&1
 #startdwm "$LOGDIR/dwm_log"
