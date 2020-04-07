@@ -3,10 +3,28 @@
 # 1 = git directory
 # 2 = project name
 # 3 = patch name
+# 4?= remote
+# 5?= branch
 
-c=$PWD
+DIR=$PWD
+PROJECT="$2"
+PATCH="$3"
+
 cd $1 || exit 1
-k=`git rev-parse --short HEAD` || exit 1
-o=$c/"$2-$3-`date +%Y%m%d`-$k.diff"
-printf "%s\\n" "$o"
-git diff > $o
+
+if [ -n "$4" ] ; then
+	if [ -n "$5" ] ; then
+		BRANCH="$5"
+	else
+		BRANCH="master"
+	fi
+
+	REMOTE="$4"
+else
+	REMOTE="origin"
+fi
+
+REVISION=`git rev-parse --short $REMOTE/$BRANCH` || exit 1
+OUTPUT="$DIR"/"$PROJECT-$PATCH-`date +%Y%m%d`-$REVISION.diff"
+printf "%s\\n" "$OUTPUT"
+git diff "$REMOTE"/"$BRANCH" --output="$OUTPUT"

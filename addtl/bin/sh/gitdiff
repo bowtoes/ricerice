@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+CWD=$PWD
+cd ..
+git diff "$PWD/$1" "$PWD/$2"
