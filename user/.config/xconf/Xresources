@@ -1,6 +1,7 @@
 *.font: monospace:pixelsize=12:antialias=true:autohint=true
+*.xcolorsFile: ~/.config/xconf/xcolors/hund.Xcolor
 
-*.alpha:        0.80
-*.alphaNoFocus: 0.60
+*.alpha:        0.82
+*.alphaNoFocus: 0.70
 
 *.borderpx:   0

@@ -24,3 +24,6 @@ export RICEDIR="/addtl/dev/other/ricerice/"
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"
 export XPROFILE="$HOME/.config/xconf/Xprofile"
+
+alias ftpstat="sudo systemctl status vsftpd"
+

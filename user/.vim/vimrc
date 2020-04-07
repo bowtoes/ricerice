@@ -91,6 +91,7 @@ augroup END
 au BufWinEnter * normal zR
 au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
+au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
 au BufRead,BufNewFile *.inc set filetype=include
 au BufRead,BufNewFile *.inc set syntax=sourcepawn
 
