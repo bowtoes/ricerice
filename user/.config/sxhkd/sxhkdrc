@@ -1,45 +1,49 @@
 # Basic binds
 super + Return
-    $TERMINAL bash -l
+    $TERMINAL $TERMINALCMD
 super + shift + Return
-    tabbed -r 2 $TERMINAL -w '' -e bash -l
+    $TABCMD $TERMINALCMD
 super + d
     dmenu_run
 super + r
-    $TERMINAL -e $FILE
+    $TERMINAL
 super + shift + w
     $BROWSER
 super + ctrl + w
-    tabbed $BROWSER -e
+    $TABBROWSER2
 super + e
-    $EXPLORER
+    $EXPLORERCMD
+super + ctrl + e
+	$TERMINAL $EXPLORER2CMD
+super + ctrl + shift + e
+	$TABEXPLORER2
 super + a
     $AUDIO
 super + z
-    $EXPLORER "$MUSICDIR" & \
+    $EXPLORERCMD "$MUSICDIR" & \
     $AUDIO
 
-super + p
-    octopi
-super + b
-    setbg "$WALLDIR"
+#super + b
+#    setbg "$WALLDIR"
 
 # Et cetera...
 super + grave
     dmenuunicode
-super + shift + e
-    $EDITOR
+super + ctrl + e
+    $EDITORCMD
 
 # Function keys
 super + F1
-    ducksearch
-super + F4
-    dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
-super + F5
+    DUcksearch
+super + F2
     dmenuprompt "Shutdown dwm?" "killall dwm"
-super + F6
+super + F3
     dmenuprompt "Shutdown X?" "killall Xorg"
-super + F7
+super + F4
     dmenuprompt "Shutdown computer?" "poweroff"
-super + F8
+super + F5
     dmenuprompt "Reboot computer?" "reboot"
+super + shift + F5
+	dmenuprompt "Restart sxhkd?" "kill -10 `pgrep sxhkd`"
+super + F6
+    dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'

@@ -1,5 +1,9 @@
 *.font: monospace:pixelsize=12:antialias=true:autohint=true
+! For some reason, monokai.Xcolor fails to load
 *.xcolorsFile: ~/.config/xconf/xcolors/hund.Xcolor
+
+*.cols: 104
+*.rows: 50
 
 *.alpha:        0.82
 *.alphaNoFocus: 0.70

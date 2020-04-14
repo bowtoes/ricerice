@@ -23,7 +23,7 @@
       "overview"
     ],
     "trailing-spaces.trimOnSave": true,
-    "editor.fontFamily": "'monospace', 'monospace2', monospace2, 'Droid Sans Fallback'",
+    "editor.fontFamily": "'monospace', 'monospace2', 'Droid Sans Fallback'",
     "editor.fontSize": 11.5,
     "editor.minimap.scale": 2,
     "editor.minimap.maxColumn": 60,
@@ -78,7 +78,7 @@
         },
         {
           "tag": "todo",
-          "color": "#44ffe6",
+          "color": "#ffb442",
           "strikethrough": false,
           "backgroundColor": "transparent"
         },
@@ -141,9 +141,9 @@
     "workbench.iconTheme": "vs-nomo-dark",
     "editor.suggestSelection": "first",
     "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
-    "workbench.colorTheme": "Gruvbox Dark (Soft)",
+    "workbench.colorTheme": "Century Colors",
     "editor.renderWhitespace": "none",
-    "C_Cpp.default.cppStandard": "c++20",
+    "C_Cpp.default.cppStandard": "c++11",
     "C_Cpp.default.cStandard": "c11",
     "C_Cpp.default.intelliSenseMode": "gcc-x64",
     "C_Cpp.errorSquiggles": "Enabled",

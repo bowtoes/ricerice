@@ -3,7 +3,7 @@ alias bashp=". ~/.bash_profile"
 
 alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
 
-alias ls="ls -hNF --color=auto --group-directories-first"
+alias ls="ls -hNFX --color=auto --group-directories-first"
 
 alias l="ls"
 alias L="ls -1"
@@ -42,4 +42,4 @@ alias utdl="youtube-dl -ci"
 alias feh="feh --zoom-fill"
 alias bandcamp="bandcamp-dl -ry"
 
-alias procfind="ps -ef | grep -i"
+alias procfind="pgrep -aif"

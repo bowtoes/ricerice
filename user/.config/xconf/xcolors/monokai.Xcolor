@@ -1,10 +1,12 @@
+! monokai Xresources palette
+
 ! special
 *.foreground:   #ffffff
 *.background:   #000000
 *.cursorColor:  #ffffff
 
 ! black
-*.color0:       #022232
+*.color0:       #0222f2
 *.color8:       #84c493
 
 ! red

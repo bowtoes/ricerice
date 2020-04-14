@@ -2,16 +2,33 @@
 
 # Personal environment variables
 
-export EDITOR="vim"
-export TERMINAL="st"
-export BROWSER="brave"
-export AUDIO="vlc"
-export EXPLORER="thunar"
-
 export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
 export RESOURCES="$HOME/Desktop/resources"
 export MUSICDIR="$RESOURCES/01 Content/Music"
+
+export TERMINAL="st"
+export TERMINALCMD="-e bash -l"
+export TABCMD="tabbed -r 2 $TERMINAL -w ''"
+
+export EDITOR="vim"
+export EDITORCMD="-e $EDITOR"
+export TABEDITOR="$TABCMD $EDITORCMD"
+
+export BROWSER="brave"
+export BROWSERCMD="$BROWSER"
+
+export BROWSER2="surf"
+export TABBROWSER2="tabbed $BROWSER2 -e"
+
+export AUDIO="vlc"
+
+export EXPLORER="thunar"
+export EXPLORERCMD="$EXPLORER"
+
+export EXPLORER2="nnn"
+export EXPLORER2CMD="-e $EXPLORER2 -dxrog"
+export TABEXPLORER2="$TABCMD $EXPLORER2CMD"
 
 export TERMCOLS="$HOME/.config/termcolors"
 export DIRCOLS="$HOME/.config/dircolors"
@@ -24,6 +41,10 @@ export RICEDIR="/addtl/dev/other/ricerice/"
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"
 export XPROFILE="$HOME/.config/xconf/Xprofile"
+
+export LESSHISTFILE="$HOME/.log/lesshst"
+export HISTFILE="$HOME/.log/bash_history"
+export FIT_LOG="$HOME/.log/fit_log"
 
 alias ftpstat="sudo systemctl status vsftpd"
 
