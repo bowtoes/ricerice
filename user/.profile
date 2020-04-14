@@ -71,7 +71,7 @@ unset appendrecurse
 
 PATH="$(echo $PATH | sed "s/::/:/g")"
 export PATH
-export PS1="\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e[0;39;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)\$ "
+export PS1="\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\W\[\e[0;39;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)\$ "
 
 export DEFINES="$HOME/.config/defines"
 [ -f "$DEFINES" ] && . "$DEFINES"

@@ -91,6 +91,7 @@ augroup END
 au BufWinEnter * normal zR
 au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
+au BufRead,BufNewFile aliasrc,defines set filetype=sh
 au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
 au BufRead,BufNewFile *.inc set filetype=include
 au BufRead,BufNewFile *.inc set syntax=sourcepawn
@@ -340,6 +341,9 @@ nnoremap <silent> <leader>. :source $MYVIMRC<CR>
 nnoremap <C-k> VdkP
 "Move line down
 nnoremap <C-j> Vdp
+
+nnoremap <leader>n :n<CR>
+nnoremap <leader>p :p<CR>
 
 "Copy line below
 nnoremap <C-c> mZVyp`Zj

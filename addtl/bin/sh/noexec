@@ -4,16 +4,26 @@ types="${types}\|ani"
 
 types="${types}\|bsp"
 
+types="${types}\|c"
+types="${types}\|cc"
+types="${types}\|cs"
 types="${types}\|cfg"
 types="${types}\|cnf"
+types="${types}\|cpp"
+types="${types}\|cur"
 types="${types}\|conf"
 types="${types}\|config"
-types="${types}\|cur"
 
 types="${types}\|dll"
 
 types="${types}\|fnt"
 types="${types}\|fon"
+
+types="${types}\|gif"
+
+types="${types}\|h"
+types="${types}\|hh"
+types="${types}\|hpp"
 
 types="${types}\|ini"
 types="${types}\|inf"
@@ -35,6 +45,7 @@ types="${types}\|swf"
 
 types="${types}\|ttf"
 types="${types}\|txt"
+types="${types}\|tmod"
 
 types="${types}\|vpk"
 types="${types}\|vdf"
@@ -42,8 +53,12 @@ types="${types}\|vtf"
 types="${types}\|vmf"
 
 types="${types}\|wav"
+types="${types}\|webm"
 types="${types}\|woff"
 
+types="${types}\|xcf"
 types="${types}\|xspf"
 
-find "$1" -type f -regex ".*\.\($types\)" -exec chmod -x -- {} +
+[ $# -eq 0 ] && ARGS="$PWD" || ARGS=$@
+
+find $ARGS -type f -iregex ".*\.\($types\)" -exec chmod -x -- {} +
