@@ -1,9 +1,11 @@
 alias claer="clear"
+alias caler="clear"
+alias celar="clear"
 alias bashp=". ~/.bash_profile"
 
 alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
 
-alias ls="ls -hNFX --color=auto --group-directories-first"
+alias ls="ls -hCNFX --color=auto --group-directories-first --time-style=long-iso"
 
 alias l="ls"
 alias L="ls -1"
@@ -25,8 +27,6 @@ alias LS="lS -l"
 alias LA="lA -l"
 alias LL="lL -l"
 
-alias diff="diff -up"
-
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 alias hibernate="date ; systemctl hibernate"
 
@@ -39,7 +39,12 @@ alias df="df --si"
 alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 alias utdl="youtube-dl -ci"
 
+alias filecounts="itemcount -t f -e ./{.,}*"
+alias linkcounts="itemcount -t l -e ./{.,}*"
+alias dircounts="itemcount -t d -e ./{.,}*"
+
 alias feh="feh --zoom-fill"
 alias bandcamp="bandcamp-dl -ry"
 
-alias procfind="pgrep -aif"
+alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on --cpu_temp C --distro_shorthand of --kernel_shorthand off --uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all --de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on --shell_version on --disk_percent on --memory_percent on --os_arch on --package_managers on --speed_shorthand off --underline on --bold on --block_height 1 --block_width 2 --cpu_display infobar --memory_display infobar --battery_display infobar --disk_display infobar --bar_char '#' '-'"
+alias ftpstat="sudo systemctl status vsftpd"

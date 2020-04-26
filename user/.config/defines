@@ -4,8 +4,6 @@
 
 export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
-export RESOURCES="$HOME/Desktop/resources"
-export MUSICDIR="$RESOURCES/01 Content/Music"
 
 export TERMINAL="st"
 export TERMINALCMD="-e bash -l"
@@ -36,15 +34,15 @@ export DIRCOLS="$HOME/.config/dircolors"
 [ -f "$DIRCOLS" ] && . "$DIRCOLS"
 
 export DEV="/addtl/dev"
-export RICEDIR="/addtl/dev/other/ricerice/"
+export RICEDIR="/addtl/dev/other/ricerice"
 
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"
 export XPROFILE="$HOME/.config/xconf/Xprofile"
 
-export LESSHISTFILE="$HOME/.log/lesshst"
-export HISTFILE="$HOME/.log/bash_history"
-export FIT_LOG="$HOME/.log/fit_log"
+export LESSHISTFILE="$LOGDIR/lesshst"
+export HISTFILE="$LOGDIR/bash_history"
+export FIT_LOG="$LOGDIR/fit_log"
 
-alias ftpstat="sudo systemctl status vsftpd"
-
+export DEFINES2="$DEFINES""2"
+[ -f "$DEFINES2" ] && . "$DEFINES2"
