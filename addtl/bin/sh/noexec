@@ -1,8 +1,14 @@
 #!/usr/bin/env sh
+
 types=""
+types="${types}\|abr"
 types="${types}\|ani"
 
+types="${types}\|ba2"
+types="${types}\|bsa"
 types="${types}\|bsp"
+types="${types}\|blend"
+types="${types}\|blend1"
 
 types="${types}\|c"
 types="${types}\|cc"
@@ -12,45 +18,68 @@ types="${types}\|cnf"
 types="${types}\|cpp"
 types="${types}\|cur"
 types="${types}\|conf"
+types="${types}\|cache"
 types="${types}\|config"
 
 types="${types}\|dll"
+types="${types}\|dxf"
+types="${types}\|docx"
 
+types="${types}\|fbx"
 types="${types}\|fnt"
 types="${types}\|fon"
 
+types="${types}\|gz"
+types="${types}\|gbr"
+types="${types}\|ggr"
 types="${types}\|gif"
+types="${types}\|gpl"
 
 types="${types}\|h"
 types="${types}\|hh"
 types="${types}\|hpp"
 
+types="${types}\|idx"
 types="${types}\|ini"
 types="${types}\|inf"
 
 types="${types}\|jpg"
 types="${types}\|jpeg"
 
+types="${types}\|md"
 types="${types}\|mp3"
 types="${types}\|mp2"
 types="${types}\|mp4"
 types="${types}\|mp4"
+types="${types}\|mtl"
 
+types="${types}\|obj"
 types="${types}\|otf"
 
+types="${types}\|pdf"
 types="${types}\|png"
+types="${types}\|pack"
 
+types="${types}\|qc"
+
+types="${types}\|smd"
 types="${types}\|smx"
 types="${types}\|swf"
+types="${types}\|sample"
+types="${types}\|settings"
 
 types="${types}\|ttf"
 types="${types}\|txt"
 types="${types}\|tmod"
+types="${types}\|tmtheme"
 
-types="${types}\|vpk"
+types="${types}\|vbr"
 types="${types}\|vdf"
+types="${types}\|vpk"
 types="${types}\|vtf"
 types="${types}\|vmf"
+types="${types}\|vmt"
+types="${types}\|vssettings"
 
 types="${types}\|wav"
 types="${types}\|webm"
@@ -59,6 +88,26 @@ types="${types}\|woff"
 types="${types}\|xcf"
 types="${types}\|xspf"
 
-[ $# -eq 0 ] && ARGS="$PWD" || ARGS=$@
+types="${types}\|zip"
 
-find $ARGS -type f -iregex ".*\.\($types\)" -exec chmod -x -- {} +
+DEPTH=-1
+ARGS=""
+
+while [ $# -gt 0 ] ; do
+    case "$1" in
+        -d)
+            DEPTH=$2
+            shift 2
+            ;;
+        *)
+            ARGS="$ARGS $1"
+            shift
+            ;;
+    esac
+done
+
+if [ $DEPTH -ge 0 ] ; then
+    find $ARGS -maxdepth $DEPTH -type f -iregex ".*\.\($types\)" -exec chmod -x -- {} +
+else
+    find $ARGS -type f -iregex ".*\.\($types\)" -exec chmod -x -- {} +
+fi

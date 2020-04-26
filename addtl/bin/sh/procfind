@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+pg=$(pgrep -d, -i $@)
+[ -n "$pg" ] && ps -fp $pg || exit 0

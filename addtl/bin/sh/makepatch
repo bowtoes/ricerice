@@ -6,6 +6,20 @@
 # 4?= remote
 # 5?= branch
 
+DIFFALL=0
+
+while [ $# -gt 4 ] ; do
+	case "$1" in
+		-a)
+			DIFFALL=1
+			shift
+			;;
+		*)
+			printf "Unknown option $1\n"
+			;;
+	esac
+done
+
 DIR=$PWD
 PROJECT="$2"
 PATCH="$3"
@@ -27,4 +41,8 @@ fi
 REVISION=`git rev-parse --short $REMOTE/$BRANCH` || exit 1
 OUTPUT="$DIR"/"$PROJECT-$PATCH-`date +%Y%m%d`-$REVISION.diff"
 printf "%s\\n" "$OUTPUT"
-git diff "$REMOTE"/"$BRANCH" --output="$OUTPUT"
+if [ $DIFFALL -eq 1 ] ; then
+	git diff "$REMOTE"/"$BRANCH" --output="$OUTPUT"
+else
+	git diff --diff-filter=M "$REMOTE"/"$BRANCH" --output="$OUTPUT"
+fi
