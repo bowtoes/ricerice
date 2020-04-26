@@ -69,9 +69,41 @@ appendrecurse "$HOME/scripts"
 unset append
 unset appendrecurse
 
-PATH="$(echo $PATH | sed "s/::/:/g")"
+PATH="$(echo "$PATH" | sed "s/::/:/g")"
 export PATH
-export PS1="\[\e[1;31m\]\u\[\e[35m\]-\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\W\[\e[0;39;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)\$ "
+PS1=""
+#PS1="$PS1\[\e[1;31m\]\u"
+#PS1="$PS1\[\e[35m\]-"
+#PS1="$PS1\[\e[33m\]\h"
+#PS1="$PS1\[\e[0;39m\]:"
+#PS1="$PS1\[\e[1;34m\]\W"
+#PS1="$PS1\[\e[0;39;49m\]"
+#PS1="$PS1\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
+#PS1="$PS1\$"
+
+path()
+{
+    if [ "$PWD" = "$HOME" ] ; then
+        printf "~"
+    else
+        P_D=`pathdepth -d "$PWD"`
+        M_D=3
+        if [ $P_D -le $M_D ] ; then
+            printf "$PWD"
+        else
+            printf ".../%s" "`echo "$PWD" | cut -d '/' -f$((P_D - M_D + 2))-`"
+        fi
+    fi
+}
+
+PS1="$PS1\[\e[00;31;49m\]\u"
+PS1="$PS1\[\e[02;39;49m\]:"
+PS1="$PS1\[\e[00;01;34;49m\]\$(path)"
+PS1="$PS1\[\e[00;31;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
+PS1="$PS1\[\e[00;33;49m\]\$ "
+
+PS1="$PS1\[\e[00;97;49m\]"
+export PS1
 
 export DEFINES="$HOME/.config/defines"
 [ -f "$DEFINES" ] && . "$DEFINES"
@@ -82,5 +114,5 @@ export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 if [ -n "$(command -v dotnet)" ] ; then
-    export MSBuildSDKsPath="/opt/dotnet/sdk/$(dotnet --version)/Sdks"
+    export MSBuildSDKsPath="/usr/share/dotnet/sdk/$(dotnet --version)/Sdks"
 fi

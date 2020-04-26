@@ -91,10 +91,13 @@ augroup END
 au BufWinEnter * normal zR
 au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
-au BufRead,BufNewFile aliasrc,defines set filetype=sh
+au BufRead,BufNewFile vimrc setlocal expandtab
+au BufRead,BufNewFile aliasrc,defines* set filetype=sh
 au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
 au BufRead,BufNewFile *.inc set filetype=include
 au BufRead,BufNewFile *.inc set syntax=sourcepawn
+
+au BufWritePre * if &expandtab | retab | endif
 
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
     \| exe "normal! g'\"" | endif
@@ -285,10 +288,10 @@ set ignorecase
 set smartcase
 set showmatch
 
-set foldenable
-set foldmethod=syntax
-set formatoptions=tcqrn1
-let g:sh_fold_enabled=5
+"set foldenable
+"set foldmethod=syntax
+"set formatoptions=tcqrn1
+"let g:sh_fold_enabled=5
 
 " Bindings
 function! GetCursorChar()
@@ -313,24 +316,24 @@ nnoremap <C-h> <i{<CR>
 "Increase scope indent
 nnoremap <C-l> >i{<CR>
 
-"Spellcheck toggle
-nnoremap <silent> <leader>p :set spell!<CR>
-"Linewrap toggle
-nnoremap <silent> <leader>g :set wrap!<CR>
-"Toggle between inserting tabs and spaces
-nnoremap <silent> <leader><tab> :setlocal expandtab! <bar> :echo "Expandtab" &expandtab ? "on" : "off"<CR>
-"Toggle cursorline
-nnoremap <silent> <leader><C-c> :set cursorline!<CR>
 "Show charcode under cursor
 nnoremap <silent> <leader>cc :echo "Charcode:" GetCursorChar()<CR>
-" Show whitespace characters
-map <silent> <leader>l :set list!<CR>
 " Toggle folds
 nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
 nnoremap <silent> <C-f> zM
 nnoremap <leader>F zR
 "vnoremap <space><space> zf
 
+"Spellcheck toggle
+nnoremap <silent> <leader>p :setlocal spell! <bar> :echo "Spellcheck" &spell ? "on" : "off"<CR>
+"Linewrap toggle
+nnoremap <silent> <leader>g :setlocal wrap! <bar> :echo "Linewrap" &wrap ? "on" : "off"<CR>
+"Toggle between inserting tabs and spaces
+nnoremap <silent> <leader><tab> :setlocal expandtab! <bar> :echo "Expandtab" &expandtab ? "on" : "off"<CR>
+"Toggle cursorline
+nnoremap <silent> <leader><C-c> :setlocal cursorline! <bar> :echo "Cursorline" &cursorline ? "on" : "off"<CR>
+" Show whitespace characters
+map <silent> <leader>l :set list! <bar> :echo "Whitepsace" &list ? "visible" : "invisible"<CR>
 "Toggle whitespace fix on file write
 nnoremap <silent> <F1> :let g:whitespacefix = !get(g:, 'whitespacefix', 1) <bar> :echo "Whitespace fix" get(g:, 'whitespacefix', 1) ? "on" : "off"<CR>
 
