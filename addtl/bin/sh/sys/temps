@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-# Print cpu core temps
-sensors | grep "Core" | sed "s/\(  \|(.*\)//g"

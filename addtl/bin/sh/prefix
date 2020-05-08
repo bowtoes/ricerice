@@ -1,4 +1,0 @@
-#!/usr/bin/env bash
-
-strings=("$@")
-printf "%s\n" "${strings[@]}" | sed -e '$!{N;s/^\(.*\).*\n\1.*$/\1\n\1/;D;}'

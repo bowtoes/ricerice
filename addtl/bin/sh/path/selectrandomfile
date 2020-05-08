@@ -1,0 +1,10 @@
+#!/usr/bin/env sh
+
+# $1 = directory
+# $2 = maxdepth
+[ "$#" -eq 0 ] && exit
+if [ -r "$1" ] && [ -d "$1" ]; then
+    echo "`find $(realpath "$1") -type f | shuf -n 1`"
+else
+    echo "Please input an image file or directory"
+fi

@@ -5,20 +5,20 @@
 
 awkcmd='
 {
-    h1 = $1 / 3600
-    m1 = $1 / 3600 % 1 * 60
-    s1 = $1 %   60
-    hours   = h1 - h1 % 1
-    minutes = m1 - m1 % 1
-    seconds = s1 - s1 % 1
-    printf "%02d:%02d:%02d\n", hours, minutes, seconds
+	h1 = $1 / 3600
+	m1 = $1 / 3600 % 1 * 60
+	s1 = $1 %	60
+	hours	= h1 - h1 % 1
+	minutes = m1 - m1 % 1
+	seconds = s1 - s1 % 1
+	printf "%02d:%02d:%02d\n", hours, minutes, seconds
 }
 '
 if [ "$#" -eq 0 ]; then
-    cat /proc/uptime | awk "$awkcmd"
+	cat /proc/uptime | awk "$awkcmd"
 else
-    while [ -n "$1" ]; do
-        echo "$1" |  awk "$awkcmd"
-        shift
-    done
+	while [ $# -gt 0 ]; do
+		echo "$1" |  awk "$awkcmd"
+		shift
+	done
 fi

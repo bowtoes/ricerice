@@ -48,10 +48,10 @@ while [ $# -gt 0 ] ; do
 
                 [ -z "$NUM" ] && NUM=0
                 SUM=$((SUM+NUM))
-                printf "%5s %s\n" "$NUM" "$1"
+                printf "%-7s %s\n" "$NUM" "$1"
             fi
             shift
             ;;
     esac
 done
-printf "%5d %s\n" "$SUM" "TOTAL"
+printf "%-7d %s\n" "$SUM" "TOTAL"

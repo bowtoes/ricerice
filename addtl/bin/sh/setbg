@@ -12,7 +12,7 @@ selectRandomFile()
 {
     [ "$#" -eq 0 ] && exit
     if [ -r $1 ]; then
-        echo "$(find $(realpath $1) -type f | shuf -n 1)"
+        echo "$(find -L $(realpath $1) -type f | shuf -n 1)"
     else
         echo "Please input an image file or directory"
         exit
