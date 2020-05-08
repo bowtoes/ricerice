@@ -1,3 +1,4 @@
+"""" ++++ PLUGINS ++++
 " Install Vim-Plug if it isn't already
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
@@ -5,29 +6,17 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" Load Plugins
 call plug#begin('~/.vim/plugged')
-"Plug 'junegunn/seoul256.vim'
-"Plug 'junegunn/goyo.vim'
-"Plug 'junegunn/limelight.vim'
-"Plug 'liuchengxu/vim-which-key'
-"Plug 'tpope/vim-repeat'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-"Plug 'shougo/unite.vim'
-"Plug 'mbbill/undotree'
-"Plug 'valloric/youcompleteme'
-"Plug 'tpope/vim-surround'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'rpdelaney/vim-sourcecfg'
-"Plug 'godlygeek/tabular'
-Plug 'raimondi/delimitmate'
+"Plug 'raimondi/delimitmate'
 Plug 'scrooloose/syntastic'
 Plug 'itchyny/lightline.vim'
 Plug 'tikhomirov/vim-glsl'
-"Plug 'craigemery/vim-autotag'
-"Plug 'abudden/taghighlight-automirror'
 Plug 'withgod/vim-sourcepawn'
+Plug 'mbbill/undotree'
 
 " Colorschemes
 Plug 'ErichDonGubler/vim-sublime-monokai'
@@ -36,104 +25,82 @@ Plug 'dracula/vim',{'as':'dracula'}
 Plug 'romainl/Apprentice',{'as':'Apprentice'}
 Plug 'morhetz/gruvbox'
 call plug#end()
+"""" ---- PLUGINS ----
 
-" Functions(?)
-
-" This is all taken from the vim fandom wiki
-" ex command for toggling hex mode - define mapping if desired
-command -bar Hexmode call ToggleHex()
-
-" helper function to toggle hex mode
-function ToggleHex()
-    " hex mode should be considered a read-only operation
-    " save values for modified and read-only for restoration later,
-    " and clear the read-only flag for now
-    let l:modified=&mod
-    let l:oldreadonly=&readonly
-    let &readonly=0
-    let l:oldmodifiable=&modifiable
-    let &modifiable=1
-    if !exists("b:editHex") || !b:editHex
-    " save old options
-    let b:oldft=&ft
-    let b:oldbin=&bin
-    " set new options
-    setlocal binary " make sure it overrides any textwidth, etc.
-    silent :e " this will reload the file without trickeries
-                "(DOS line endings will be shown entirely )
-    let &ft="xxd"
-    " set status
-    let b:editHex=1
-    " switch to hex editor
-    %!xxd
-    else
-    " restore old options
-    let &ft=b:oldft
-    if !b:oldbin
-        setlocal nobinary
-    endif
-    " set status
-    let b:editHex=0
-    " return to normal editing
-    %!xxd -r
-    endif
-    " restore values for modified and read only state
-    let &mod=l:modified
-    let &readonly=l:oldreadonly
-    let &modifiable=l:oldmodifiable
+"""" ++++ FUNCTIONS ++++
+function! GetCursorChar()
+    return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
-" Autocmds
-augroup fixWhitespace
-    au!
-    au BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-augroup END
-au BufWinEnter * normal zR
+" This is all taken from the vim fandom wiki
+"
+" Return indent (all whitespace at start of a line), converted from
+" tabs to spaces if what = 1, or from spaces to tabs otherwise.
+" When converting to tabs, result has no redundant spaces.
+function! Indenting(indent, what, cols)
+    let spccol = repeat(' ', a:cols)
+    let result = substitute(a:indent, spccol, '\t', 'g')
+    let result = substitute(result, ' \+\ze\t', '', 'g')
+    if a:what == 1
+        let result = substitute(result, '\t', spccol, 'g')
+    endif
+    return result
+endfunction
+
+" Convert whitespace used for indenting (before first non-whitespace).
+" what = 0 (convert spaces to tabs), or 1 (convert tabs to spaces).
+" cols = string with number of columns per tab, or empty to use 'tabstop'.
+" The cursor position is restored, but the cursor will be in a different
+" column when the number of characters in the indent of the line is changed.
+function! IndentConvert(line1, line2, what, cols)
+    let savepos = getpos('.')
+    let cols = empty(a:cols) ? &tabstop : a:cols
+    execute a:line1 . ',' . a:line2 . 's/^\s\+/\=Indenting(submatch(0), a:what, cols)/e'
+    call histdel('search', -1)
+    call setpos('.', savepos)
+endfunction
+command! -nargs=? -range=% Space2Tab
+            \ call IndentConvert(<line1>,<line2>,0,<q-args>)
+command! -nargs=? -range=% Tab2Space
+            \ call IndentConvert(<line1>,<line2>,1,<q-args>)
+command! -nargs=? -range=% RetabIndent
+            \ call IndentConvert(<line1>,<line2>,&et,<q-args>)
+"""" ---- FUNCTIONS ----
+
+"""" ++++ AUTOCMDS ++++
 au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
-au BufRead,BufNewFile vimrc setlocal expandtab
-au BufRead,BufNewFile aliasrc,defines* set filetype=sh
-au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
-au BufRead,BufNewFile *.inc set filetype=include
-au BufRead,BufNewFile *.inc set syntax=sourcepawn
+au BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+"au BufWritePre * RetabIndent
 
-au BufWritePre * if &expandtab | retab | endif
+au BufWinEnter * normal zR
+
+au BufRead,BufNewFile vimrc setlocal expandtab
+au BufRead,BufNewFile aliasrc,defines,defines\d set filetype=sh
+au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
+au BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
 
 au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\"" | endif
-"TODO: Cleanup this whole file, please
-
-"Leader Key
-let mapleader=' '
-
-
-"Plugin Config
-let delimitMate_matchpairs="(:),[:],{:}"
-set tags+=$HOME/.cache/vim/ctags
-
+    \| exe "normal! g'\""
+    \| endif
 
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
+autocmd VimEnter *
+            \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+            \| exe 'NERDTree' argv()[0]
+            \| wincmd p
+            \| ene
+            \| endif
+"""" ---- AUTOCMDS ----
 
-" open NERDTree when no files are specified
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-
-" ycm
-"let g:ycm_seed_identifiers_with_syntax=1
-"let g:ycm_global_ycm_extra_conf = '$HOME/.vim/plugged/youcompleteme/third_party/ycmd/.ycm_extra_conf.py'
-"let g:ycm_confirm_extra_conf=0
-"let g:ycm_collect_identifiers_from_tag_files = 1
-"set completeopt=longest,menu
-
-" Some Defaults
+"""" ++++ GENERAL CONFIG ++++
 syntax enable
+let mapleader=' '
 set nocompatible
 set encoding=UTF-8
 set exrc
 set secure
-"set ruler
 set number relativenumber
 set hidden
 set ttyfast
@@ -142,174 +109,55 @@ set showmode
 set showcmd
 set wildmode=longest,list,full
 
-set listchars=tab:\ \ →,eol:¬,space:·
-
-set statusline=
-set statusline+=%#PmenuSel#
-set statusline+=%#LineNr#
-set statusline+=\ %f\ A
-set statusline+=%m\
-set statusline+=%=%#CursorColumn#
-set statusline+=\ %y\ AAAA " Filetype
-set statusline+=\ %{&fileencoding?&fileencoding:&encoding}
-set statusline+=\[%{&fileformat}\]
-set statusline+=\ %p%%
-set statusline+=\ %L:%c " Current line:Current char
-set statusline+=\ 
-"set statusline=%<%F%h%m%r%=%b\ 0x%B\ \ %l,%c%V\ %P
-
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-let g:syntastic_mode_map = { 'mode': 'passive',
-            \                'active_filetypes': [],
-            \                'passive_filetypes': [] }
-" Lightline
-let g:lightline = { }
-let g:lightline.enable = { 'statusline': 1, 'tabline': 1 }
-let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '|', 'right': '|' }
-let g:lightline.tabline_separator = g:lightline.separator
-let g:lightline.tabline_subseparator = g:lightline.subseparator
-let g:lightline.active = {
-    \ 'left':  [[ 'mode', 'paste' ],
-    \           [ 'readonly', 'filename', 'modified' ],
-    \           ['synwarn', 'synstatus']],
-    \ 'right': [[ 'lineinfo', 'charinfo' ], [ 'percent' ],
-    \           [ 'fileformat', 'fileencoding', 'filetype' ]],
-    \ }
-let g:lightline.inactive = {
-    \ 'left':  [[ 'filename' ]],
-    \ 'right': [[ 'lineinfo' ],
-    \           [ 'percent' ]],
-    \ }
-let g:lightline.tabline = {
-    \ 'left': [ [ 'tabs' ] ],
-    \ 'right': [ [ 'close' ] ] }
-let g:lightline.tab = {
-    \ 'active': [ 'tabnum', 'filename', 'modified' ],
-    \ 'inactive': [ 'tabnum', 'filename', 'modified' ] }
-
-" Statusline/tabline components.
-let g:lightline.component = {
-    \ 'synwarn': '%warningmsg',
-    \ 'mode': '%{lightline#mode()}',
-    \ 'absolutepath': '%F',
-    \ 'relativepath': '%f',
-    \ 'filename': '%t',
-    \ 'modified': '%M',
-    \ 'bufnum': '%n',
-    \ 'paste': '%{&paste?"PASTE":""}',
-    \ 'readonly': '%R',
-    \ 'charvalue': '%b',
-    \ 'charvaluehex': '%B',
-    \ 'fileencoding': '%{&fenc!=#""?&fenc:&enc}',
-    \ 'fileformat': '%{&ff}',
-    \ 'filetype': '%{&ft!=#""?&ft:"no ft"}',
-    \ 'percent': '%p%%',
-    \ 'percentwin': '%P',
-    \ 'spell': '%{&spell?&spelllang:""}',
-    \ 'lineinfo': '%3l/%-3L',
-    \ 'charinfo': '%3c%3V:%03b:%03B',
-    \ 'line': '%l',
-    \ 'column': '%c',
-    \ 'close': '%999X X ',
-    \ 'winnr': '%{winnr()}',
-    \ }
-let g:lightline.component_visible_condition = {
-    \ 'modified': '&modified||!&modifiable',
-    \ 'readonly': '&readonly',
-    \ 'paste': '&paste',
-    \ 'spell': '&spell',
-    \ }
-let g:lightline.component_function = {
-    \ 'synflag': 'SyntasticStatusFlag',
-    \ }
-let g:lightline.component_function_visible_condition = {}
-let g:lightline.component_expand = {
-    \ 'tabs': 'lightline#tabs' }
-let g:lightline.component_type = {
-    \ 'tabs': 'tabsel',
-    \ 'close': 'raw' }
-let g:lightline.component_raw = {}
-let g:lightline.tab_component = {}
-let g:lightline.tab_component_function = {
-        \ 'filename': 'lightline#tab#filename',
-        \ 'modified': 'lightline#tab#modified',
-        \ 'readonly': 'lightline#tab#readonly',
-        \ 'tabnum': 'lightline#tab#tabnum' }
-let g:lightline.mode_map = {
-    \ 'n' : 'NORMAL',
-    \ 'i' : 'INSERT',
-    \ 'R' : 'REPLACE',
-    \ 'v' : 'VISUAL',
-    \ 'V' : 'V-LINE',
-    \ "\<C-v>": 'V-BLOCK',
-    \ 'c' : 'COMMAND',
-    \ 's' : 'SELECT',
-    \ 'S' : 'S-LINE',
-    \ "\<C-s>": 'S-BLOCK',
-    \ 't': 'TERMINAL',
-    \ }
-
-" Recovery
 set backup
 set writebackup
 set undofile
 set swapfile
 
-" Whitespace
+set colorcolumn=80
 set wrap
-"set nowrap
 set textwidth=0
 set tabstop=4
 set shiftwidth=4
-"set softtabstop=4
 set noexpandtab
 set autoindent
 set smartindent
-"Show whitespace chars
-set list
-" Cursor stuff
+"set list
+set listchars=tab:\ \ →,eol:¬,space:·
 set scrolloff=3
-set matchpairs+=<:> " use % to jump between pairs
 
-" Searching
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set showmatch
+"""" ---- GENERAL CONFIG ----
 
-"set foldenable
-"set foldmethod=syntax
-"set formatoptions=tcqrn1
-"let g:sh_fold_enabled=5
+"""" ++++ PLUGIN CONFIG ++++
+let delimitMate_matchpairs="(:),[:],{:}"
 
-" Bindings
-function! GetCursorChar()
-    return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
-endfunction
+" Syntastic
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
+let g:syntastic_mode_map = { 'mode': 'passive',
+            \ 'active_filetypes': [],
+            \ 'passive_filetypes': [] }
+"""" ---- PLUGIN CONFIG ----
 
-" Recording & Replaying
+"""" ++++ MAPPINGS ++++
+set pastetoggle=<F2>
+
 nnoremap <F3> @q
 nnoremap <F4> @w
 nnoremap <F5> @e
 
-" Paste Mode
-set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
 imap <F2> <C-O>:set invpaste paste?<CR>
 
 "Clear search string
-map <silent> <leader>/ :let @/=''<CR>
+nmap <silent> <leader>/ :let @/=''<CR>
 
 "Decrease scope indent
 nnoremap <C-h> <i{<CR>
@@ -337,8 +185,7 @@ map <silent> <leader>l :set list! <bar> :echo "Whitepsace" &list ? "visible" : "
 "Toggle whitespace fix on file write
 nnoremap <silent> <F1> :let g:whitespacefix = !get(g:, 'whitespacefix', 1) <bar> :echo "Whitespace fix" get(g:, 'whitespacefix', 1) ? "on" : "off"<CR>
 
-"Reread vimrc
-nnoremap <silent> <leader>. :source $MYVIMRC<CR>
+nnoremap <silent> U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
 
 "Move line up
 nnoremap <C-k> VdkP
@@ -390,16 +237,18 @@ nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>pU :PlugUpgrade<CR>
 nnoremap <leader>ps :PlugStatus<CR>
 map      <leader>t  :NERDTreeToggle<CR>
+"""" ---- MAPPINGS ----
 
-" Colors
-" For 256 color terminals
-set t_Co=256
+"""" ++++ COLORS ++++
+" Set to 256 for 256+ terms, as well as good colorscheme support
+" Set to 16 to use xresources
+set t_Co=16
 set t_ut=
-set background=dark
-let g:lightline.colorscheme = 'gruvbox'
-colorscheme gruvbox
+set background=light
+"colorscheme gruvbox
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
 " and it'll work whenever you use that colorscheme
 hi Normal guibg=NONE ctermbg=NONE
-
+hi ColorColumn ctermbg=darkgrey ctermfg=NONE guibg=red
+"""" ---- COLORS ----
