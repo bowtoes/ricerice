@@ -1,13 +1,13 @@
 *.font: Consolas:pixelsize=12:antialias=true:autohint=true
 ! For some reason, monokai.Xcolor fails to load
-*.xcolorsFile: ~/.config/xconf/xcolors/gruvboxdark.Xcolor
+*.xcolorsFile: ~/.config/xconf/xcolors/century.Xcolor
 
-*.cols: 104
-*.rows: 50
+*.cols: 80
+*.rows: 25
 
-*.alpha:         0.60
-*.alphaNoFocus:  0.50
-*.aplha2:        0.96
-*.alpha2NoFocus: 0.80
+*.alpha:         0.96
+*.alphaNoFocus:  0.80
+*.aplha2:        0.60
+*.alpha2NoFocus: 0.50
 
 *.borderpx:   0

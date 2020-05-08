@@ -5,7 +5,7 @@ alias bashp=". ~/.bash_profile"
 
 alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
 
-alias ls="ls -hCNFX --color=auto --group-directories-first --time-style=long-iso"
+alias ls="ls -CNFX --si --color=auto --group-directories-first --time-style=long-iso"
 
 alias l="ls"
 alias L="ls -1"
@@ -42,9 +42,13 @@ alias utdl="youtube-dl -ci"
 alias filecounts="itemcount -t f -e ./{.,}*"
 alias linkcounts="itemcount -t l -e ./{.,}*"
 alias dircounts="itemcount -t d -e ./{.,}*"
+alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
 alias feh="feh --zoom-fill"
 alias bandcamp="bandcamp-dl -ry"
+
+[ -n `command -v safe-rm` ] && \
+	alias rm="safe-rm"
 
 alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on --cpu_temp C --distro_shorthand of --kernel_shorthand off --uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all --de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on --shell_version on --disk_percent on --memory_percent on --os_arch on --package_managers on --speed_shorthand off --underline on --bold on --block_height 1 --block_width 2 --cpu_display infobar --memory_display infobar --battery_display infobar --disk_display infobar --bar_char '#' '-'"
 alias ftpstat="sudo systemctl status vsftpd"

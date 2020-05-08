@@ -1,0 +1,38 @@
+! My custom Xcolors palette, based on Dracula
+
+! special
+*.foreground:   #f3f3f3
+*.background:   #1a1a1a
+*.cursorColor:  #f3f3f3
+
+! black
+*.color0:       #141414
+*.color8:       #3f3f3f
+
+! red
+*.color1:       #FF406B
+*.color9:       #FF6380
+
+! green
+*.color2:       #B0F0A0
+*.color10:      #C8FFBF
+
+! yellow
+*.color3:       #ff8251
+*.color11:      #ffaa66
+
+! blue
+*.color4:       #69AADD
+*.color12:      #89DDFF
+
+! magenta
+*.color5:       #ff53b7
+*.color13:      #f07178
+
+! cyan
+*.color6:       #A880FF
+*.color14:      #C792EA
+
+! white
+*.color7:       #acacac
+*.color15:      #f3f3f3

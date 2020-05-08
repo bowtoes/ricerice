@@ -43,23 +43,24 @@ umask 0002
 
 shopt -s autocd
 
-append () {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
+append ()
+{
+	case ":$PATH:" in
+		*:"$1":*)
+			;;
+		*)
+			PATH="${PATH:+$PATH:}$1"
+	esac
 }
 
 appendrecurse ()
 {
-    rp="$(realpath "$1")"
-    if [ -d "$rp" ] ; then
-        for d in $(find -L "$rp" -type d -not -path '*.git*') ; do
-            append "$d"
-        done
-    fi
+	rp="$(realpath "$1")"
+	if [ -d "$rp" ] ; then
+		for d in $(find -L "$rp" -type d -not -path '*.git*') ; do
+			append "$d"
+		done
+	fi
 }
 
 append "$HOME/.gem/ruby/2.6.0/bin"
@@ -83,17 +84,17 @@ PS1=""
 
 path()
 {
-    if [ "$PWD" = "$HOME" ] ; then
-        printf "~"
-    else
-        P_D=`pathdepth -d "$PWD"`
-        M_D=3
-        if [ $P_D -le $M_D ] ; then
-            printf "$PWD"
-        else
-            printf ".../%s" "`echo "$PWD" | cut -d '/' -f$((P_D - M_D + 2))-`"
-        fi
-    fi
+	if [ "$PWD" = "$HOME" ] ; then
+		printf "~"
+	else
+		P_D=`pathdepth -d "$PWD"`
+		M_D=3
+		if [ $P_D -le $M_D ] ; then
+			printf "$PWD"
+		else
+			printf ".../%s" "`echo "$PWD" | cut -d '/' -f$((P_D - M_D + 2))-`"
+		fi
+	fi
 }
 
 PS1="$PS1\[\e[00;31;49m\]\u"
@@ -113,6 +114,5 @@ export LPASS_PINENTRY="pinentry-curses"
 export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-if [ -n "$(command -v dotnet)" ] ; then
-    export MSBuildSDKsPath="/usr/share/dotnet/sdk/$(dotnet --version)/Sdks"
-fi
+[ -n `command -v dotnet` ] && \
+	export MSBuildSDKsPath="/usr/share/dotnet/sdk/$(dotnet --version)/Sdks"

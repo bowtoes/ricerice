@@ -133,7 +133,8 @@
     "files.associations": {
       "*.shader": "shaderlab",
       "*.compute": "hlsl",
-      "*.hlsl": "hlsl"
+      "*.hlsl": "hlsl",
+      "*.h": "c"
     },
     "[hlsl]": {
 
@@ -153,4 +154,5 @@
     "sync.removeExtensions": false,
     "sync.quietSync": true,
     "sync.autoUpload": true,
+    "workbench.colorTheme": "Gruvbox Dark (Hard)",
 }
