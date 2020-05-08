@@ -11,7 +11,8 @@
 umask 022
 
 # Append our default paths
-append () {
+append ()
+{
     case ":$PATH:" in
         *:"$1":*)
             ;;
