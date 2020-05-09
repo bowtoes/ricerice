@@ -125,5 +125,5 @@ export LPASS_PINENTRY="pinentry-curses"
 export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
-[ -n `command -v dotnet` ] && \
+[ -n "`command -v dotnet`" ]  && \
 	export MSBuildSDKsPath="/usr/share/dotnet/sdk/$(dotnet --version)/Sdks"
