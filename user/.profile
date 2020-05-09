@@ -82,25 +82,36 @@ PS1=""
 #PS1="$PS1\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
 #PS1="$PS1\$"
 
-path()
+path ()
 {
-	if [ "$PWD" = "$HOME" ] ; then
-		printf "~"
+	case "$PWD" in
+		"$HOME"*)
+			P_D=`pathdepth -r "$HOME" -d "$PWD"`
+			;;
+		*)
+			P_D=`pathdepth -d "$PWD"`
+			;;
+	esac
+	M_D=2
+	PTH=`echo "$PWD" | sed "s~^$HOME~\~~"`
+	if [ $P_D -le $M_D ] ; then
+		printf "$PTH"
 	else
-		P_D=`pathdepth -d "$PWD"`
-		M_D=3
-		if [ $P_D -le $M_D ] ; then
-			printf "$PWD"
-		else
-			printf ".../%s" "`echo "$PWD" | cut -d '/' -f$((P_D - M_D + 2))-`"
-		fi
+		printf ".../%s" "`echo "$PTH" | cut -d '/' -f$((P_D - M_D + 2))-`"
+	fi
+}
+code ()
+{
+	A=$?
+	if [ $A -ne 0 ] ; then
+		printf "[$A]"
 	fi
 }
 
 PS1="$PS1\[\e[00;31;49m\]\u"
 PS1="$PS1\[\e[02;39;49m\]:"
-PS1="$PS1\[\e[00;01;34;49m\]\$(path)"
-PS1="$PS1\[\e[00;31;49m\]\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
+PS1="$PS1\[\e[00;32;49m\]\$(code)"
+PS1="$PS1\[\e[01;34;49m\]\$(path)"
 PS1="$PS1\[\e[00;33;49m\]\$ "
 
 PS1="$PS1\[\e[00;97;49m\]"
