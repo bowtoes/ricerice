@@ -7,16 +7,29 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'rpdelaney/vim-sourcecfg'
-"Plug 'raimondi/delimitmate'
+"Plug 'vim-scripts/TagHighlight'
+"Plug 'ludovicchabant/vim-gutentags'
+" Easytags seems to be the only plugin I've found to do what I want,
+" that being extra type highlighting (say typedefs in C) without cluttering
+" my filesystem or git projects with unnecessary tags files all over the
+" place. Though it seems to be outdated, and a patch needs to be applied for
+" it to work with Universal CTags:
+" https://github.com/xolox/vim-easytags/pull/133#issuecomment-316477649
+Plug 'xolox/vim-easytags'
+Plug 'xolox/vim-misc'
+Plug 'majutsushi/tagbar'
 Plug 'scrooloose/syntastic'
+Plug 'valloric/youcompleteme'
+Plug 'raimondi/delimitmate'
 Plug 'itchyny/lightline.vim'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'mbbill/undotree'
+Plug 'airblade/vim-gitgutter'
+Plug 'preservim/nerdtree'
+" Syntax Highlighting
+Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
 Plug 'withgod/vim-sourcepawn'
-Plug 'mbbill/undotree'
 
 " Colorschemes
 Plug 'ErichDonGubler/vim-sublime-monokai'
@@ -105,7 +118,7 @@ set number relativenumber
 set hidden
 set ttyfast
 set laststatus=2
-set showmode
+set noshowmode
 set showcmd
 set wildmode=longest,list,full
 
@@ -113,7 +126,9 @@ set backup
 set writebackup
 set undofile
 set swapfile
+set updatetime=1000
 
+set signcolumn=yes
 set colorcolumn=80
 set wrap
 set textwidth=0
@@ -123,9 +138,11 @@ set noexpandtab
 set autoindent
 set smartindent
 "set list
-set listchars=tab:\ \ →,eol:¬,space:·
+set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
+set fillchars=vert:\ ,fold:-,stl:=
 set scrolloff=3
 
+set foldmethod=syntax
 set hlsearch
 set incsearch
 set ignorecase
@@ -134,9 +151,51 @@ set showmatch
 """" ---- GENERAL CONFIG ----
 
 """" ++++ PLUGIN CONFIG ++++
+" DelimitMate
 let delimitMate_matchpairs="(:),[:],{:}"
+let delimitMate_nesting_quotes=['"', '`',"'"]
+
+" Tagbar
+let g:tagbar_autoclose = 1
+
+" Tag Highlight
+if ! exists('g:TagHighlightSettings')
+	let g:TagHighlightSettings = {}
+endif
+let g:TagHighlightSettings['DoNotGenerateTags'] = 'true'
+let g:TagHighlightSettings['TypesFileDirectory'] = "~/.cache/vim/tags"
+
+" Gutentags
+let g:gutentags_cache_dir = '~/.cache/vim/tags'
+
+" Easytags
+let g:easytags_file = '~/.cache/vim/tags/easytags'
+let g:easytags_async = 1
+let g:easytags_dynamic_files = 0
+let g:easytags_events =['BufWritePost', 'BufReadPost']
+let g:easytags_include_members = 1
+
+" Git Gutter
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_highlight_linesnrs = 0
+let g:gitgutter_sign_added              = '++'
+let g:gitgutter_sign_removed            = '--'
+let g:gitgutter_sign_modified           = '~~'
+let g:gitgutter_sign_removed_first_line = 'KK'
+let g:gitgutter_sign_modified_removed   = '~~'
+let g:gitgutter_map_keys = 0
+
+hi GitGutterAdd    ctermfg=darkblue cterm=bold
+hi GitGutterChange ctermfg=lightyellow cterm=bold
+hi GitGutterDelete ctermfg=darkmagenta cterm=bold
+hi GitGutterChangeDelete ctermfg=darkmagenta cterm=bold,underline
 
 " Syntastic
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_error_symbol = "✖"
+let g:syntastic_style_error_symbol = "S>"
+let g:syntastic_warning_symbol = ">"
+let g:syntastic_style_warning_symbol = "S>"
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
@@ -144,6 +203,25 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_mode_map = { 'mode': 'passive',
             \ 'active_filetypes': [],
             \ 'passive_filetypes': [] }
+
+hi SyntasticError            ctermbg=lightcyan
+hi SyntasticWarning          ctermbg=lightblue
+hi SyntasticStyleError       ctermbg=lightred
+hi SyntasticStyleWarning     ctermbg=lightyellow
+
+hi SyntasticErrorSign        ctermbg=darkred
+hi SyntasticWarningSign      ctermbg=darkyellow
+hi SyntasticStyleErrorSign   ctermbg=darkcyan
+hi SyntasticStyleWarningSign ctermbg=darkblue
+
+hi SyntasticErrorLine        ctermfg=darkred
+hi SyntasticWarningLine      ctermfg=darkyellow
+hi SyntasticStyleErrorLine   ctermfg=darkcyan
+hi SyntasticStyleWarningLine ctermfg=darkblue
+
+function! SyntasticCheckHook(errors)
+    call lightline#update()
+endfunction
 """" ---- PLUGIN CONFIG ----
 
 """" ++++ MAPPINGS ++++
@@ -167,9 +245,8 @@ nnoremap <C-l> >i{<CR>
 "Show charcode under cursor
 nnoremap <silent> <leader>cc :echo "Charcode:" GetCursorChar()<CR>
 " Toggle folds
-nnoremap <silent> <space>f @=(foldlevel('.')?'za':"\<space>")<CR>
-nnoremap <silent> <C-f> zM
-nnoremap <leader>F zR
+nnoremap <silent> f @=(foldlevel('.')?'za':"\<space>")<CR>
+nnoremap <silent> F @=(&foldlevel?'zM':'zR')<CR>
 "vnoremap <space><space> zf
 
 "Spellcheck toggle
@@ -237,6 +314,8 @@ nnoremap <leader>pu :PlugUpdate<CR>
 nnoremap <leader>pU :PlugUpgrade<CR>
 nnoremap <leader>ps :PlugStatus<CR>
 map      <leader>t  :NERDTreeToggle<CR>
+
+nnoremap <silent> <F8> :TagbarToggle<CR>
 """" ---- MAPPINGS ----
 
 """" ++++ COLORS ++++
@@ -249,6 +328,9 @@ set background=light
 " Add this to make transparent background
 " Add it to the bottom of the colorscheme file
 " and it'll work whenever you use that colorscheme
-hi Normal guibg=NONE ctermbg=NONE
-hi ColorColumn ctermbg=darkgrey ctermfg=NONE guibg=red
+highlight Normal guibg=NONE ctermbg=NONE
+highlight ColorColumn guibg=red ctermbg=darkgrey ctermfg=NONE
+highlight SignColumn guibg=NONE ctermbg=NONE
+highlight Comment cterm='italic'
+highlight Folded guibg=NONE ctermbg=NONE cterm='boldunderline'
 """" ---- COLORS ----
