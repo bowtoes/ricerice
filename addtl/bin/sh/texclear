@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+# also totally not thieved from Smith, Luke
+case "$1" in
+	*.tex)
+			file=`realpath "$1"`
+			dir=`dirname "$file"`
+			base=`basename "$file" .tex`
+			find "$dir" -maxdepth 1 -type f -name "$base.*" -a \
+				-not -name "$base.tex" -a -not -name "$base.log" -delete
+			find "$dir" -maxdepth 1 -type f -name ".latexrun*" -delete ;;
+	*) printf "GIB ME TEX FILE\\n" ;;
+esac
+

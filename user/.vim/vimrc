@@ -1,5 +1,6 @@
 """" TODO TODO TODO """"
 " Clean this whole thing up, reorganize, simplify, and make it more focused
+" TRIM OUT THE FAT - GlaDOS
 
 """" ++++ PLUGINS ++++
 " Install Vim-Plug if it isn't already
@@ -9,6 +10,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
+" TRIM OUT THE FAT - GlaDOS
 call plug#begin('~/.vim/plugged')
 " Easytags seems to be the only plugin I've found to do what I want,
 " that being extra type highlighting (say typedefs in C) without cluttering
@@ -27,18 +29,12 @@ Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree'
 Plug 'pseewald/vim-anyfold'
 Plug 'airblade/vim-gitgutter'
-Plug 'lervag/vimtex'
 Plug 'bronson/vim-trailing-whitespace'
 
 " Syntax Highlighting
 Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
 Plug 'withgod/vim-sourcepawn'
-
-" Colorschemes
-Plug 'ErichDonGubler/vim-sublime-monokai'
-Plug 'dracula/vim',{'as':'dracula'}
-Plug 'morhetz/gruvbox'
 call plug#end()
 """" ---- PLUGINS ----
 
@@ -47,8 +43,20 @@ function! GetCursorChar()
     return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
-function! RefreshMUPDF(status)
-    call system('pkill -s HUP mupdf')
+function! SilentExec(cmd)
+    let cmd = substitute(a:cmd, '^!', '', '')
+    let cmd = substitute(cmd, '%', shellescape(expand('%')), '')
+    call system(cmd)
+endfunction
+
+function! CompTexRefMU()
+    call SilentExec("compiler %")
+    if get(g:, 'mupdf_open', 0)
+        call SilentExec("pkill --signal HUP mupdf")
+    else
+        silent !mupdf %:r.pdf & disown
+        let g:mupdf_open = 1
+    endif
 endfunction
 
 function! EchoToggle(text, status)
@@ -60,94 +68,11 @@ function! ToggleWhitespaceFix()
 endfunction
 """" ---- FUNCTIONS ----
 
-"""" ++++ AUTOCMDS ++++
-augroup displaystuf
-    autocmd!
-    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
-
-    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-    autocmd BufRead,BufNewFile vimrc setlocal expandtab
-    autocmd BufRead,BufNewFile aliasrc,defines,defines\d set filetype=sh
-    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
-    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
-
-    "continue where you left off
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\""
-                \| endif
-augroup END
-
-augroup VCenterCursor
-  au!
-  au BufEnter,WinEnter,WinNew,VimResized *,*.*
-        \ let &scrolloff=winheight(win_getid())/2
-augroup END
-
-augroup pluginstuff
-    autocmd!
-    "activate anyfold on every file
-    autocmd Filetype * AnyFoldActivate
-    "open NERDTree automatically when vim starts up on opening a directory
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter *
-                \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-                \| exe 'NERDTree' argv()[0]
-                \| wincmd p
-                \| ene
-                \| endif
-    " Vimtex
-    autocmd BufWritePost *.tex call vimtex#compiler#compile()
-    "cleanup on quit
-    autocmd User VimtexEventQuit call vimtex#compiler#clean(0)
-augroup END
-"""" ---- AUTOCMDS ----
-
-"""" ++++ GENERAL CONFIG ++++
-syntax enable
-filetype plugin indent on
-let mapleader=' '
-set nocompatible
-set encoding=UTF-8
-set exrc
-set secure
-set number relativenumber
-set hidden
-set ttyfast
-set laststatus=2
-set noshowmode
-set showcmd
-set wildmode=longest,list,full
-
-set backup
-set writebackup
-set undofile
-set swapfile
-set updatetime=1000
-
-set signcolumn=yes
-set colorcolumn=80
-set wrap
-set textwidth=0
-set tabstop=4
-set shiftwidth=4
-set noexpandtab
-set autoindent
-set smartindent
-set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
-set fillchars=vert:\ ,fold:-,stl:=
-set scrolloff=3
-
-"don't do folds when opening a file (doesn't disable fold feature)
-set nofoldenable
-set foldmethod=syntax
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-set showmatch
-"""" ---- GENERAL CONFIG ----
-
 """" ++++ PLUGIN CONFIG ++++
+" TRIM OUT THE FAT - GlaDOS
+" FixWhitespace
+let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
+
 " DelimitMate
 let delimitMate_matchpairs="(:),[:],{:}"
 let delimitMate_nesting_quotes=['"', '`',"'"]
@@ -169,16 +94,11 @@ let g:gitgutter_sign_removed_first_line = 'KK'
 let g:gitgutter_sign_modified_removed   = '~~'
 let g:gitgutter_map_keys = 0
 
-" Vimtex
-let g:vimtex_view_method = 'mupdf'
-let g:vimtex_compiler_callback_hooks = ['RefreshMUPDF']
-
 " YCM
 let g:ycm_show_diagnostics_ui = 0
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
-let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 " Syntastic
 let g:syntastic_error_symbol = ">!"
@@ -194,6 +114,101 @@ function! SyntasticCheckHook(errors)
 endfunction
 """" ---- PLUGIN CONFIG ----
 
+"""" ++++ AUTOCMDS ++++
+
+augroup displaystuf
+    autocmd!
+    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap nospell
+
+    autocmd VimLeave *.tex !texclear %
+    autocmd BufWritePre *.tex let g:tex_modified = &modified
+    autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
+
+    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+    autocmd BufRead,BufNewFile vimrc setlocal expandtab
+    autocmd BufRead,BufNewFile aliasrc,defines* set filetype=sh
+    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
+    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
+
+    "continue where you left off
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\""
+                \| endif
+augroup END
+
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+        \ let &scrolloff=winheight(win_getid())/2
+augroup END
+
+augroup pluginstuff
+    autocmd!
+    "activate anyfold on every file
+    "autocmd Filetype * AnyFoldActivate
+    "open NERDTree automatically when vim starts up on opening a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter *
+                \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+                \| exe 'NERDTree' argv()[0]
+                \| wincmd p
+                \| ene
+                \| endif
+augroup END
+"""" ---- AUTOCMDS ----
+
+"""" ++++ GENERAL CONFIG ++++
+" TRIM OUT THE FAT - GlaDOS
+syntax enable
+filetype plugin indent on
+let mapleader=' '
+set nocompatible
+set encoding=UTF-8
+set exrc
+set secure
+set number relativenumber
+set hidden
+set ttyfast
+set laststatus=2
+set noshowmode
+set showcmd
+"commandmode autocomplete
+set wildmode=longest,list,full
+
+"do not delete backup file
+set backup
+"create a backup file
+set writebackup
+set undofile
+set swapfile
+set updatetime=1000
+
+set signcolumn=yes
+set colorcolumn=80
+set wrap
+set textwidth=0
+set tabstop=4
+set shiftwidth=4
+set noexpandtab
+set autoindent
+set smartindent
+set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
+set fillchars=vert:\ ,fold:-,stl:=
+set scrolloff=3
+
+set spell
+set spelllang=en_us
+
+"don't do folds when opening a file (doesn't disable fold feature)
+set nofoldenable
+set foldmethod=syntax
+set hlsearch
+"set incsearch
+set ignorecase
+set smartcase
+set showmatch
+"""" ---- GENERAL CONFIG ----
+
 """" ++++ MAPPINGS ++++
 noremap <right> <nop>
 noremap <left> <nop>
@@ -205,10 +220,16 @@ inoremap <left> <nop>
 inoremap <up> <down>
 inoremap <down> <up>
 
-inoremap <c-i>i <esc>
+inoremap jk <esc>
+nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
 
 set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
+
+" Navigating with guides
+inoremap <c-space> <esc>/<++><Enter>"_c4l
+vnoremap <c-space> <esc>/<++><Enter>"_c4l
+map <c-space> <esc>/<++><Enter>"_c4l
 
 "turn off search highlight until next search
 nnoremap <space>/ :nohlsearch<CR>
@@ -218,24 +239,20 @@ nnoremap <space><C-h> <i{<CR>
 nnoremap <space><C-l> >i{<CR>
 
 "folds
-nnoremap F zA
 nnoremap <space>f za
-nnoremap <space>F @=(&foldlevel?'zM':'zR')<CR>
+nnoremap <space><c-f> @=(&foldlevel?'zM':'zR')<CR>
 
 "toggles
 noremap <space>p :setlocal spell! <bar> call EchoToggle("Spellcheck", &spell)<CR>
 noremap <space>g :setlocal wrap! <bar> call EchoToggle("Linewrap", &wrap)<CR>
 noremap <space><tab> :setlocal expandtab! <bar> call EchoToggle("Expandtab", &expandtab)<CR>
-noremap <space><C-c> :set cursorline! <bar> call EchoToggle("Cursorline", &cursorline)<CR>
+noremap <space>C :set cursorline! <bar> call EchoToggle("Cursorline", &cursorline)<CR>
 noremap <space>l :set list! <bar> call EchoToggle("Whitespace", &list)<CR>
 noremap <F1> :call ToggleWhitespaceFix() <bar> call EchoToggle("Whitespace fix", get(g:, 'whitespacefix', 1))<CR>
 
-nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
-
-vnoremap <c-k> mZdkPV`Z
-nnoremap <c-j> Vdp
-vnoremap <c-j> dp
-nnoremap <c-k> VdkP
+nnoremap <c-k> ddkP
+nnoremap <c-j> ddp
+nnoremap <space>c :w! \| !compiler <c-r>%<cr><cr>
 
 nnoremap <space>n :n<CR>
 nnoremap <space>p :p<CR>
@@ -265,14 +282,16 @@ nnoremap <F8> :TagbarToggle<cr>
 """" ---- MAPPINGS ----
 
 """" ++++ COLORS ++++
-" Set to 256 for 256+ terms, as well as good colorscheme support
+" Set to 256 for 256+ terms, as well as good colorscheme support.
 " Set to 16 to use xresources
 set t_Co=16
 set t_ut=
-set background=dark
+set background=light
 "colorscheme gruvbox
 " Highlighting
 highlight Comment           cterm=italic
+highlight Search            cterm=reverse
+highlight IncSearch         cterm=reverse
 highlight Normal            ctermbg=none
 highlight SignColumn        ctermbg=none
 highlight CursorLine        ctermbg=darkgrey    cterm=none
@@ -297,10 +316,10 @@ highlight SyntasticStyleWarning ctermbg=lightyellow
 highlight SyntasticErrorSign        ctermbg=darkred
 highlight SyntasticWarningSign      ctermbg=darkyellow
 highlight SyntasticStyleErrorSign   ctermbg=darkcyan
-highlight SyntasticStyleWarningSign ctermbg=darkblue
+highlight SyntasticStyleWarningSign ctermbg=darkgrey
 
 highlight SyntasticErrorLine        ctermfg=darkred
 highlight SyntasticWarningLine      ctermfg=darkyellow
 highlight SyntasticStyleErrorLine   ctermfg=darkcyan
-highlight SyntasticStyleWarningLine ctermfg=darkblue
+"highlight SyntasticStyleWarningLine ctermfg=darkblue
 """" ---- COLORS ----
