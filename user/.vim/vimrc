@@ -1,3 +1,6 @@
+"""" TODO TODO TODO """"
+" Clean this whole thing up, reorganize, simplify, and make it more focused
+
 """" ++++ PLUGINS ++++
 " Install Vim-Plug if it isn't already
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -7,25 +10,26 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 call plug#begin('~/.vim/plugged')
-"Plug 'vim-scripts/TagHighlight'
-"Plug 'ludovicchabant/vim-gutentags'
 " Easytags seems to be the only plugin I've found to do what I want,
 " that being extra type highlighting (say typedefs in C) without cluttering
 " my filesystem or git projects with unnecessary tags files all over the
 " place. Though it seems to be outdated, and a patch needs to be applied for
 " it to work with Universal CTags:
 " https://github.com/xolox/vim-easytags/pull/133#issuecomment-316477649
+Plug 'raimondi/delimitmate'
+Plug 'scrooloose/syntastic'
+Plug 'valloric/youcompleteme'
+Plug 'preservim/nerdtree'
 Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 Plug 'majutsushi/tagbar'
-Plug 'scrooloose/syntastic'
-Plug 'valloric/youcompleteme'
-Plug 'raimondi/delimitmate'
 Plug 'itchyny/lightline.vim'
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'mbbill/undotree'
+Plug 'pseewald/vim-anyfold'
 Plug 'airblade/vim-gitgutter'
-Plug 'preservim/nerdtree'
+Plug 'lervag/vimtex'
+Plug 'bronson/vim-trailing-whitespace'
+
 " Syntax Highlighting
 Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
@@ -33,9 +37,7 @@ Plug 'withgod/vim-sourcepawn'
 
 " Colorschemes
 Plug 'ErichDonGubler/vim-sublime-monokai'
-Plug 'flazz/vim-colorschemes'
 Plug 'dracula/vim',{'as':'dracula'}
-Plug 'romainl/Apprentice',{'as':'Apprentice'}
 Plug 'morhetz/gruvbox'
 call plug#end()
 """" ---- PLUGINS ----
@@ -45,70 +47,64 @@ function! GetCursorChar()
     return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
 
-" This is all taken from the vim fandom wiki
-"
-" Return indent (all whitespace at start of a line), converted from
-" tabs to spaces if what = 1, or from spaces to tabs otherwise.
-" When converting to tabs, result has no redundant spaces.
-function! Indenting(indent, what, cols)
-    let spccol = repeat(' ', a:cols)
-    let result = substitute(a:indent, spccol, '\t', 'g')
-    let result = substitute(result, ' \+\ze\t', '', 'g')
-    if a:what == 1
-        let result = substitute(result, '\t', spccol, 'g')
-    endif
-    return result
+function! RefreshMUPDF(status)
+    call system('pkill -s HUP mupdf')
 endfunction
 
-" Convert whitespace used for indenting (before first non-whitespace).
-" what = 0 (convert spaces to tabs), or 1 (convert tabs to spaces).
-" cols = string with number of columns per tab, or empty to use 'tabstop'.
-" The cursor position is restored, but the cursor will be in a different
-" column when the number of characters in the indent of the line is changed.
-function! IndentConvert(line1, line2, what, cols)
-    let savepos = getpos('.')
-    let cols = empty(a:cols) ? &tabstop : a:cols
-    execute a:line1 . ',' . a:line2 . 's/^\s\+/\=Indenting(submatch(0), a:what, cols)/e'
-    call histdel('search', -1)
-    call setpos('.', savepos)
+function! EchoToggle(text, status)
+	echo a:text a:status ? "on" : "off"
 endfunction
-command! -nargs=? -range=% Space2Tab
-            \ call IndentConvert(<line1>,<line2>,0,<q-args>)
-command! -nargs=? -range=% Tab2Space
-            \ call IndentConvert(<line1>,<line2>,1,<q-args>)
-command! -nargs=? -range=% RetabIndent
-            \ call IndentConvert(<line1>,<line2>,&et,<q-args>)
+
+function! ToggleWhitespaceFix()
+    let g:whitespacefix = !get(g:, 'whitespacefix', 1)
+endfunction
 """" ---- FUNCTIONS ----
 
 """" ++++ AUTOCMDS ++++
-au FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
+augroup displaystuf
+    autocmd!
+    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap
 
-au BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-"au BufWritePre * RetabIndent
+    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+    autocmd BufRead,BufNewFile vimrc setlocal expandtab
+    autocmd BufRead,BufNewFile aliasrc,defines,defines\d set filetype=sh
+    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
+    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
 
-au BufWinEnter * normal zR
+    "continue where you left off
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\""
+                \| endif
+augroup END
 
-au BufRead,BufNewFile vimrc setlocal expandtab
-au BufRead,BufNewFile aliasrc,defines,defines\d set filetype=sh
-au BufRead,BufNewFile *.conf,*.cfg set filetype=conf
-au BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
+augroup VCenterCursor
+  au!
+  au BufEnter,WinEnter,WinNew,VimResized *,*.*
+        \ let &scrolloff=winheight(win_getid())/2
+augroup END
 
-au BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-    \| exe "normal! g'\""
-    \| endif
-
-" open NERDTree automatically when vim starts up on opening a directory
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter *
-            \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-            \| exe 'NERDTree' argv()[0]
-            \| wincmd p
-            \| ene
-            \| endif
+augroup pluginstuff
+    autocmd!
+    "activate anyfold on every file
+    autocmd Filetype * AnyFoldActivate
+    "open NERDTree automatically when vim starts up on opening a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter *
+                \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+                \| exe 'NERDTree' argv()[0]
+                \| wincmd p
+                \| ene
+                \| endif
+    " Vimtex
+    autocmd BufWritePost *.tex call vimtex#compiler#compile()
+    "cleanup on quit
+    autocmd User VimtexEventQuit call vimtex#compiler#clean(0)
+augroup END
 """" ---- AUTOCMDS ----
 
 """" ++++ GENERAL CONFIG ++++
 syntax enable
+filetype plugin indent on
 let mapleader=' '
 set nocompatible
 set encoding=UTF-8
@@ -137,11 +133,12 @@ set shiftwidth=4
 set noexpandtab
 set autoindent
 set smartindent
-"set list
 set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
 set fillchars=vert:\ ,fold:-,stl:=
 set scrolloff=3
 
+"don't do folds when opening a file (doesn't disable fold feature)
+set nofoldenable
 set foldmethod=syntax
 set hlsearch
 set incsearch
@@ -154,19 +151,6 @@ set showmatch
 " DelimitMate
 let delimitMate_matchpairs="(:),[:],{:}"
 let delimitMate_nesting_quotes=['"', '`',"'"]
-
-" Tagbar
-let g:tagbar_autoclose = 1
-
-" Tag Highlight
-if ! exists('g:TagHighlightSettings')
-	let g:TagHighlightSettings = {}
-endif
-let g:TagHighlightSettings['DoNotGenerateTags'] = 'true'
-let g:TagHighlightSettings['TypesFileDirectory'] = "~/.cache/vim/tags"
-
-" Gutentags
-let g:gutentags_cache_dir = '~/.cache/vim/tags'
 
 " Easytags
 let g:easytags_file = '~/.cache/vim/tags/easytags'
@@ -185,39 +169,25 @@ let g:gitgutter_sign_removed_first_line = 'KK'
 let g:gitgutter_sign_modified_removed   = '~~'
 let g:gitgutter_map_keys = 0
 
-hi GitGutterAdd    ctermfg=darkblue cterm=bold
-hi GitGutterChange ctermfg=lightyellow cterm=bold
-hi GitGutterDelete ctermfg=darkmagenta cterm=bold
-hi GitGutterChangeDelete ctermfg=darkmagenta cterm=bold,underline
+" Vimtex
+let g:vimtex_view_method = 'mupdf'
+let g:vimtex_compiler_callback_hooks = ['RefreshMUPDF']
+
+" YCM
+let g:ycm_show_diagnostics_ui = 0
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 " Syntastic
+let g:syntastic_error_symbol = ">!"
+let g:syntastic_warning_symbol = ">?"
+let g:syntastic_style_error_symbol = "s!"
+let g:syntastic_style_warning_symbol = "s?"
 let g:syntastic_aggregate_errors = 1
-let g:syntastic_error_symbol = "✖"
-let g:syntastic_style_error_symbol = "S>"
-let g:syntastic_warning_symbol = ">"
-let g:syntastic_style_warning_symbol = "S>"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-let g:syntastic_mode_map = { 'mode': 'passive',
-            \ 'active_filetypes': [],
-            \ 'passive_filetypes': [] }
-
-hi SyntasticError            ctermbg=lightcyan
-hi SyntasticWarning          ctermbg=lightblue
-hi SyntasticStyleError       ctermbg=lightred
-hi SyntasticStyleWarning     ctermbg=lightyellow
-
-hi SyntasticErrorSign        ctermbg=darkred
-hi SyntasticWarningSign      ctermbg=darkyellow
-hi SyntasticStyleErrorSign   ctermbg=darkcyan
-hi SyntasticStyleWarningSign ctermbg=darkblue
-
-hi SyntasticErrorLine        ctermfg=darkred
-hi SyntasticWarningLine      ctermfg=darkyellow
-hi SyntasticStyleErrorLine   ctermfg=darkcyan
-hi SyntasticStyleWarningLine ctermfg=darkblue
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_always_populate_loc_list = 0
 
 function! SyntasticCheckHook(errors)
     call lightline#update()
@@ -225,97 +195,73 @@ endfunction
 """" ---- PLUGIN CONFIG ----
 
 """" ++++ MAPPINGS ++++
+noremap <right> <nop>
+noremap <left> <nop>
+noremap <up> <nop>
+noremap <down> <nop>
+"double mappings because insert mode is weird
+inoremap <right> <nop>
+inoremap <left> <nop>
+inoremap <up> <down>
+inoremap <down> <up>
+
+inoremap <c-i>i <esc>
+
 set pastetoggle=<F2>
-
-nnoremap <F3> @q
-nnoremap <F4> @w
-nnoremap <F5> @e
-
 nnoremap <F2> :set invpaste paste?<CR>
-imap <F2> <C-O>:set invpaste paste?<CR>
 
-"Clear search string
-nmap <silent> <leader>/ :let @/=''<CR>
+"turn off search highlight until next search
+nnoremap <space>/ :nohlsearch<CR>
 
-"Decrease scope indent
-nnoremap <C-h> <i{<CR>
-"Increase scope indent
-nnoremap <C-l> >i{<CR>
+"indents
+nnoremap <space><C-h> <i{<CR>
+nnoremap <space><C-l> >i{<CR>
 
-"Show charcode under cursor
-nnoremap <silent> <leader>cc :echo "Charcode:" GetCursorChar()<CR>
-" Toggle folds
-nnoremap <silent> f @=(foldlevel('.')?'za':"\<space>")<CR>
-nnoremap <silent> F @=(&foldlevel?'zM':'zR')<CR>
-"vnoremap <space><space> zf
+"folds
+nnoremap F zA
+nnoremap <space>f za
+nnoremap <space>F @=(&foldlevel?'zM':'zR')<CR>
 
-"Spellcheck toggle
-nnoremap <silent> <leader>p :setlocal spell! <bar> :echo "Spellcheck" &spell ? "on" : "off"<CR>
-"Linewrap toggle
-nnoremap <silent> <leader>g :setlocal wrap! <bar> :echo "Linewrap" &wrap ? "on" : "off"<CR>
-"Toggle between inserting tabs and spaces
-nnoremap <silent> <leader><tab> :setlocal expandtab! <bar> :echo "Expandtab" &expandtab ? "on" : "off"<CR>
-"Toggle cursorline
-nnoremap <silent> <leader><C-c> :setlocal cursorline! <bar> :echo "Cursorline" &cursorline ? "on" : "off"<CR>
-" Show whitespace characters
-map <silent> <leader>l :set list! <bar> :echo "Whitepsace" &list ? "visible" : "invisible"<CR>
-"Toggle whitespace fix on file write
-nnoremap <silent> <F1> :let g:whitespacefix = !get(g:, 'whitespacefix', 1) <bar> :echo "Whitespace fix" get(g:, 'whitespacefix', 1) ? "on" : "off"<CR>
+"toggles
+noremap <space>p :setlocal spell! <bar> call EchoToggle("Spellcheck", &spell)<CR>
+noremap <space>g :setlocal wrap! <bar> call EchoToggle("Linewrap", &wrap)<CR>
+noremap <space><tab> :setlocal expandtab! <bar> call EchoToggle("Expandtab", &expandtab)<CR>
+noremap <space><C-c> :set cursorline! <bar> call EchoToggle("Cursorline", &cursorline)<CR>
+noremap <space>l :set list! <bar> call EchoToggle("Whitespace", &list)<CR>
+noremap <F1> :call ToggleWhitespaceFix() <bar> call EchoToggle("Whitespace fix", get(g:, 'whitespacefix', 1))<CR>
 
-nnoremap <silent> U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
+nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
 
-"Move line up
-nnoremap <C-k> VdkP
-"Move line down
-nnoremap <C-j> Vdp
+vnoremap <c-k> mZdkPV`Z
+nnoremap <c-j> Vdp
+vnoremap <c-j> dp
+nnoremap <c-k> VdkP
 
-nnoremap <leader>n :n<CR>
-nnoremap <leader>p :p<CR>
+nnoremap <space>n :n<CR>
+nnoremap <space>p :p<CR>
 
 "Copy line below
-nnoremap <C-c> mZVyp`Zj
-"Delete line
-nnoremap <C-d> mZVd`Z
-"Copy in insert mode
-inoremap <C-c> <esc>mZVyp`Z<right>i
-"Delete in insert mode
-inoremap <C-d> <esc>Vdi
+nnoremap <c-c> mZVyp`Zj
+inoremap <c-c> <esc>mZVyp`Zjli
+inoremap <c-d> <esc>Vdi
 
-"Toggle Hexmode
-nnoremap <leader>H :Hexmode<CR>
-
-nnoremap <leader>w :w<CR>
-nnoremap <leader>W :w!<CR>
-nnoremap <leader>q :q<CR>
-nnoremap <leader>Q :q!<CR>
-nnoremap <leader>e :e<CR>
-nnoremap <leader>E :e!<CR>
-nnoremap <leader><C-e> :E<CR>
-nnoremap Q :q!<CR>
-
-" Tabs
-nnoremap <silent> <leader><C-Right> :tabnext<CR>
-nnoremap <silent> <leader><C-Left>  :tabprevious<CR>
-nnoremap <silent> <leader><C-w>     :tabclose<CR>
-
-" Splits
-nnoremap <silent> <leader><C-L> <C-W>l
-nnoremap <silent> <leader><C-H> <C-W>h
-nnoremap <silent> <leader><C-K> <C-W>k
-nnoremap <silent> <leader><C-J> <C-W>j
-
-nnoremap <leader>T :hi Normal guibg=NONE ctermbg=NONE<CR>
-nnoremap <leader>Y :hi Normal guibg=gruvbox ctermbg=235<CR>
+nnoremap <space>w :w<CR>
+nnoremap <space>W :w!<CR>
+nnoremap <space>q :q<CR>
+nnoremap <space>Q :q!<CR>
+nnoremap <space>e :e<CR>
+nnoremap <space>E :e!<CR>
+nnoremap <space><C-e> :E<CR>
 
 " Plugin binds
-nnoremap <leader>pi :PlugInstall<CR>
-nnoremap <leader>pc :PlugClean<CR>
-nnoremap <leader>pu :PlugUpdate<CR>
-nnoremap <leader>pU :PlugUpgrade<CR>
-nnoremap <leader>ps :PlugStatus<CR>
-map      <leader>t  :NERDTreeToggle<CR>
+nnoremap <space>t :NERDTreeToggle<cr>
+nnoremap <space>pi :PlugInstall<cr>
+nnoremap <space>pc :PlugClean<cr>
+nnoremap <space>pu :PlugUpdate<cr>
+nnoremap <space>pU :PlugUpgrade<cr>
+nnoremap <space>ps :PlugStatus<cr>
 
-nnoremap <silent> <F8> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<cr>
 """" ---- MAPPINGS ----
 
 """" ++++ COLORS ++++
@@ -323,14 +269,38 @@ nnoremap <silent> <F8> :TagbarToggle<CR>
 " Set to 16 to use xresources
 set t_Co=16
 set t_ut=
-set background=light
+set background=dark
 "colorscheme gruvbox
-" Add this to make transparent background
-" Add it to the bottom of the colorscheme file
-" and it'll work whenever you use that colorscheme
-highlight Normal guibg=NONE ctermbg=NONE
-highlight ColorColumn guibg=red ctermbg=darkgrey ctermfg=NONE
-highlight SignColumn guibg=NONE ctermbg=NONE
-highlight Comment cterm='italic'
-highlight Folded guibg=NONE ctermbg=NONE cterm='boldunderline'
+" Highlighting
+highlight Comment           cterm=italic
+highlight Normal            ctermbg=none
+highlight SignColumn        ctermbg=none
+highlight CursorLine        ctermbg=darkgrey    cterm=none
+highlight CursorColumn      ctermbg=darkgrey    cterm=none
+highlight ColorColumn       ctermbg=darkgrey    ctermfg=none
+highlight Folded            ctermbg=darkgrey    ctermfg=lightgreen  cterm='bold'
+highlight Pmenu             ctermbg=darkgrey    ctermfg=white       cterm=bold
+highlight PmenuSel          ctermbg=darkyellow  ctermfg=white       cterm=bold
+
+" Git Gutter
+highlight GitGutterAdd          ctermfg=darkblue    cterm=bold
+highlight GitGutterChange       ctermfg=lightyellow cterm=bold
+highlight GitGutterDelete       ctermfg=darkmagenta cterm=bold
+highlight GitGutterChangeDelete ctermfg=darkmagenta cterm=bold,underline
+
+" Syntastic
+highlight SyntasticError        ctermbg=lightcyan
+highlight SyntasticWarning      ctermbg=lightblue
+highlight SyntasticStyleError   ctermbg=lightred
+highlight SyntasticStyleWarning ctermbg=lightyellow
+
+highlight SyntasticErrorSign        ctermbg=darkred
+highlight SyntasticWarningSign      ctermbg=darkyellow
+highlight SyntasticStyleErrorSign   ctermbg=darkcyan
+highlight SyntasticStyleWarningSign ctermbg=darkblue
+
+highlight SyntasticErrorLine        ctermfg=darkred
+highlight SyntasticWarningLine      ctermfg=darkyellow
+highlight SyntasticStyleErrorLine   ctermfg=darkcyan
+highlight SyntasticStyleWarningLine ctermfg=darkblue
 """" ---- COLORS ----
