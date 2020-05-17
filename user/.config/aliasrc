@@ -39,6 +39,8 @@ alias df="df --si"
 alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 alias utdl="youtube-dl -ci"
 
+alias vfc="vim ~/.vim/vimrc"
+
 alias filecounts="itemcount -t f -e ./{.,}*"
 alias linkcounts="itemcount -t l -e ./{.,}*"
 alias dircounts="itemcount -t d -e ./{.,}*"
