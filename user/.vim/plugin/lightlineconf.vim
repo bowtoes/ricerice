@@ -1,5 +1,5 @@
 let g:lightline = {}
-let g:lightline.enable = { 'statusline': 1, 'tabline': 1 }
+let g:lightline.enable = { 'statusline': 1, 'tabline': 0 }
 let g:lightline.separator = { 'left': '', 'right': '' }
 let g:lightline.subseparator = { 'left': '|', 'right': '|' }
 let g:lightline.tabline_separator = g:lightline.separator

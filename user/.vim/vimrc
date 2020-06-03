@@ -1,5 +1,6 @@
 """" TODO TODO TODO """"
 " Clean this whole thing up, reorganize, simplify, and make it more focused
+" This is really slow
 " TRIM OUT THE FAT - GlaDOS
 
 """" ++++ PLUGINS ++++
@@ -18,7 +19,7 @@ call plug#begin('~/.vim/plugged')
 " place. Though it seems to be outdated, and a patch needs to be applied for
 " it to work with Universal CTags:
 " https://github.com/xolox/vim-easytags/pull/133#issuecomment-316477649
-Plug 'raimondi/delimitmate'
+Plug 'scrooloose/nerdcommenter' " I despise vimscript with a passion
 Plug 'scrooloose/syntastic'
 Plug 'valloric/youcompleteme'
 Plug 'preservim/nerdtree'
@@ -30,6 +31,7 @@ Plug 'mbbill/undotree'
 Plug 'pseewald/vim-anyfold'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'lervag/vimtex'
 
 " Syntax Highlighting
 Plug 'rpdelaney/vim-sourcecfg'
@@ -54,8 +56,11 @@ function! CompTexRefMU()
     if get(g:, 'mupdf_open', 0)
         call SilentExec("pkill --signal HUP mupdf")
     else
-        silent !mupdf %:r.pdf & disown
-        let g:mupdf_open = 1
+        let l:pdff = expand('%:r').'.pdf'
+        if filereadable(l:pdff)
+            silent !mupdf %:r.pdf & disown
+            let g:mupdf_open = 1
+        endif
     endif
 endfunction
 
@@ -72,10 +77,6 @@ endfunction
 " TRIM OUT THE FAT - GlaDOS
 " FixWhitespace
 let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
-
-" DelimitMate
-let delimitMate_matchpairs="(:),[:],{:}"
-let delimitMate_nesting_quotes=['"', '`',"'"]
 
 " Easytags
 let g:easytags_file = '~/.cache/vim/tags/easytags'
@@ -94,11 +95,15 @@ let g:gitgutter_sign_removed_first_line = 'KK'
 let g:gitgutter_sign_modified_removed   = '~~'
 let g:gitgutter_map_keys = 0
 
+" Vimtex
+let g:vimtex_compiler_enabled = 0
+
 " YCM
 let g:ycm_show_diagnostics_ui = 0
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
+let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
 
 " Syntastic
 let g:syntastic_error_symbol = ">!"
@@ -108,6 +113,7 @@ let g:syntastic_style_warning_symbol = "s?"
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 2
 let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_ignore_files = ['\m\c.tex$']
 
 function! SyntasticCheckHook(errors)
     call lightline#update()
@@ -118,8 +124,9 @@ endfunction
 
 augroup displaystuf
     autocmd!
-    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc setlocal nowrap nospell
+    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc,tex setlocal nowrap nospell
 
+    autocmd FileType tex let g:tex_no_error=1
     autocmd VimLeave *.tex !texclear %
     autocmd BufWritePre *.tex let g:tex_modified = &modified
     autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
@@ -194,34 +201,34 @@ set autoindent
 set smartindent
 set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
 set fillchars=vert:\ ,fold:-,stl:=
-set scrolloff=3
 
-set spell
-set spelllang=en_us
+set scrolloff=3
 
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
 set foldmethod=syntax
 set hlsearch
-"set incsearch
+set incsearch
 set ignorecase
 set smartcase
 set showmatch
 """" ---- GENERAL CONFIG ----
 
 """" ++++ MAPPINGS ++++
-noremap <right> <nop>
-noremap <left> <nop>
-noremap <up> <nop>
-noremap <down> <nop>
-"double mappings because insert mode is weird
-inoremap <right> <nop>
-inoremap <left> <nop>
-inoremap <up> <down>
-inoremap <down> <up>
-
 inoremap jk <esc>
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
+"print token type
+nnoremap <silent> <space>s :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
+
+nnoremap <space>w :w<cr>
+nnoremap <space>W :w!<cr>
+nnoremap <space>q :q<cr>
+nnoremap <space>Q :q!<cr>
+nnoremap Q :echo "It's '\<space\>Q' milord!"<cr>
+nnoremap <space>e :e<cr>
+nnoremap <space>E :e!<cr>
+nnoremap <space><C-e> :E<cr>
+nnoremap <space><space>q :wq<cr>
 
 set pastetoggle=<F2>
 nnoremap <F2> :set invpaste paste?<CR>
@@ -229,46 +236,51 @@ nnoremap <F2> :set invpaste paste?<CR>
 " Navigating with guides
 inoremap <c-space> <esc>/<++><Enter>"_c4l
 vnoremap <c-space> <esc>/<++><Enter>"_c4l
-map <c-space> <esc>/<++><Enter>"_c4l
+noremap <c-space> <esc>/<++><Enter>"_c4l
 
 "turn off search highlight until next search
 nnoremap <space>/ :nohlsearch<CR>
 
-"indents
-nnoremap <space><C-h> <i{<CR>
-nnoremap <space><C-l> >i{<CR>
-
 "folds
-nnoremap <space>f za
-nnoremap <space><c-f> @=(&foldlevel?'zM':'zR')<CR>
+nnoremap fa za
+nnoremap fA zA
+nnoremap tf @=(&foldlevel?'zM':'zR')<CR>
+
+" SNIPPETS
+inoremap {<cr> <cr>{<cr><bs>}<esc>O
+inoremap <cr>{<cr> <cr>{<cr><bs>}<esc>O
+inoremap {}<cr> {<cr><bs>}<esc>O
+inoremap ;ST START_TEST()<esc>mzo{<cr><++><cr>}<cr>END_TEST<esc>`zi
 
 "toggles
 noremap <space>p :setlocal spell! <bar> call EchoToggle("Spellcheck", &spell)<CR>
 noremap <space>g :setlocal wrap! <bar> call EchoToggle("Linewrap", &wrap)<CR>
 noremap <space><tab> :setlocal expandtab! <bar> call EchoToggle("Expandtab", &expandtab)<CR>
 noremap <space>C :set cursorline! <bar> call EchoToggle("Cursorline", &cursorline)<CR>
-noremap <space>l :set list! <bar> call EchoToggle("Whitespace", &list)<CR>
+noremap <space>i :set list! <bar> call EchoToggle("Whitespace", &list)<CR>
 noremap <F1> :call ToggleWhitespaceFix() <bar> call EchoToggle("Whitespace fix", get(g:, 'whitespacefix', 1))<CR>
 
-nnoremap <c-k> ddkP
-nnoremap <c-j> ddp
-nnoremap <space>c :w! \| !compiler <c-r>%<cr><cr>
-
-nnoremap <space>n :n<CR>
-nnoremap <space>p :p<CR>
-
-"Copy line below
-nnoremap <c-c> mZVyp`Zj
-inoremap <c-c> <esc>mZVyp`Zjli
+" Line manipulation
+"move lines
+nnoremap <c-j> mZddp`Zj
+nnoremap <c-k> mZddkP`Z2k
+nnoremap <c-c> mZyyp`Zj
+inoremap <c-c> <esc>mZyyp`Zjli
 inoremap <c-d> <esc>Vdi
+"indents
+nnoremap <c-h> <i{<CR>
+nnoremap <c-l> >i{<CR>
 
-nnoremap <space>w :w<CR>
-nnoremap <space>W :w!<CR>
-nnoremap <space>q :q<CR>
-nnoremap <space>Q :q!<CR>
-nnoremap <space>e :e<CR>
-nnoremap <space>E :e!<CR>
-nnoremap <space><C-e> :E<CR>
+"split nav
+nnoremap <space>h <c-w>h
+nnoremap <space>j <c-w>j
+nnoremap <space>k <c-w>k
+nnoremap <space>l <c-w>l
+nnoremap <space>H <c-w><
+nnoremap <space>L <c-w>>
+
+noremap <F10> gt
+noremap <F9> gT
 
 " Plugin binds
 nnoremap <space>t :NERDTreeToggle<cr>
@@ -297,9 +309,16 @@ highlight SignColumn        ctermbg=none
 highlight CursorLine        ctermbg=darkgrey    cterm=none
 highlight CursorColumn      ctermbg=darkgrey    cterm=none
 highlight ColorColumn       ctermbg=darkgrey    ctermfg=none
-highlight Folded            ctermbg=darkgrey    ctermfg=lightgreen  cterm='bold'
+highlight Folded            ctermbg=none        ctermfg=darkblue    cterm=italic
 highlight Pmenu             ctermbg=darkgrey    ctermfg=white       cterm=bold
 highlight PmenuSel          ctermbg=darkyellow  ctermfg=white       cterm=bold
+highlight LineNrAbove       ctermbg=none        ctermfg=grey
+highlight LineNr            ctermbg=none        ctermfg=magenta     cterm=bolditalic
+highlight LineNrBelow       ctermbg=none        ctermfg=grey
+highlight MatchParen        ctermbg=yellow      ctermfg=black
+highlight TabLineFill       ctermbg=white       ctermfg=black
+highlight TabLineSel        ctermbg=green       ctermfg=black
+highlight TabLine           ctermbg=gray        ctermfg=black
 
 " Git Gutter
 highlight GitGutterAdd          ctermfg=darkblue    cterm=bold
