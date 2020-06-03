@@ -100,7 +100,7 @@ path ()
 		printf ".../%s" "`echo "$PTH" | cut -d '/' -f$((P_D - M_D + 2))-`"
 	fi
 }
-code ()
+errorcode ()
 {
 	A=$?
 	if [ $A -ne 0 ] ; then
@@ -110,7 +110,7 @@ code ()
 
 PS1="$PS1\[\e[00;31;49m\]\u"
 PS1="$PS1\[\e[02;39;49m\]:"
-PS1="$PS1\[\e[00;32;49m\]\$(code)"
+PS1="$PS1\[\e[00;32;49m\]\$(errorcode)"
 PS1="$PS1\[\e[01;34;49m\]\$(path)"
 PS1="$PS1\[\e[00;33;49m\]\$ "
 

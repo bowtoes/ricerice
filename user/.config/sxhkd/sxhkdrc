@@ -34,7 +34,7 @@ super + ctrl + e
 
 # Function keys
 super + F1
-    DUcksearch
+    ducksearch
 super + F2
     dmenuprompt "Shutdown dwm?" "killall dwm"
 super + F3
