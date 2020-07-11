@@ -51,6 +51,7 @@ alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
 [ -n `command -v safe-rm` ] && alias rm="safe-rm"
 
+alias pacgraph="pacgraph -b black -l cyan -t brightgreen -d red -p 12 60"
 alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
 	--cpu_temp C --distro_shorthand of --kernel_shorthand off \
 	--uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all \
