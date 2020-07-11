@@ -5,8 +5,8 @@
 *.cols: 80
 *.rows: 25
 
-*.alpha:         0.96
-*.alphaNoFocus:  0.80
+*.alpha:         0.80
+*.alphaNoFocus:  0.85
 *.aplha2:        0.60
 *.alpha2NoFocus: 0.50
 

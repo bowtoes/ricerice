@@ -34,6 +34,7 @@ Plug 'bronson/vim-trailing-whitespace'
 Plug 'lervag/vimtex'
 
 " Syntax Highlighting
+Plug 'gisphm/vim-gitignore'
 Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
 Plug 'withgod/vim-sourcepawn'
@@ -100,10 +101,13 @@ let g:vimtex_compiler_enabled = 0
 
 " YCM
 let g:ycm_show_diagnostics_ui = 0
+let g:ycm_open_loclist_on_ycm_diags = 0
+let g:ycm_confirm_extra_conf = 0
 if !exists('g:ycm_semantic_triggers')
     let g:ycm_semantic_triggers = {}
 endif
 let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
+set completeopt-=preview
 
 " Syntastic
 let g:syntastic_error_symbol = ">!"
@@ -114,6 +118,7 @@ let g:syntastic_aggregate_errors = 1
 let g:syntastic_auto_loc_list = 2
 let g:syntastic_always_populate_loc_list = 0
 let g:syntastic_ignore_files = ['\m\c.tex$']
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
 
 function! SyntasticCheckHook(errors)
     call lightline#update()
@@ -135,6 +140,7 @@ augroup displaystuf
     autocmd BufRead,BufNewFile vimrc setlocal expandtab
     autocmd BufRead,BufNewFile aliasrc,defines* set filetype=sh
     autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
+    autocmd BufRead fonts.conf set ft=html
     autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
 
     "continue where you left off
@@ -241,16 +247,22 @@ noremap <c-space> <esc>/<++><Enter>"_c4l
 "turn off search highlight until next search
 nnoremap <space>/ :nohlsearch<CR>
 
+nnoremap silent <space>n :next<cr>
+nnoremap silent <space>p :previous<cr>
+
 "folds
 nnoremap fa za
 nnoremap fA zA
 nnoremap tf @=(&foldlevel?'zM':'zR')<CR>
 
-" SNIPPETS
-inoremap {<cr> <cr>{<cr><bs>}<esc>O
-inoremap <cr>{<cr> <cr>{<cr><bs>}<esc>O
-inoremap {}<cr> {<cr><bs>}<esc>O
+" :: SNIPPETS ::
+inoremap {<cr> {<cr><bs>}<esc>O
+"check.h START_TEST/END_TEST block
 inoremap ;ST START_TEST()<esc>mzo{<cr><++><cr>}<cr>END_TEST<esc>`zi
+"function template
+inoremap ;FC <cr><cr><++>(<++>)<cr>{<cr><++><cr>}<esc>4ki
+"header guard
+inoremap ;HG _<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yo#define <esc>""po<cr><cr>#endif /* <esc>""pA */<esc>kk
 
 "toggles
 noremap <space>p :setlocal spell! <bar> call EchoToggle("Spellcheck", &spell)<CR>
@@ -277,10 +289,12 @@ nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
 nnoremap <space>H <c-w><
+nnoremap <space>J <c-w>+
+nnoremap <space>K <c-w>-
 nnoremap <space>L <c-w>>
 
-noremap <F10> gt
-noremap <F9> gT
+noremap <space>[ gT
+noremap <space>] gt
 
 " Plugin binds
 nnoremap <space>t :NERDTreeToggle<cr>
@@ -319,6 +333,12 @@ highlight MatchParen        ctermbg=yellow      ctermfg=black
 highlight TabLineFill       ctermbg=white       ctermfg=black
 highlight TabLineSel        ctermbg=green       ctermfg=black
 highlight TabLine           ctermbg=gray        ctermfg=black
+highlight Todo              ctermbg=none        ctermfg=green       cterm=bolditalic
+
+" Easytags
+highlight cTypeTag      ctermfg=lightyellow
+highlight cFunctionTag  ctermfg=yellow
+highlight cMemberTag    ctermfg=darkyellow
 
 " Git Gutter
 highlight GitGutterAdd          ctermfg=darkblue    cterm=bold

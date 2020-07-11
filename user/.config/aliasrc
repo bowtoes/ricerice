@@ -1,43 +1,46 @@
 alias claer="clear"
 alias caler="clear"
 alias celar="clear"
+alias clera="clear"
+alias clare="clear"
 alias bashp=". ~/.bash_profile"
+
+alias cd..="cd .."
 
 alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
 
+# It should be noted that 'ls -s' prints, at least on my system, the
+# logical size/allocated space, whereas the size shown by 'ls -l' is the actual
+# physical size taken up on disk.
 alias ls="ls -CNFX --si --color=auto --group-directories-first --time-style=long-iso"
 
 alias l="ls"
 alias L="ls -1"
 
-alias la="ls -As"
-alias lt="ls -t"
-alias ll="ls -lAs"
-
 alias Ls="ls -1"
-alias La="la -1"
-alias Lt="ls -tl"
-alias Ll="ll -1"
+alias lS="ls -s"
+alias LS="ls -1s"
 
-alias lS="ls -S"
-alias lA="ls -AS"
-alias lL="ls -lAS"
+alias la="ls -A"
+alias La="ls -1A"
+alias lA="ls -sA"
+alias LA="ls -1sA"
 
-alias LS="lS -l"
-alias LA="lA -l"
-alias LL="lL -l"
+alias ll="ls -ls"
+alias LL="ls -lAs"
 
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
-alias hibernate="date ; systemctl hibernate"
 
-alias feh="feh --force-aliasing --keep-zoom-vp"
+alias feh="feh --force-aliasing --keep-zoom-vp --zoom-fill"
 alias tmux="tmux -2"
 alias patch="patch -b"
 alias ka="killall"
 alias du="du -cs --si"
 alias df="df --si"
 alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
+
 alias utdl="youtube-dl -ci"
+alias bandcamp="bandcamp-dl -ry"
 
 alias vfc="vim ~/.vim/vimrc"
 
@@ -46,11 +49,15 @@ alias linkcounts="itemcount -t l -e ./{.,}*"
 alias dircounts="itemcount -t d -e ./{.,}*"
 alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
-alias feh="feh --zoom-fill"
-alias bandcamp="bandcamp-dl -ry"
+[ -n `command -v safe-rm` ] && alias rm="safe-rm"
 
-[ -n `command -v safe-rm` ] && \
-	alias rm="safe-rm"
-
-alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on --cpu_temp C --distro_shorthand of --kernel_shorthand off --uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all --de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on --shell_version on --disk_percent on --memory_percent on --os_arch on --package_managers on --speed_shorthand off --underline on --bold on --block_height 1 --block_width 2 --cpu_display infobar --memory_display infobar --battery_display infobar --disk_display infobar --bar_char '#' '-'"
+alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
+	--cpu_temp C --distro_shorthand of --kernel_shorthand off \
+	--uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all \
+	--de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on \
+	--shell_version on --disk_percent on --memory_percent on --os_arch on \
+	--package_managers on --speed_shorthand off --underline on --bold on \
+	--block_height 1 --block_width 2 --cpu_display infobar \
+	--memory_display infobar --battery_display infobar --disk_display infobar \
+	--bar_char '#' '-'"
 alias ftpstat="sudo systemctl status vsftpd"
