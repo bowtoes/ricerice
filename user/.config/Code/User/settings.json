@@ -15,7 +15,7 @@
         "document",
         "containers"
       ],
-      "gitlens.heatmap.toggleMode": "window",
+    "gitlens.heatmap.toggleMode": "window",
     "gitlens.recentChanges.toggleMode": "window",
     "gitlens.recentChanges.highlight.locations": [
       "gutter",
@@ -29,7 +29,7 @@
     "editor.minimap.maxColumn": 60,
     "files.trimTrailingWhitespace": true,
     "C_Cpp.intelliSenseEngine": "Tag Parser",
-    "breadcrumbs.enabled": false,
+    "breadcrumbs.enabled": true,
     "window.menuBarVisibility": "default",
     "window.zoomLevel": -1,
     "workbench.editor.showTabs": false,
@@ -154,7 +154,6 @@
     "sync.removeExtensions": false,
     "sync.quietSync": true,
     "sync.autoUpload": true,
-    "workbench.colorTheme": "Sublime Monokai",
     "latex-workshop.message.update.show": false,
     "latex-workshop.view.pdf.viewer": "tab",
     "latex-workshop.chktex.delay": 250,
@@ -170,4 +169,5 @@
     "latex-workshop.synctex.synctexjs.enabled": false,
     "latex-workshop.view.pdf.backgroundColor": "#000",
     "latex-workshop.view.pdf.zoom": "page-actual",
+    "workbench.colorTheme": "Century Colors",
 }

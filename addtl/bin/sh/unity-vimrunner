@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ ! -z `vim --serverlist | grep Unity3D` ] ; then
+	vim --servername Unity3D --remote-silent "$@"
+else
+	st -e vim --servername Unity3D --remote-silent "$@"
+fi

@@ -12,28 +12,60 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 " TRIM OUT THE FAT - GlaDOS
-call plug#begin('~/.vim/plugged')
 " Easytags seems to be the only plugin I've found to do what I want,
 " that being extra type highlighting (say typedefs in C) without cluttering
 " my filesystem or git projects with unnecessary tags files all over the
 " place. Though it seems to be outdated, and a patch needs to be applied for
 " it to work with Universal CTags:
 " https://github.com/xolox/vim-easytags/pull/133#issuecomment-316477649
-Plug 'scrooloose/nerdcommenter' " I despise vimscript with a passion
-Plug 'scrooloose/syntastic'
-Plug 'valloric/youcompleteme'
-Plug 'preservim/nerdtree'
+call plug#begin('~/.vim/plugged')
+" TAGS
 Plug 'xolox/vim-easytags'
+" Required for vim-easytags
 Plug 'xolox/vim-misc'
 Plug 'majutsushi/tagbar'
+" MISC VISUAL
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree'
 Plug 'pseewald/vim-anyfold'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
+Plug 'preservim/nerdtree'
+Plug 'dsimidzija/vim-nerdtree-ignore'
+" SYNTAX ENGINES
+"SO FAR i've gotten this setup to work, with ALE and Deoplete working
+"together to do autocompletion and YCM to handle information popups. However,
+"ALE keeps throwing errors when I'm working on a C# project. Even though
+"completion works (which isn't YCM's doing), it still fails to find
+"namespaces and the like. I have no idea what's wrong here.
+
+"I believe it is possible to get deoplete to show function signatures in a
+"balloon, similar to YCM but I've yet to figure it out. For now, I'll just not
+"worry about it. I'd REALLY like to get rid of youcompleteme if it can be
+"replaced.
+" Deoplete
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+
+Plug 'dense-analysis/ale'
+Plug 'omnisharp/omnisharp-vim'
 Plug 'lervag/vimtex'
 
-" Syntax Highlighting
+"Plug 'scrooloose/syntastic'
+"I would REALLY like to use ALE+Deoplete to do autocompletion ONLY and let YCM
+"handle info popups exclusively, but when I try to use ALE for C# projects
+"(Unity specfically) it can't reference external libraries? It fails to find
+"references and namespaces for some reason. Also, I haven't figured out how to
+"configure YCM to do only popups and ALE+Deoplete to only do autocompletion.
+"Plug 'valloric/youcompleteme'
+"Plug 'shougo/echodoc'
+
+" SYNTAX HIGHLIGHTING
 Plug 'gisphm/vim-gitignore'
 Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
@@ -76,6 +108,65 @@ endfunction
 
 """" ++++ PLUGIN CONFIG ++++
 " TRIM OUT THE FAT - GlaDOS
+" Omnisharp
+let g:OmniSharp_start_server = 1
+let g:OmniSharp_stop_server  = 1
+let g:OmniSharp_host="http://localhost:20001"
+
+" Deoplete
+set completeopt-=preview
+let g:deoplete#enable_at_startup = 1
+call deoplete#custom#option('sources',
+\{
+\   '_': ['ale'],
+\})
+"from doc
+call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+
+" ALE
+let g:ale_sign_error = '>!'
+let g:ale_sign_warning = '>?'
+let g:ale_sign_style_error = 's!'
+let g:ale_sign_style_warning = 's?'
+let g:ale_set_balloons = 1
+
+" echodoc
+"let g:echodoc#type = 'signature'
+
+" YCM
+"let g:ycm_auto_trigger = 0
+"let g:ycm_min_num_of_chars_for_completion = 999
+"let g:ycm_show_diagnostics_ui = 0
+"let g:ycm_open_loclist_on_ycm_diags = 0
+"let g:ycm_confirm_extra_conf = 0
+"if !exists('g:ycm_semantic_triggers')
+"    let g:ycm_semantic_triggers = {
+"    \   'tex': [ g:vimtex#re#youcompleteme ],
+"    \ }
+"endif
+"let g:ycm_auto_start_csharp_server = 1
+"let g:ycm_auto_stop_csharp_server = 1
+"let g:ycm_csharp_server_port = 20001
+
+" Syntastic
+"let g:syntastic_error_symbol = ">!"
+"let g:syntastic_warning_symbol = ">?"
+"let g:syntastic_style_error_symbol = "s!"
+"let g:syntastic_style_warning_symbol = "s?"
+"let g:syntastic_aggregate_errors = 1
+"let g:syntastic_auto_loc_list = 2
+"let g:syntastic_always_populate_loc_list = 0
+"let g:syntastic_ignore_files = ['\m\c.tex$']
+"let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+"let g:syntastic_cs_checkers = ['code_checker']
+"
+"function! SyntasticCheckHook(errors)
+"    call lightline#update()
+"endfunction
+
+" Vimtex
+let g:vimtex_compiler_enabled = 0
+
 " FixWhitespace
 let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
 
@@ -95,34 +186,6 @@ let g:gitgutter_sign_modified           = '~~'
 let g:gitgutter_sign_removed_first_line = 'KK'
 let g:gitgutter_sign_modified_removed   = '~~'
 let g:gitgutter_map_keys = 0
-
-" Vimtex
-let g:vimtex_compiler_enabled = 0
-
-" YCM
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_open_loclist_on_ycm_diags = 0
-let g:ycm_confirm_extra_conf = 0
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex=g:vimtex#re#youcompleteme
-set completeopt-=preview
-
-" Syntastic
-let g:syntastic_error_symbol = ">!"
-let g:syntastic_warning_symbol = ">?"
-let g:syntastic_style_error_symbol = "s!"
-let g:syntastic_style_warning_symbol = "s?"
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_ignore_files = ['\m\c.tex$']
-let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
-
-function! SyntasticCheckHook(errors)
-    call lightline#update()
-endfunction
 """" ---- PLUGIN CONFIG ----
 
 """" ++++ AUTOCMDS ++++
@@ -209,6 +272,9 @@ set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
 set fillchars=vert:\ ,fold:-,stl:=
 
 set scrolloff=3
+"Disable Deoplete completion messages
+"A: You can disable the messages through the 'shortmess' option. >
+set shortmess+=c
 
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
@@ -225,6 +291,7 @@ inoremap jk <esc>
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
 "print token type
 nnoremap <silent> <space>s :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
+nnoremap <silent> <space>. :source $MYVIMRC<cr>
 
 nnoremap <space>w :w<cr>
 nnoremap <space>W :w!<cr>
@@ -256,7 +323,7 @@ nnoremap fA zA
 nnoremap tf @=(&foldlevel?'zM':'zR')<CR>
 
 " :: SNIPPETS ::
-inoremap {<cr> {<cr><bs>}<esc>O
+au! BufRead *.c,*.cs,*.cpp,*.cc inoremap {<cr> {<cr><bs>}<esc>O
 "check.h START_TEST/END_TEST block
 inoremap ;ST START_TEST()<esc>mzo{<cr><++><cr>}<cr>END_TEST<esc>`zi
 "function template
@@ -304,6 +371,8 @@ nnoremap <space>pu :PlugUpdate<cr>
 nnoremap <space>pU :PlugUpgrade<cr>
 nnoremap <space>ps :PlugStatus<cr>
 
+nnoremap <space>P :OmniSharpHighlightEcho<cr>
+
 nnoremap <F8> :TagbarToggle<cr>
 """" ---- MAPPINGS ----
 
@@ -315,25 +384,25 @@ set t_ut=
 set background=light
 "colorscheme gruvbox
 " Highlighting
-highlight Comment           cterm=italic
-highlight Search            cterm=reverse
-highlight IncSearch         cterm=reverse
-highlight Normal            ctermbg=none
-highlight SignColumn        ctermbg=none
-highlight CursorLine        ctermbg=darkgrey    cterm=none
-highlight CursorColumn      ctermbg=darkgrey    cterm=none
-highlight ColorColumn       ctermbg=darkgrey    ctermfg=none
-highlight Folded            ctermbg=none        ctermfg=darkblue    cterm=italic
-highlight Pmenu             ctermbg=darkgrey    ctermfg=white       cterm=bold
-highlight PmenuSel          ctermbg=darkyellow  ctermfg=white       cterm=bold
-highlight LineNrAbove       ctermbg=none        ctermfg=grey
-highlight LineNr            ctermbg=none        ctermfg=magenta     cterm=bolditalic
-highlight LineNrBelow       ctermbg=none        ctermfg=grey
-highlight MatchParen        ctermbg=yellow      ctermfg=black
-highlight TabLineFill       ctermbg=white       ctermfg=black
-highlight TabLineSel        ctermbg=green       ctermfg=black
-highlight TabLine           ctermbg=gray        ctermfg=black
-highlight Todo              ctermbg=none        ctermfg=green       cterm=bolditalic
+highlight Comment                                               cterm=italic
+highlight Search                                                cterm=reverse
+highlight IncSearch                                             cterm=reverse
+highlight Normal        ctermbg=none
+highlight SignColumn    ctermbg=none
+highlight CursorLine    ctermbg=darkgrey                        cterm=none
+highlight CursorColumn  ctermbg=darkgrey                        cterm=none
+highlight ColorColumn   ctermbg=darkgrey    ctermfg=none
+highlight Folded        ctermbg=none        ctermfg=darkblue    cterm=italic
+highlight Pmenu         ctermbg=darkgrey    ctermfg=white       cterm=bold
+highlight PmenuSel      ctermbg=darkyellow  ctermfg=white       cterm=bold
+highlight LineNrAbove   ctermbg=none        ctermfg=grey
+highlight LineNr        ctermbg=none        ctermfg=magenta     cterm=bolditalic
+highlight LineNrBelow   ctermbg=none        ctermfg=grey
+highlight MatchParen    ctermbg=yellow      ctermfg=black
+highlight TabLineFill   ctermbg=white       ctermfg=black
+highlight TabLineSel    ctermbg=green       ctermfg=black
+highlight TabLine       ctermbg=gray        ctermfg=black
+highlight Todo          ctermbg=none        ctermfg=green       cterm=bolditalic
 
 " Easytags
 highlight cTypeTag      ctermfg=lightyellow
@@ -348,9 +417,9 @@ highlight GitGutterChangeDelete ctermfg=darkmagenta cterm=bold,underline
 
 " Syntastic
 highlight SyntasticError        ctermbg=lightcyan
-highlight SyntasticWarning      ctermbg=lightblue
-highlight SyntasticStyleError   ctermbg=lightred
-highlight SyntasticStyleWarning ctermbg=lightyellow
+highlight SyntasticWarning      ctermbg=none
+highlight SyntasticStyleError   ctermbg=none
+highlight SyntasticStyleWarning ctermbg=none
 
 highlight SyntasticErrorSign        ctermbg=darkred
 highlight SyntasticWarningSign      ctermbg=darkyellow
@@ -358,7 +427,43 @@ highlight SyntasticStyleErrorSign   ctermbg=darkcyan
 highlight SyntasticStyleWarningSign ctermbg=darkgrey
 
 highlight SyntasticErrorLine        ctermfg=darkred
-highlight SyntasticWarningLine      ctermfg=darkyellow
+highlight SyntasticWarningLine      ctermfg=none
 highlight SyntasticStyleErrorLine   ctermfg=darkcyan
-"highlight SyntasticStyleWarningLine ctermfg=darkblue
+highlight SyntasticStyleWarningLine ctermfg=darkblue
+
+" ALE (ALE has a LOT more highlight groups than this)
+highlight link ALEError         SyntasticError
+highlight link ALEWarning       SyntasticWarning
+highlight link ALEStyleError    SyntasticStyleError
+highlight link ALEStyleWarning  SyntasticStyleWarning
+
+highlight link ALEErrorSign         SyntasticErrorSign
+highlight link ALEWarningSign       SyntasticWarningSign
+highlight link ALEStyleErrorSign    SyntasticStyleErrorSign
+highlight link ALEStyleWarningSign  SyntasticStyleWarningSign
+
+highlight link ALEErrorLine         SyntasticErrorLine
+highlight link ALEWarningLine       SyntasticWarningLine
+highlight link ALEStyleErrorLine    SyntasticStyleErrorLine
+highlight link ALEStyleWarningLine  SyntasticStyleWarningLine
+
+" Omnisharp
+highlight csClass       ctermfg=blue
+highlight csVar         ctermfg=white
+highlight csLocal                           cterm=italic
+highlight csMethod      ctermfg=lightyellow
+highlight csIdent       ctermfg=magenta
+highlight csProp        ctermfg=cyan        cterm=italic
+highlight csNamespace   ctermfg=blue        cterm=italic
+
+let g:OmniSharp_highlight_groups =
+   \{
+   \    'ClassName':        'csClass',
+   \    'FieldName':        'csVar',
+   \    'LocalName':        'csLocal',
+   \    'MethodName':       'csMethod',
+   \    'PropertyName':     'csProp',
+   \    'NamespaceName':    'csNamespace',
+   \    'Identifier':       'csIdent',
+   \}
 """" ---- COLORS ----
