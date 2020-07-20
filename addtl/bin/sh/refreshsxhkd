@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+kill -s 10 `procfind sxhkd | grep sxhkd | awk '{ printf $2 }'`

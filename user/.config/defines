@@ -39,6 +39,7 @@ export RICEDIR="/addtl/dev/other/ricerice"
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"
 export XPROFILE="$HOME/.config/xconf/Xprofile"
+export XPROFILE2="$HOME/.config/Xprofile2"
 
 export LESSHISTFILE="$LOGDIR/lesshst"
 export HISTFILE="$LOGDIR/bash_history"
