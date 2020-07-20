@@ -92,6 +92,7 @@ export LS_COLORS="$LS_COLORS:*.cp=00;31;49"
 export LS_COLORS="$LS_COLORS:*.hh=00;35;49"
 export LS_COLORS="$LS_COLORS:*.hp=00;35;49"
 export LS_COLORS="$LS_COLORS:*.ii=00;35;47"
+export LS_COLORS="$LS_COLORS:*.mk=00;34;49"
 export LS_COLORS="$LS_COLORS:*.c++=00;31;49"
 export LS_COLORS="$LS_COLORS:*.cfg=00;32;49"
 export LS_COLORS="$LS_COLORS:*.cnf=00;32;49"
@@ -123,6 +124,7 @@ export LS_COLORS="$LS_COLORS:*.cache=02;33;49"
 export LS_COLORS="$LS_COLORS:*.tmtheme=00;33;49"
 export LS_COLORS="$LS_COLORS:*.settings=00;33;49"
 export LS_COLORS="$LS_COLORS:*.vssettings=00;33;49"
+export LS_COLORS="$LS_COLORS:*Makefile=00;33;49"
 
 # DOCUMENTS
 

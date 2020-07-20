@@ -39,8 +39,8 @@ alias du="du -cs --si"
 alias df="df --si"
 alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 
-alias utdl="youtube-dl -ci"
-alias bandcamp="bandcamp-dl -ry"
+alias ytdl="youtube-dl -ci"
+alias bcdl="bandcamp-dl -ry"
 
 alias vfc="vim ~/.vim/vimrc"
 

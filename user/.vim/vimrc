@@ -44,26 +44,27 @@ Plug 'dsimidzija/vim-nerdtree-ignore'
 "worry about it. I'd REALLY like to get rid of youcompleteme if it can be
 "replaced.
 " Deoplete
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+"if has('nvim')
+"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+"else
+"  Plug 'Shougo/deoplete.nvim'
+"  Plug 'roxma/nvim-yarp'
+"  Plug 'roxma/vim-hug-neovim-rpc'
+"endif
+"
+"Plug 'dense-analysis/ale'
 
-Plug 'dense-analysis/ale'
-Plug 'omnisharp/omnisharp-vim'
-Plug 'lervag/vimtex'
-
-"Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 "I would REALLY like to use ALE+Deoplete to do autocompletion ONLY and let YCM
 "handle info popups exclusively, but when I try to use ALE for C# projects
 "(Unity specfically) it can't reference external libraries? It fails to find
 "references and namespaces for some reason. Also, I haven't figured out how to
 "configure YCM to do only popups and ALE+Deoplete to only do autocompletion.
-"Plug 'valloric/youcompleteme'
+Plug 'valloric/youcompleteme'
 "Plug 'shougo/echodoc'
+
+Plug 'omnisharp/omnisharp-vim'
+Plug 'lervag/vimtex'
 
 " SYNTAX HIGHLIGHTING
 Plug 'gisphm/vim-gitignore'
@@ -114,55 +115,58 @@ let g:OmniSharp_stop_server  = 1
 let g:OmniSharp_host="http://localhost:20001"
 
 " Deoplete
-set completeopt-=preview
-let g:deoplete#enable_at_startup = 1
-call deoplete#custom#option('sources',
-\{
-\   '_': ['ale'],
-\})
-"from doc
-call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
+"let g:deoplete#enable_at_startup = 1
+"call deoplete#custom#option('sources',
+"\{
+"\   '_': ['ale'],
+"\})
+""from doc
+"call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
 
 " ALE
-let g:ale_sign_error = '>!'
-let g:ale_sign_warning = '>?'
-let g:ale_sign_style_error = 's!'
-let g:ale_sign_style_warning = 's?'
-let g:ale_set_balloons = 1
+"let g:ale_lint_on_text_changed = 'never'
+"let g:ale_lint_on_insert_leave = 0
+"let g:ale_c_parse_makefile = 1
+"
+"let g:ale_sign_error = '>!'
+"let g:ale_sign_warning = '>?'
+"let g:ale_sign_style_error = 's!'
+"let g:ale_sign_style_warning = 's?'
+"let g:ale_set_balloons = 1
 
 " echodoc
 "let g:echodoc#type = 'signature'
 
 " YCM
-"let g:ycm_auto_trigger = 0
-"let g:ycm_min_num_of_chars_for_completion = 999
-"let g:ycm_show_diagnostics_ui = 0
-"let g:ycm_open_loclist_on_ycm_diags = 0
-"let g:ycm_confirm_extra_conf = 0
-"if !exists('g:ycm_semantic_triggers')
-"    let g:ycm_semantic_triggers = {
-"    \   'tex': [ g:vimtex#re#youcompleteme ],
-"    \ }
-"endif
-"let g:ycm_auto_start_csharp_server = 1
-"let g:ycm_auto_stop_csharp_server = 1
-"let g:ycm_csharp_server_port = 20001
+let g:ycm_auto_trigger = 1
+let g:ycm_min_num_of_chars_for_completion = 2
+let g:ycm_show_diagnostics_ui = 0
+let g:ycm_open_loclist_on_ycm_diags = 0
+let g:ycm_confirm_extra_conf = 0
+if !exists('g:ycm_semantic_triggers')
+    let g:ycm_semantic_triggers = {
+    \   'tex': [ g:vimtex#re#youcompleteme ],
+    \ }
+endif
+let g:ycm_auto_start_csharp_server = 1
+let g:ycm_auto_stop_csharp_server = 1
+let g:ycm_csharp_server_port = 20001
 
 " Syntastic
-"let g:syntastic_error_symbol = ">!"
-"let g:syntastic_warning_symbol = ">?"
-"let g:syntastic_style_error_symbol = "s!"
-"let g:syntastic_style_warning_symbol = "s?"
-"let g:syntastic_aggregate_errors = 1
-"let g:syntastic_auto_loc_list = 2
-"let g:syntastic_always_populate_loc_list = 0
-"let g:syntastic_ignore_files = ['\m\c.tex$']
-"let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
-"let g:syntastic_cs_checkers = ['code_checker']
-"
-"function! SyntasticCheckHook(errors)
-"    call lightline#update()
-"endfunction
+let g:syntastic_error_symbol = ">!"
+let g:syntastic_warning_symbol = ">?"
+let g:syntastic_style_error_symbol = "s!"
+let g:syntastic_style_warning_symbol = "s?"
+let g:syntastic_aggregate_errors = 1
+let g:syntastic_auto_loc_list = 2
+let g:syntastic_always_populate_loc_list = 0
+let g:syntastic_ignore_files = ['\m\c.tex$']
+let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
+let g:syntastic_cs_checkers = ['code_checker']
+
+function! SyntasticCheckHook(errors)
+    call lightline#update()
+endfunction
 
 " Vimtex
 let g:vimtex_compiler_enabled = 0
@@ -192,6 +196,7 @@ let g:gitgutter_map_keys = 0
 
 augroup displaystuf
     autocmd!
+    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
     autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc,tex setlocal nowrap nospell
 
     autocmd FileType tex let g:tex_no_error=1
@@ -199,12 +204,12 @@ augroup displaystuf
     autocmd BufWritePre *.tex let g:tex_modified = &modified
     autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
 
-    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+    autocmd BufRead,BufNewFile *.h set ft=c
+    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
+    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
     autocmd BufRead,BufNewFile vimrc setlocal expandtab
     autocmd BufRead,BufNewFile aliasrc,defines* set filetype=sh
-    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
     autocmd BufRead fonts.conf set ft=html
-    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
 
     "continue where you left off
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -275,6 +280,7 @@ set scrolloff=3
 "Disable Deoplete completion messages
 "A: You can disable the messages through the 'shortmess' option. >
 set shortmess+=c
+set completeopt-=preview
 
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
@@ -287,7 +293,6 @@ set showmatch
 """" ---- GENERAL CONFIG ----
 
 """" ++++ MAPPINGS ++++
-inoremap jk <esc>
 nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
 "print token type
 nnoremap <silent> <space>s :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
