@@ -10,6 +10,7 @@ stty -ixon # Disable ctrl-s, ctrl-q
 
 [ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
 [ -f $HOME/.config/aliasrc ] && . $HOME/.config/aliasrc
+[ -f $HOME/.config/alias2 ] && . $HOME/.config/alias2
 [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
 n()

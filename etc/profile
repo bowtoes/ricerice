@@ -11,35 +11,32 @@
 umask 022
 
 # Append our default paths
-append ()
+
+append_path ()
 {
-    case ":$PATH:" in
-        *:"$1":*)
-            ;;
-        *)
-            PATH="${PATH:+$PATH:}$1"
-    esac
+	case ":$PATH:" in
+		*:"$1":*)
+			;;
+		*)
+			PATH="${PATH:+$PATH:}$1"
+	esac
 }
 
 appendrecurse ()
 {
-    if [ -d "$(realpath "$1")" ] ; then
-        for d in $(find -L "$(realpath "$1")" -type d -not -path '*.git*') ; do
-            append $d
-        done
-    fi
+	rp="$(realpath "$1")"
+	if [ -d "$rp" ] ; then
+		for d in $(find -L "$rp" -type d -not -path '*.git*') ; do
+			append_path "$d"
+		done
+	fi
 }
 
-
-append "/usr/local/sbin"
-append "/usr/local/bin"
-append "/usr/bin"
-append "/usr/include"
-append "/usr/local/include"
-appendrecurse "/addtl/bin"
-
-unset append
-unset appendrecurse
+append_path "/usr/local/sbin"
+append_path "/usr/local/bin"
+append_path "/usr/bin"
+append_path "/usr/include"
+append_path "/usr/local/include"
 
 export PATH
 
@@ -50,6 +47,12 @@ if [ -d "/etc/profile.d/" ] ; then
     done
     unset profile
 fi
+
+# Unload our profile API functions
+#unset -f append
+unset -f append_path
+unset -f appendrecurse
+
 
 # Source global bash config
 [ "$BASH" ] && [ -z ${POSIXLY_CORRECT+x} ] && [ -r "/etc/bash.bashrc" ] && . "/etc/bash.bashrc"

@@ -1,7 +1,7 @@
 # ~/.profile
 
 # Personal environment variables and startup programs.
-
+#
 # Personal aliases and functions should go in ~/.bashrc.  System wide
 # environment variables and startup programs are in /etc/profile.
 # System wide aliases and functions are in /etc/bashrc.
@@ -10,11 +10,11 @@
 #
 # File permissions table
 # This TUG syntax is not valid for any permissions command such as chmod
-# It's only used for convenience in this file
+# It's only used for my convenience in this table
 #
-# T = sticky bit
 # U = SUID
 # G = SGID
+# T = sticky bit
 # (s)pecial
 # (u)ser
 # (g)roup
@@ -38,11 +38,8 @@
 # -6xx = rw-
 # -7xx = rwx
 
-# Each new file/directory has '0777 - umask' permissions
+# 0664
 umask 0002
-
-shopt -s autocd
-
 append ()
 {
 	case ":$PATH:" in
@@ -52,7 +49,6 @@ append ()
 			PATH="${PATH:+$PATH:}$1"
 	esac
 }
-
 appendrecurse ()
 {
 	rp="$(realpath "$1")"
@@ -71,8 +67,7 @@ unset append
 unset appendrecurse
 
 PATH="$(echo "$PATH" | sed "s/::/:/g")"
-export PATH
-PS1=""
+
 #PS1="$PS1\[\e[1;31m\]\u"
 #PS1="$PS1\[\e[35m\]-"
 #PS1="$PS1\[\e[33m\]\h"
@@ -81,7 +76,8 @@ PS1=""
 #PS1="$PS1\[\e[0;39;49m\]"
 #PS1="$PS1\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
 #PS1="$PS1\$"
-
+export PATH
+PS1=""
 path ()
 {
 	case "$PWD" in
@@ -117,7 +113,9 @@ PS1="$PS1\[\e[00;33;49m\]\$ "
 PS1="$PS1\[\e[00;97;49m\]"
 export PS1
 
-export DEFINES="$HOME/.config/defines"
+# TODO automatically choose CONFIGDIR if ~/.config does not exist.
+export CONFIGDIR="$HOME/.config"
+export DEFINES="$CONFIGDIR/defines"
 [ -f "$DEFINES" ] && . "$DEFINES"
 
 export GPG_TTY=$(tty)
@@ -125,5 +123,15 @@ export LPASS_PINENTRY="pinentry-curses"
 export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
+export GTK_IM_MODULE=ibus
+export XMODIFIERS=@im=ibus
+export QT4_IM_MODULE=xim
+export QT_IM_MODULE=xim
+
+# dotnet's weird, this seems to be a bit of a problem on windows too.
 [ -n "`command -v dotnet`" ]  && \
 	export MSBuildSDKsPath="/usr/share/dotnet/sdk/$(dotnet --version)/Sdks"
+# https://web.archive.org/web/20200919120248/https://andrewlock.net/building-net-framework-asp-net-core-apps-on-linux-using-mono-and-the-net-cli/#adding-frameworkpathoverrides-for-linux
+# 4.5 works for vim-omnisharp
+[ -n "`command -v mono`" ] && \
+	export FrameworkPathOverride="/usr/lib/mono/4.5"

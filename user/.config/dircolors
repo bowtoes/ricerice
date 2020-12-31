@@ -24,6 +24,9 @@ export LS_COLORS="$LS_COLORS:su=00;37;41"
 export LS_COLORS="$LS_COLORS:tw=00;30;42"
 
 # SYSTEM FILES
+
+export LS_COLORS="$LS_COLORS:*.exe=03;33;49"
+export LS_COLORS="$LS_COLORS:*.dll=00;37;49"
 export LS_COLORS="$LS_COLORS:*.Xcolor=01;31;49"
 
 # VIM
@@ -85,7 +88,8 @@ export LS_COLORS="$LS_COLORS:*.tzst=01;31;49"
 export LS_COLORS="$LS_COLORS:*.c=00;31;49"
 export LS_COLORS="$LS_COLORS:*.h=00;35;49"
 export LS_COLORS="$LS_COLORS:*.o=04;32;49"
-export LS_COLORS="$LS_COLORS:*.s=04;33;49"
+export LS_COLORS="$LS_COLORS:*.e=04;33;49"
+export LS_COLORS="$LS_COLORS:*.s=04;34;49"
 export LS_COLORS="$LS_COLORS:*.cc=00;31;49"
 export LS_COLORS="$LS_COLORS:*.cs=00;31;49"
 export LS_COLORS="$LS_COLORS:*.cp=00;31;49"
@@ -118,6 +122,7 @@ export LS_COLORS="$LS_COLORS:*.vim=00;93;49"
 export LS_COLORS="$LS_COLORS:*.xml=00;36;49"
 export LS_COLORS="$LS_COLORS:*.conf=00;36;49"
 export LS_COLORS="$LS_COLORS:*.diff=00;33;49"
+export LS_COLORS="$LS_COLORS:*.glsl=01;31;49"
 export LS_COLORS="$LS_COLORS:*.orig=01;33;49"
 export LS_COLORS="$LS_COLORS:*.vsix=00;33;49"
 export LS_COLORS="$LS_COLORS:*.cache=02;33;49"
@@ -141,10 +146,12 @@ export LS_COLORS="$LS_COLORS:*.bsa=01;39;49"
 export LS_COLORS="$LS_COLORS:*.bsp=01;39;49"
 export LS_COLORS="$LS_COLORS:*.inc=00;31;49"
 export LS_COLORS="$LS_COLORS:*.smx=04;32;49"
+export LS_COLORS="$LS_COLORS:*.tjs=00;33;49"
 export LS_COLORS="$LS_COLORS:*.vdf=00;35;49"
 export LS_COLORS="$LS_COLORS:*.vmt=00;35;49"
 export LS_COLORS="$LS_COLORS:*.vpk=01;31;49"
 export LS_COLORS="$LS_COLORS:*.vtf=01;35;49"
+export LS_COLORS="$LS_COLORS:*.xp3=00;32;49"
 
 # FONTS
 

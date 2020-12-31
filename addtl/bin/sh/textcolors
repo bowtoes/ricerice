@@ -42,7 +42,8 @@ gettext ()
         elif [ $3 -eq 97  ] ; then FGS="WHTE"
         else FGS="IVLD"
         fi
-          if [ $4 -eq 40  ] ; then BGS="BLCK"
+          if [ $4 -eq 49  ] ; then BGS="DFLT"
+        elif [ $4 -eq 40  ] ; then BGS="BLCK"
         elif [ $4 -eq 41  ] ; then BGS="RED_"
         elif [ $4 -eq 42  ] ; then BGS="GREN"
         elif [ $4 -eq 43  ] ; then BGS="YLLW"
@@ -62,7 +63,7 @@ gettext ()
         else BGS="IVLD"
         fi
         printf "%14s" " $FTS $FGS $BGS "
-    else printf "%$1s" ""
+    else printf "%$1s" "#"
       fi
 }
 
@@ -78,7 +79,7 @@ gettext ()
 
 FMT_LIST_A='0 1 2 3'
  FG_LIST_A='30 31 32 33 34 35 36 37 39'
- BG_LIST_A='40 41 42 43 44 45 46 47'
+ BG_LIST_A='40 41 42 43 44 45 46 47 49'
 FMT_LIST_B='4 5 6 7 8 9'
  FG_LIST_B='90 91 92 93 94 95 96 97 99'
  BG_LIST_B='100 101 102 103 104 105 106 107'

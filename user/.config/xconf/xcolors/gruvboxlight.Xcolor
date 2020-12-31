@@ -2,9 +2,9 @@
 
 ! special
 *foreground:  #3c3836
-! soft contrast: *background: #f2e5bc
-! hard contrast: *background: #f9f5d7
-*background:  #fbf1c7
+! soft contrast: #f2e5bc
+! hard contrast: #f9f5d7
+*background:  #f2e5bc
 *cursorColor: #3c3836
 
 ! black

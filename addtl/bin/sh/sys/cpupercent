@@ -9,10 +9,10 @@ for i in $(find '/sys/devices/system/cpu/cpufreq/' -maxdepth 1 -type d -name 'po
     CPU_MAX=$(cat $i/scaling_max_freq)
     CPU_MIN=$(cat $i/scaling_min_freq)
     CPU_CUR=$(cat $i/scaling_cur_freq)
-    MAX=$(echo "$MAX + $CPU_MAX" | bc)
-    MIN=$(echo "$MIN + $CPU_MIN" | bc)
-    CUR=$(echo "$CUR + $CPU_CUR" | bc)
-    N=$(echo "$N + 1" | bc)
+	MAX=$((MAX + CPU_MAX))
+    MIN=$((MIN + CPU_MIN))
+    CUR=$((CUR + CPU_CUR))
+	N=$((N + 1))
 done
 
 MAX=$(echo "$MAX / $N" | bc)
@@ -26,3 +26,5 @@ fi
 
 cmd="scale=$p;100 * ($CUR - $MIN) / ($MAX - $MIN)"
 echo "$cmd" | bc
+
+#mpstat | grep all | awk '{print 100 - $NF}'

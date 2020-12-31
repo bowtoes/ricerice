@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+# How do I do this so that it is whitespace-safe, without glob?
+shopt -s globstar
+
+DIR="$PWD"
+TEMPLATE=""
+
+if [ $# -eq 1 ] ; then
+	TEMPLATE="$1"
+elif [ $# -eq 2 ] ; then
+	DIR="$1"
+	TEMPLATE="$2"
+elif [ $# -eq 0 ] ; then
+	echo "No template directory provided, quitting."
+	exit 1
+else
+	echo "Too many arguments provided."
+	echo "Either provide a template directory to copy to current, or provide a template directory after a target directory."
+	exit 1
+fi
+
+cd "$DIR"
+
+for i in **/* ; do
+	f="$TEMPLATE/$i"
+	[ -e "$f" ] && echo "touch -m -r" "\"$f\"" \""$i\""
+	[ -e "$f" ] && touch -m -r "$f" "$i"
+done

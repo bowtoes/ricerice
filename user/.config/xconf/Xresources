@@ -1,13 +1,20 @@
-*.font: Consolas:pixelsize=12:antialias=true:autohint=true
+st.font: Consolas:pixelsize=12:antialias=true:autohint=true
 ! For some reason, monokai.Xcolor fails to load
-*.xcolorsFile: ~/.config/xconf/xcolors/century.Xcolor
+st.xcolorsFile: ~/.config/xconf/xcolors/hybrid.Xcolor
 
-*.cols: 80
-*.rows: 25
+st.cols: 80
+st.rows: 25
 
-*.alpha:         0.80
-*.alphaNoFocus:  0.85
-*.aplha2:        0.60
-*.alpha2NoFocus: 0.50
+st.alpha:         0.80
+st.alphaNoFocus:  0.75
+st.alpha2:        0.60
+st.alpha2NoFocus: 0.55
 
-*.borderpx:   0
+st.borderpx: 0
+
+dwm.borderpx: 2
+dwm.snap: 8
+!dwm.normfgcolor: #ffffff
+!dwm.normbgcolor: #555555
+!dwm.selfgcolor: #555555
+!dwm.selbgcolor: #eeeeee

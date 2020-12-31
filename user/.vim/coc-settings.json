@@ -1,0 +1,4 @@
+{
+	"clangd.disableDiagnostics": true,
+	"clangd.semanticHighlighting": true
+}

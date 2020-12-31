@@ -1,22 +1,62 @@
+# Conditional alias, only aliases if $2 is a valid command on the system
+calias ()
+{
+	[ -n "$(command -v $2)" ] && \
+		alias $1="$2"
+}
+
+calias bashp "source ~/.bash_profile"
+calias vfc "vim ~/.vim/vimrc"
+
+# -- SYSTEM QUERY/CONTROL
+calias ms "mountspace"
+calias ms4 "mountspace ext4"
+# List the size of all installed packages, sorted least-to-most size.
+calias yaysizes "yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+calias ftpstat "sudo systemctl status vsftpd"
+calias restarteth "sudo modprobe -r r8168; sudo modprobe r8168"
+
+alias filecounts="itemcount -t f -e ./{.,}*"
+alias linkcounts="itemcount -t l -e ./{.,}*"
+alias dircounts="itemcount -t d -e ./{.,}*"
+alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
+
+# Currently, safe-rm and safe-rmdir don't quite work the way I want.
+# I'd like it to be so that if I blacklist a folder like '/root/**',
+# all subdirectories and files will also be blacklisted. Instead, it only does
+# 'recursive' blacklisting to a depth of 1.
+# TODO fix
+if [ -n `command -v safe-rm` ] ; then
+	alias rm="safe-rm -v --preserve-root"
+	alias rmdir="safe-rmdir -v"
+else
+	alias rm="rm -v --preserve-root"
+	alias rmdir="rmdir -v"
+fi
+
+# -- TYPOS
 alias claer="clear"
 alias caler="clear"
 alias celar="clear"
 alias clera="clear"
 alias clare="clear"
-alias bashp=". ~/.bash_profile"
-
 alias cd..="cd .."
 
-alias restarteth="sudo modprobe -r r8168; sudo modprobe r8168"
+# -- DEFAULT SETTINGS
 
-# It should be noted that 'ls -s' prints, at least on my system, the
-# logical size/allocated space, whereas the size shown by 'ls -l' is the actual
-# physical size taken up on disk.
-alias ls="ls -CNFX --si --color=auto --group-directories-first --time-style=long-iso"
-
+# TODO replace ls with a script that uses stat to generate a listing.
+#	Give it an option to do normal 'ls' instead.
+# On my system,     'ls -s'  prints the logical size/allocated space.
+# The size shown by 'ls -l'  prints the actual physical size taken up on disk.
+# 'ls -ls' prints what 'ls -l' prints.
+# General rules:
+#  Capital first letter:  '-1' is passed to 'ls' (single column)
+#  Capital second letter: '-s' is passed to 'ls'
+#  The argument that matches the second letter is always passed (except for ls)
 alias l="ls"
 alias L="ls -1"
 
+alias ls="ls -CNFX --si --color=auto --group-directories-first --time-style=long-iso"
 alias Ls="ls -1"
 alias lS="ls -s"
 alias LS="ls -1s"
@@ -27,31 +67,26 @@ alias lA="ls -sA"
 alias LA="ls -1sA"
 
 alias ll="ls -ls"
-alias LL="ls -lAs"
+alias Ll="ls -1ls"
+alias lL="ls -ls"
+alias LL="ls -1lsA"
 
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 
-alias feh="feh --force-aliasing --keep-zoom-vp --zoom-fill"
-alias tmux="tmux -2"
-alias patch="patch -b"
-alias ka="killall"
+[ -n `command -v wget` ] && \
+	alias wget="wget -v --no-clobber --timestamping --no-cookies --compression=auto \
+		--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
+[ -n `command -v feh` ] && \
+	alias feh="feh --force-aliasing --keep-zoom-vp --zoom-fill"
+[ -n `command -v patch` ] && \
+	alias patch="patch -b"
 alias du="du -cs --si"
 alias df="df --si"
-alias 7zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
-
+# Ultimate 7z compression
+alias zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 alias ytdl="youtube-dl -ci"
 alias bcdl="bandcamp-dl -ry"
-
-alias vfc="vim ~/.vim/vimrc"
-
-alias filecounts="itemcount -t f -e ./{.,}*"
-alias linkcounts="itemcount -t l -e ./{.,}*"
-alias dircounts="itemcount -t d -e ./{.,}*"
-alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
-
-[ -n `command -v safe-rm` ] && alias rm="safe-rm"
-
-alias pacgraph="pacgraph -b black -l cyan -t brightgreen -d red -p 12 60"
+alias pacgraph="pacgraph -b black -l cyan -t green -d red -p 12 60"
 alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
 	--cpu_temp C --distro_shorthand of --kernel_shorthand off \
 	--uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all \
@@ -61,4 +96,3 @@ alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
 	--block_height 1 --block_width 2 --cpu_display infobar \
 	--memory_display infobar --battery_display infobar --disk_display infobar \
 	--bar_char '#' '-'"
-alias ftpstat="sudo systemctl status vsftpd"

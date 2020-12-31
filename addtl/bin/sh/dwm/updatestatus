@@ -1,10 +1,10 @@
 #!/usr/bin/env sh
 
 time="$(clock)"
-uptime="$(getuptime)"
+#uptime="$(getuptime)"
 #mem="$(mempercent | xargs printf "%3.3s%%")"
 mem="$(memfraction)"
-cpu="$(cpupercent 2)"
+cpu="$(mpstat | awk '$NF ~ /[0-9.]+/ { print 100 - $NF"%" }')"
 #cpu="$(cpuavg)"
 #xsetroot -name ""
-xsetroot -name "$cpu%|$mem|$uptime|$time"
+xsetroot -name "│$cpu│$mem│$time│"

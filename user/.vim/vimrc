@@ -1,30 +1,17 @@
 """" TODO TODO TODO """"
 " Clean this whole thing up, reorganize, simplify, and make it more focused
-" This is really slow
-" TRIM OUT THE FAT - GlaDOS
 
-"""" ++++ PLUGINS ++++
+"{{{ PLUGINS
 " Install Vim-Plug if it isn't already
 if empty(glob('~/.vim/autoload/plug.vim'))
     silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
         \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-
-" TRIM OUT THE FAT - GlaDOS
-" Easytags seems to be the only plugin I've found to do what I want,
-" that being extra type highlighting (say typedefs in C) without cluttering
-" my filesystem or git projects with unnecessary tags files all over the
-" place. Though it seems to be outdated, and a patch needs to be applied for
-" it to work with Universal CTags:
-" https://github.com/xolox/vim-easytags/pull/133#issuecomment-316477649
 call plug#begin('~/.vim/plugged')
-" TAGS
-Plug 'xolox/vim-easytags'
-" Required for vim-easytags
-Plug 'xolox/vim-misc'
-Plug 'majutsushi/tagbar'
-" MISC VISUAL
+
+" MISC
+Plug 'sickill/vim-monokai'
 Plug 'itchyny/lightline.vim'
 Plug 'mbbill/undotree'
 Plug 'pseewald/vim-anyfold'
@@ -32,49 +19,28 @@ Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'preservim/nerdtree'
 Plug 'dsimidzija/vim-nerdtree-ignore'
+Plug 'wsdjeg/vim-fetch'
+
 " SYNTAX ENGINES
-"SO FAR i've gotten this setup to work, with ALE and Deoplete working
-"together to do autocompletion and YCM to handle information popups. However,
-"ALE keeps throwing errors when I'm working on a C# project. Even though
-"completion works (which isn't YCM's doing), it still fails to find
-"namespaces and the like. I have no idea what's wrong here.
-
-"I believe it is possible to get deoplete to show function signatures in a
-"balloon, similar to YCM but I've yet to figure it out. For now, I'll just not
-"worry about it. I'd REALLY like to get rid of youcompleteme if it can be
-"replaced.
-" Deoplete
-"if has('nvim')
-"  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-"else
-"  Plug 'Shougo/deoplete.nvim'
-"  Plug 'roxma/nvim-yarp'
-"  Plug 'roxma/vim-hug-neovim-rpc'
-"endif
-"
-"Plug 'dense-analysis/ale'
-
-Plug 'scrooloose/syntastic'
-"I would REALLY like to use ALE+Deoplete to do autocompletion ONLY and let YCM
-"handle info popups exclusively, but when I try to use ALE for C# projects
-"(Unity specfically) it can't reference external libraries? It fails to find
-"references and namespaces for some reason. Also, I haven't figured out how to
-"configure YCM to do only popups and ALE+Deoplete to only do autocompletion.
-Plug 'valloric/youcompleteme'
-"Plug 'shougo/echodoc'
-
-Plug 'omnisharp/omnisharp-vim'
+Plug 'Omnisharp/omnisharp-vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+Plug 'jackguo380/vim-lsp-cxx-highlight'
 Plug 'lervag/vimtex'
+Plug 'esalter-va/vim-checklist'
+Plug 'turbio/bracey.vim', {'do': 'npm install --prefix server'}
+"Plug 'ap/vim-css-color'
+Plug 'beyondmarc/hlsl.vim'
 
 " SYNTAX HIGHLIGHTING
 Plug 'gisphm/vim-gitignore'
 Plug 'rpdelaney/vim-sourcecfg'
 Plug 'tikhomirov/vim-glsl'
 Plug 'withgod/vim-sourcepawn'
-call plug#end()
-"""" ---- PLUGINS ----
 
-"""" ++++ FUNCTIONS ++++
+call plug#end()
+"}}} PLUGINS
+"{{{ FUNCTIONS
 function! GetCursorChar()
     return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
@@ -86,7 +52,7 @@ function! SilentExec(cmd)
 endfunction
 
 function! CompTexRefMU()
-    call SilentExec("compiler %")
+    call SilentExec('compiler %')
     if get(g:, 'mupdf_open', 0)
         call SilentExec("pkill --signal HUP mupdf")
     else
@@ -98,151 +64,74 @@ function! CompTexRefMU()
     endif
 endfunction
 
-function! EchoToggle(text, status)
-	echo a:text a:status ? "on" : "off"
+function! OnOff(status)
+    return a:status ? "on" : "off"
 endfunction
 
 function! ToggleWhitespaceFix()
     let g:whitespacefix = !get(g:, 'whitespacefix', 1)
 endfunction
-"""" ---- FUNCTIONS ----
-
-"""" ++++ PLUGIN CONFIG ++++
+"}}} FUNCTIONS
+"{{{ PLUGIN CONFIG
 " TRIM OUT THE FAT - GlaDOS
-" Omnisharp
-let g:OmniSharp_start_server = 1
-let g:OmniSharp_stop_server  = 1
-let g:OmniSharp_host="http://localhost:20001"
-
-" Deoplete
-"let g:deoplete#enable_at_startup = 1
-"call deoplete#custom#option('sources',
-"\{
-"\   '_': ['ale'],
-"\})
-""from doc
-"call deoplete#custom#source('_', 'disabled_syntaxes', ['Comment', 'String'])
-
-" ALE
-"let g:ale_lint_on_text_changed = 'never'
-"let g:ale_lint_on_insert_leave = 0
-"let g:ale_c_parse_makefile = 1
-"
-"let g:ale_sign_error = '>!'
-"let g:ale_sign_warning = '>?'
-"let g:ale_sign_style_error = 's!'
-"let g:ale_sign_style_warning = 's?'
-"let g:ale_set_balloons = 1
-
-" echodoc
-"let g:echodoc#type = 'signature'
-
-" YCM
-let g:ycm_auto_trigger = 1
-let g:ycm_min_num_of_chars_for_completion = 2
-let g:ycm_show_diagnostics_ui = 0
-let g:ycm_open_loclist_on_ycm_diags = 0
-let g:ycm_confirm_extra_conf = 0
-if !exists('g:ycm_semantic_triggers')
-    let g:ycm_semantic_triggers = {
-    \   'tex': [ g:vimtex#re#youcompleteme ],
-    \ }
-endif
-let g:ycm_auto_start_csharp_server = 1
-let g:ycm_auto_stop_csharp_server = 1
-let g:ycm_csharp_server_port = 20001
-
-" Syntastic
-let g:syntastic_error_symbol = ">!"
-let g:syntastic_warning_symbol = ">?"
-let g:syntastic_style_error_symbol = "s!"
-let g:syntastic_style_warning_symbol = "s?"
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_auto_loc_list = 2
-let g:syntastic_always_populate_loc_list = 0
-let g:syntastic_ignore_files = ['\m\c.tex$']
-let g:syntastic_python_pylint_quiet_messages = { "level" : "warnings" }
-let g:syntastic_cs_checkers = ['code_checker']
-
-function! SyntasticCheckHook(errors)
-    call lightline#update()
+"{{{ Git Gutter
+let g:gitgutter_highlight_lines = 0
+let g:gitgutter_highlight_linesnrs = 0
+let g:gitgutter_sign_added              = '+'
+let g:gitgutter_sign_removed            = '-'
+let g:gitgutter_sign_modified           = '~'
+let g:gitgutter_sign_removed_first_line = 'K'
+let g:gitgutter_sign_modified_removed   = '~'
+let g:gitgutter_map_keys = 0
+"}}}
+"{{{ CoC
+" use <tab> for trigger completion and navigate to the next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
 endfunction
 
+inoremap <silent><expr> <Tab>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<Tab>" :
+      \ coc#refresh()
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+"}}}
+"{{{ ALE
+let g:ale_sign_error = '!'
+let g:ale_sign_warning = '?'
+let g:ale_sign_style_error = '!'
+let g:ale_sign_style_warning = '?'
+
+let g:ale_linters = {
+\ 'cs': ['Omnisharp']
+\}
+let b:ale_linters = ['cs']
+"}}}
+"{{{ Misc
+" NERDTree
+let NERDTreeIgnore = ['\.meta']
 " Vimtex
+let g:tex_flavor = 'latex'
 let g:vimtex_compiler_enabled = 0
+
+" Vim-Checklist
+noremap <space>V :ChecklistToggleCheckbox<cr>
 
 " FixWhitespace
 let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
-
-" Easytags
-let g:easytags_file = '~/.cache/vim/tags/easytags'
-let g:easytags_async = 1
-let g:easytags_dynamic_files = 0
-let g:easytags_events =['BufWritePost', 'BufReadPost']
-let g:easytags_include_members = 1
-
-" Git Gutter
-let g:gitgutter_highlight_lines = 0
-let g:gitgutter_highlight_linesnrs = 0
-let g:gitgutter_sign_added              = '++'
-let g:gitgutter_sign_removed            = '--'
-let g:gitgutter_sign_modified           = '~~'
-let g:gitgutter_sign_removed_first_line = 'KK'
-let g:gitgutter_sign_modified_removed   = '~~'
-let g:gitgutter_map_keys = 0
-"""" ---- PLUGIN CONFIG ----
-
-"""" ++++ AUTOCMDS ++++
-
-augroup displaystuf
-    autocmd!
-    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc,tex setlocal nowrap nospell
-
-    autocmd FileType tex let g:tex_no_error=1
-    autocmd VimLeave *.tex !texclear %
-    autocmd BufWritePre *.tex let g:tex_modified = &modified
-    autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
-
-    autocmd BufRead,BufNewFile *.h set ft=c
-    autocmd BufRead,BufNewFile *.conf,*.cfg set filetype=conf
-    autocmd BufRead,BufNewFile *.inc set filetype=include | set syntax=sourcepawn
-    autocmd BufRead,BufNewFile vimrc setlocal expandtab
-    autocmd BufRead,BufNewFile aliasrc,defines* set filetype=sh
-    autocmd BufRead fonts.conf set ft=html
-
-    "continue where you left off
-    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
-                \| exe "normal! g'\""
-                \| endif
-augroup END
-
-augroup VCenterCursor
-  au!
-  au BufEnter,WinEnter,WinNew,VimResized *,*.*
-        \ let &scrolloff=winheight(win_getid())/2
-augroup END
-
-augroup pluginstuff
-    autocmd!
-    "activate anyfold on every file
-    "autocmd Filetype * AnyFoldActivate
-    "open NERDTree automatically when vim starts up on opening a directory
-    autocmd StdinReadPre * let s:std_in=1
-    autocmd VimEnter *
-                \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-                \| exe 'NERDTree' argv()[0]
-                \| wincmd p
-                \| ene
-                \| endif
-augroup END
-"""" ---- AUTOCMDS ----
-
-"""" ++++ GENERAL CONFIG ++++
+"}}}
+let g:lsp_cxxx_hl_use_text_props = 1
+"}}} PLUGIN CONFIG
+"{{{ VIM CONFIG
 " TRIM OUT THE FAT - GlaDOS
 syntax enable
 filetype plugin indent on
 let mapleader=' '
+set pastetoggle=<F2>
 set nocompatible
 set encoding=UTF-8
 set exrc
@@ -255,16 +144,14 @@ set noshowmode
 set showcmd
 "commandmode autocomplete
 set wildmode=longest,list,full
-
-"do not delete backup file
-set backup
 "create a backup file
 set writebackup
+"do not delete backup file
+set backup
 set undofile
 set swapfile
-set updatetime=1000
-
-set signcolumn=yes
+set updatetime=300
+set signcolumn=number
 set colorcolumn=80
 set wrap
 set textwidth=0
@@ -274,29 +161,26 @@ set noexpandtab
 set autoindent
 set smartindent
 set listchars=tab:←-→,space:·,eol:~,extends:¬,precedes:⏗
-set fillchars=vert:\ ,fold:-,stl:=
-
+set fillchars=vert:\ ,fold:-,stl:\ ,stlnc:-
 set scrolloff=3
-"Disable Deoplete completion messages
-"A: You can disable the messages through the 'shortmess' option. >
+" Don't pass messages to |ins-completion-menu|.
 set shortmess+=c
 set completeopt-=preview
-
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
-set foldmethod=syntax
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
 set showmatch
-"""" ---- GENERAL CONFIG ----
-
-"""" ++++ MAPPINGS ++++
-nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
-"print token type
-nnoremap <silent> <space>s :echo synIDattr(synID(line('.'), col('.'), 1), 'name')<cr>
+"}}} GENERAL CONFIG
+"{{{ MAPPINGS
+nnoremap <F2> :set invpaste paste?<CR>
 nnoremap <silent> <space>. :source $MYVIMRC<cr>
+nnoremap U :echo " < < ===== C H E C K   C A P S   L O C K ===== > > "<CR>
+
+" Close all but current buffer
+nnoremap <silent> mbo  :%bd <bar> e# <bar> bd#<cr>
 
 nnoremap <space>w :w<cr>
 nnoremap <space>W :w!<cr>
@@ -308,41 +192,34 @@ nnoremap <space>E :e!<cr>
 nnoremap <space><C-e> :E<cr>
 nnoremap <space><space>q :wq<cr>
 
-set pastetoggle=<F2>
-nnoremap <F2> :set invpaste paste?<CR>
-
 " Navigating with guides
-inoremap <c-space> <esc>/<++><Enter>"_c4l
-vnoremap <c-space> <esc>/<++><Enter>"_c4l
-noremap <c-space> <esc>/<++><Enter>"_c4l
+" in some terminals, <c-space> produces <nul>
+inoremap <nul> <esc>/<++><Enter>"_c4l
+vnoremap <nul> <esc>/<++><Enter>"_c4l
+noremap <nul> <esc>/<++><Enter>"_c4l
 
-"turn off search highlight until next search
-nnoremap <space>/ :nohlsearch<CR>
+nnoremap <silent> <space>/ :let @/=""<CR>
 
-nnoremap silent <space>n :next<cr>
-nnoremap silent <space>p :previous<cr>
+nnoremap <silent> <space>n :next<cr>
+nnoremap <silent> <space>N :previous<cr>
 
 "folds
-nnoremap fa za
-nnoremap fA zA
-nnoremap tf @=(&foldlevel?'zM':'zR')<CR>
-
-" :: SNIPPETS ::
-au! BufRead *.c,*.cs,*.cpp,*.cc inoremap {<cr> {<cr><bs>}<esc>O
-"check.h START_TEST/END_TEST block
-inoremap ;ST START_TEST()<esc>mzo{<cr><++><cr>}<cr>END_TEST<esc>`zi
-"function template
-inoremap ;FC <cr><cr><++>(<++>)<cr>{<cr><++><cr>}<esc>4ki
-"header guard
-inoremap ;HG _<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yo#define <esc>""po<cr><cr>#endif /* <esc>""pA */<esc>kk
+nnoremap <silent> fa za
+nnoremap <silent> fA zA
+nnoremap <silent> tf @=(&foldlevel?'zm':'zr')<CR>
+nnoremap <silent> tF @=(&foldlevel?'zM':'zR')<CR>
 
 "toggles
-noremap <space>p :setlocal spell! <bar> call EchoToggle("Spellcheck", &spell)<CR>
-noremap <space>g :setlocal wrap! <bar> call EchoToggle("Linewrap", &wrap)<CR>
-noremap <space><tab> :setlocal expandtab! <bar> call EchoToggle("Expandtab", &expandtab)<CR>
-noremap <space>C :set cursorline! <bar> call EchoToggle("Cursorline", &cursorline)<CR>
-noremap <space>i :set list! <bar> call EchoToggle("Whitespace", &list)<CR>
-noremap <F1> :call ToggleWhitespaceFix() <bar> call EchoToggle("Whitespace fix", get(g:, 'whitespacefix', 1))<CR>
+noremap <space>p :setlocal spell! <bar> echo "Spellcheck ".OnOff(&spell)<CR>
+noremap <space>g :set wrap! <bar> echo "Linewrap ".OnOff(&wrap)<CR>
+noremap <space><tab> :setlocal expandtab! <bar> echo "Expandtab ".OnOff(&expandtab)<CR>
+noremap <space>C :set cursorline! <bar> echo "Cursorline" .OnOff(&cursorline)<CR>
+noremap <space>c :set cursorcolumn! <bar> echo "Cursorcolumn" .OnOff(&cursorcolumn)<CR>
+noremap <space>i :set list! <bar> echo "Whitespace ".OnOff(&list)<CR>
+noremap <F1> :call ToggleWhitespaceFix() <bar> echo "Whitespace fix ".OnOff(get(g:, 'whitespacefix', 1))<CR>
+
+noremap <F3> :call EchoSyntaxInfo(line("."), col("."))<CR>
+noremap <F4> :call EchoStyleInfo(line("."), col("."))<CR>
 
 " Line manipulation
 "move lines
@@ -365,78 +242,186 @@ nnoremap <space>J <c-w>+
 nnoremap <space>K <c-w>-
 nnoremap <space>L <c-w>>
 
-noremap <space>[ gT
-noremap <space>] gt
+"tabs
+noremap <silent> <space>] :tabnext<cr>
+noremap <silent> <space>[ :tabNext<cr>
+noremap <silent> <space>} :tabm +1<cr>
+noremap <silent> <space>{ :tabm -1<cr>
+noremap <space>1 1gt<cr>
+noremap <space>2 2gt<cr>
+noremap <space>3 3gt<cr>
+noremap <space>4 4gt<cr>
+noremap <space>5 5gt<cr>
+noremap <space>6 6gt<cr>
+noremap <space>7 7gt<cr>
+noremap <space>8 8gt<cr>
+noremap <space>9 9gt<cr>
+noremap <space>0 10gt<cr>
 
 " Plugin binds
-nnoremap <space>t :NERDTreeToggle<cr>
-nnoremap <space>pi :PlugInstall<cr>
-nnoremap <space>pc :PlugClean<cr>
-nnoremap <space>pu :PlugUpdate<cr>
-nnoremap <space>pU :PlugUpgrade<cr>
-nnoremap <space>ps :PlugStatus<cr>
+nnoremap <silent> <space>t :NERDTreeToggle<cr>
+nnoremap <silent> <space>T :UndotreeToggle<cr>
+nnoremap <silent> <space>Pi :PlugInstall<cr>
+nnoremap <silent> <space>Pc :PlugClean<cr>
+nnoremap <silent> <space>Pu :PlugUpdate<cr>
+nnoremap <silent> <space>PU :PlugUpgrade<cr>
+nnoremap <silent> <space>Ps :PlugStatus<cr>
+"}}} MAPPINGS
+"{{{ AUTOCMDS
+"{{{ Display
+augroup Display
+    autocmd!
+    " CS folding: http://vim.wikia.com/wiki/Syntax-based_folding, see comment by Ostrygen
+    autocmd FileType cs set omnifunc=syntaxcomplete#Complete
+                     \| set foldmethod=marker
+                     \| set foldmarker={,}
+                     \| set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
+                     \| set foldlevelstart=2
 
-nnoremap <space>P :OmniSharpHighlightEcho<cr>
+    autocmd FileType vim setlocal foldmethod=marker
+                \| setlocal expandtab
+    autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
+    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc,tex setlocal nowrap nospell
 
-nnoremap <F8> :TagbarToggle<cr>
-"""" ---- MAPPINGS ----
+    autocmd FileType tex let g:tex_no_error=1
+    autocmd VimLeave *.tex !texclear %
+    autocmd BufWritePre *.tex let g:tex_modified = &modified
+    autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
 
-"""" ++++ COLORS ++++
-" Set to 256 for 256+ terms, as well as good colorscheme support.
-" Set to 16 to use xresources
-set t_Co=16
+    autocmd BufRead,BufNewFile *.Xcolor,xcolor set ft=xdefaults
+    autocmd BufRead,BufNewFile *.h set ft=c
+    autocmd BufRead,BufNewFile *.conf,*.cfg set ft=conf
+    autocmd BufRead,BufNewFile *.inc set ft=include | set syntax=sourcepawn
+    autocmd BufRead,BufNewFile *.vt,*.ft set ft=glsl
+    autocmd BufRead,BufNewFile *.vth,*.fth set ft=hlsl
+    autocmd BufRead,BufNewFile *.compute, set ft=hlsl
+    autocmd BufRead,BufNewFile *.todo,*.TODO,TODO,todo set ft=markdown
+
+    autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines* set ft=sh
+    autocmd BufRead fonts.conf set ft=html
+
+    autocmd FileType markdown let g:whitespacefix=0
+
+    "continue where you left off
+    autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
+                \| exe "normal! g'\""
+                \| endif
+
+    autocmd FileType glsl,hlsl set iskeyword=@,48-57,_,192-255
+    autocmd FileType glsl,hlsl set nowrap
+    autocmd BufEnter,WinEnter,WinNew,VimResized *,*.*
+                \  let &scrolloff=winheight(win_getid())/2
+augroup END
+"}}}
+"{{{ Snippets
+augroup Snippets
+    autocmd!
+    "check.h START_TEST/END_TEST block
+    autocmd FileType c,cpp inoremap ;ST START_TEST()<esc>mzo{<cr><++><cr>}<cr>END_TEST<esc>`zi
+    "function template
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;FC <cr><cr><++>(<++>)<cr>{<cr><++><cr>}<esc>4ki
+    "header guard
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yo#define <esc>""po<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3jo
+    "ifdef
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;ID #ifdef <++><cr>#endif /* <++> */<esc>kciw
+    "ifndef
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;ND #ifndef <++><cr>#endif /* <++> */<esc>kciw
+    "multline commenting
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap /** /*<space><space>*/<esc>hhi
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap {<cr> {<cr><bs>}<esc>O
+    autocmd FileType c,cpp,glsl,hlsl,cs inoremap <C-{> <esc>V:s/^\t\\|^ \{4\}//<cr>i
+
+    autocmd FileType cs nnoremap <silent> <space>R :echo "Restarting OmniSharp Server" <bar> OmniSharpRestartServer <bar> echo "Server restarted"<cr>
+    autocmd FileType cs nnoremap <silent> <space>P :OmniSharpHighlightEcho<cr>
+augroup END
+"}}}
+"{{{ Plugin Stuff
+augroup pluginstuff
+    autocmd!
+    "open NERDTree automatically when vim starts up on opening a directory
+    autocmd StdinReadPre * let s:std_in=1
+    autocmd VimEnter *
+                \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
+                \| exe 'NERDTree' argv()[0]
+                \| wincmd p
+                \| ene
+                \| endif
+augroup END
+"}}}
+"}}} AUTOCMDS
+"{{{ COLORS
+" On default colorscheme:
+"   8, 16, 256 the color order is NR-8, otherwise it's NR-16 (:help cterm-colors)
+set t_Co=256
 set t_ut=
+" t_RB for auto light/dark background
+"set t_RB=
 set background=light
 "colorscheme gruvbox
 " Highlighting
-highlight Comment                                               cterm=italic
-highlight Search                                                cterm=reverse
-highlight IncSearch                                             cterm=reverse
-highlight Normal        ctermbg=none
-highlight SignColumn    ctermbg=none
-highlight CursorLine    ctermbg=darkgrey                        cterm=none
-highlight CursorColumn  ctermbg=darkgrey                        cterm=none
-highlight ColorColumn   ctermbg=darkgrey    ctermfg=none
-highlight Folded        ctermbg=none        ctermfg=darkblue    cterm=italic
-highlight Pmenu         ctermbg=darkgrey    ctermfg=white       cterm=bold
-highlight PmenuSel      ctermbg=darkyellow  ctermfg=white       cterm=bold
-highlight LineNrAbove   ctermbg=none        ctermfg=grey
-highlight LineNr        ctermbg=none        ctermfg=magenta     cterm=bolditalic
-highlight LineNrBelow   ctermbg=none        ctermfg=grey
-highlight MatchParen    ctermbg=yellow      ctermfg=black
-highlight TabLineFill   ctermbg=white       ctermfg=black
-highlight TabLineSel    ctermbg=green       ctermfg=black
-highlight TabLine       ctermbg=gray        ctermfg=black
-highlight Todo          ctermbg=none        ctermfg=green       cterm=bolditalic
+highlight Comment                                         cterm=italic
+highlight Search       ctermfg=black   ctermbg=darkyellow
+highlight IncSearch                                       cterm=reverse
+highlight VertSplit    ctermfg=black   ctermbg=black
+highlight link StatusLine VertSplit
+highlight link StatusLineNC VertSplit
+highlight Normal                       ctermbg=none
+highlight SignColumn                   ctermbg=none
+highlight CursorLine                   ctermbg=grey       cterm=none
+highlight CursorColumn                 ctermbg=grey       cterm=none
+highlight ColorColumn  ctermfg=none    ctermbg=black
+highlight Folded       ctermfg=grey    ctermbg=none
+highlight Pmenu        ctermfg=white   ctermbg=darkgrey   cterm=bold
+highlight PmenuSel     ctermfg=white   ctermbg=darkyellow cterm=bold
+highlight LineNrAbove  ctermfg=grey    ctermbg=none
+highlight LineNr       ctermfg=magenta ctermbg=none       cterm=bold,italic
+highlight LineNrBelow  ctermfg=grey    ctermbg=none
+highlight MatchParen   ctermfg=black   ctermbg=yellow
+highlight TabLineFill  ctermfg=black   ctermbg=black      cterm=none
+highlight TabLineSel   ctermfg=black   ctermbg=white      cterm=none
+highlight TabLine      ctermfg=black   ctermbg=darkgray   cterm=italic
+highlight Todo         ctermfg=green   ctermbg=none       cterm=bold,italic
+highlight Statement    ctermfg=blue
 
-" Easytags
-highlight cTypeTag      ctermfg=lightyellow
-highlight cFunctionTag  ctermfg=yellow
-highlight cMemberTag    ctermfg=darkyellow
+highlight vimHighlight  ctermfg=darkyellow
+highlight vimMap        ctermfg=yellow
+highlight vimOption     ctermfg=blue                      cterm=bold
+highlight vimVar        ctermfg=blue
+highlight vimCommand    ctermfg=red
+highlight vimIsCommand  ctermfg=yellow
+highlight vimFunction   ctermfg=magenta                   cterm=italic
+highlight link vimFuncName vimFunction
+highlight vimHICTerm    ctermfg=green                     cterm=bold
+highlight link vimHiCtermFgBg vimHICTerm
+highlight vimHiGroup    ctermfg=darkcyan
+highlight link vimGroup vimHiGroup
+highlight vimHiAttrib   ctermfg=magenta
+highlight link vimHiCtermColor vimHiAttrib
+highlight link vimFgBgAttrib vimHiAttrib
 
 " Git Gutter
-highlight GitGutterAdd          ctermfg=darkblue    cterm=bold
-highlight GitGutterChange       ctermfg=lightyellow cterm=bold
-highlight GitGutterDelete       ctermfg=darkmagenta cterm=bold
-highlight GitGutterChangeDelete ctermfg=darkmagenta cterm=bold,underline
+highlight GitGutterAdd              ctermfg=cyan                           cterm=bold
+highlight GitGutterChange           ctermfg=yellow                         cterm=bold
+highlight GitGutterDelete           ctermfg=darkred                        cterm=bold
+highlight GitGutterChangeDelete     ctermfg=darkmagenta                    cterm=bold,underline
 
 " Syntastic
-highlight SyntasticError        ctermbg=lightcyan
-highlight SyntasticWarning      ctermbg=none
-highlight SyntasticStyleError   ctermbg=none
-highlight SyntasticStyleWarning ctermbg=none
+highlight SyntasticError            ctermfg=red         ctermbg=black      cterm=bold
+highlight SyntasticWarning                              ctermbg=none
+highlight SyntasticStyleError                           ctermbg=none
+highlight SyntasticStyleWarning                         ctermbg=none       cterm=none
 
-highlight SyntasticErrorSign        ctermbg=darkred
-highlight SyntasticWarningSign      ctermbg=darkyellow
-highlight SyntasticStyleErrorSign   ctermbg=darkcyan
-highlight SyntasticStyleWarningSign ctermbg=darkgrey
+highlight SyntasticErrorSign                            ctermbg=darkred
+highlight SyntasticWarningSign                          ctermbg=darkyellow
+highlight SyntasticStyleErrorSign                       ctermbg=darkcyan
+highlight SyntasticStyleWarningSign                                        cterm=reverse
 
-highlight SyntasticErrorLine        ctermfg=darkred
-highlight SyntasticWarningLine      ctermfg=none
+highlight SyntasticErrorLine        ctermfg=darkred                        cterm=none
+highlight SyntasticWarningLine      ctermfg=none        ctermbg=none
 highlight SyntasticStyleErrorLine   ctermfg=darkcyan
 highlight SyntasticStyleWarningLine ctermfg=darkblue
 
-" ALE (ALE has a LOT more highlight groups than this)
+" ALE
 highlight link ALEError         SyntasticError
 highlight link ALEWarning       SyntasticWarning
 highlight link ALEStyleError    SyntasticStyleError
@@ -453,22 +438,38 @@ highlight link ALEStyleErrorLine    SyntasticStyleErrorLine
 highlight link ALEStyleWarningLine  SyntasticStyleWarningLine
 
 " Omnisharp
-highlight csClass       ctermfg=blue
-highlight csVar         ctermfg=white
-highlight csLocal                           cterm=italic
-highlight csMethod      ctermfg=lightyellow
+highlight csNamespace   ctermfg=yellow     cterm=italic
+highlight csClass       ctermfg=green      cterm=italic
+highlight csStruct      ctermfg=green
+highlight csField       ctermfg=white
+highlight csProp        ctermfg=cyan
+highlight csMethod      ctermfg=yellow     cterm=bold
+highlight csLocal                          cterm=italic
 highlight csIdent       ctermfg=magenta
-highlight csProp        ctermfg=cyan        cterm=italic
-highlight csNamespace   ctermfg=blue        cterm=italic
+highlight csOperator    ctermfg=darkyellow cterm=bold
+highlight csOverload    ctermfg=darkyellow cterm=bold
+highlight csPunctuation ctermfg=darkyellow
+highlight csKeyword     ctermfg=red        cterm=italic
+highlight csControl                        cterm=italic
+highlight csNumber      ctermfg=magenta
+highlight csString      ctermfg=darkyellow
 
 let g:OmniSharp_highlight_groups =
    \{
-   \    'ClassName':        'csClass',
-   \    'FieldName':        'csVar',
-   \    'LocalName':        'csLocal',
-   \    'MethodName':       'csMethod',
-   \    'PropertyName':     'csProp',
-   \    'NamespaceName':    'csNamespace',
-   \    'Identifier':       'csIdent',
+   \    'ClassName':            'csClass',
+   \    'StructName':           'csStruct',
+   \    'FieldName':            'csField',
+   \    'LocalName':            'csLocal',
+   \    'MethodName':           'csMethod',
+   \    'PropertyName':         'csProp',
+   \    'NamespaceName':        'csNamespace',
+   \    'Identifier':           'csIdent',
+   \    'Operator':             'csOperator',
+   \    'OperatorOverloaded':   'csOverload',
+   \    'Keyword':              'csKeyword',
+   \    'ControlKeyword':       'csControl',
+   \    'NumericLiteral':       'csNumber',
+   \    'StringLiteral':        'csString',
+   \    'Punctuation':          'csPunctuation',
    \}
-"""" ---- COLORS ----
+"}}} COLORS

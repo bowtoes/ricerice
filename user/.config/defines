@@ -2,7 +2,6 @@
 
 # Personal environment variables
 
-export WALLDIR="$HOME/wallpapers/include"
 export LOGDIR="$HOME/.log"
 
 export TERMINAL="st"
@@ -34,7 +33,8 @@ export DIRCOLS="$HOME/.config/dircolors"
 [ -f "$DIRCOLS" ] && . "$DIRCOLS"
 
 export DEV="/addtl/dev"
-export RICEDIR="/addtl/dev/other/ricerice"
+export RICEDIR="$DEV/other/ricerice"
+export WALLDIR="$DEV/other/wallpapers/include"
 
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"

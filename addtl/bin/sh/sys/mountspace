@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+awkcmd='
+FNR==1 {
+	printf("%-9s |%-7s |%-9s |%-7s | %s\n","Used","Used %","Free","Free %","Mount")
+}
+{
+	size = $2
+	used = $3
+	avail = $4
+	mount = $6
+
+	guse = (((used / 1000) / 1000) / 1000)
+	gfree = (((avail / 1000) / 1000) / 1000)
+
+	puse = 100 * used/size
+	pfree = 100 * avail/size
+
+	printf("%-7.2fGB |%-6.2f%% |%-7.2fGB |%-6.2f%% | %s\n",guse,puse,gfree,pfree,mount)
+}
+'
+
+TYPE=""
+while [ "$#" -gt 0 ] ; do
+	TYPE="$TYPE --type="$1""
+	shift
+done
+
+df --block-size=1 --portability $TYPE | awk "$awkcmd"

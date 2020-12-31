@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+# args: "sname" $(ProjectPath) $(File) $(Line) $(Column)
+
+sname="$1"
+projPath="$2"
+file="$3"
+if [ -n "$4" ] ; then
+	line="$4"
+else
+	line="0"
+fi
+if [ -n "$5" ] ; then
+	col="$5"
+else
+	col="0"
+fi
+
+if [ -d "$projPath/$file" ] ; then
+	pos="$file"
+else
+	pos="$file:$line:$col"
+fi
+
+# These cmdline arguments are awfully finicky.
+# Also, a vim plugin is needed for the '$line:$col' thing to work.
+# There might be a way to do it without a plugin, but I don't know it.
+if [ -n "$(vim --serverlist | grep "$sname")" ] ; then
+	vim --servername "$sname" --remote-send ":tabe $pos<cr>"
+	# focus the window
+	if [ -n "$(command -v wmctrl)" ] ; then
+		id=$(wmctrl -lp | grep "$sname" | awk '{ print $1 }')
+		wmctrl -ia $id
+	fi
+else
+	st -F -e bash -l -c "vim --servername "$sname" --remote-silent '$pos'" &
+fi
