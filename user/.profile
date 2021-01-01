@@ -51,7 +51,7 @@ append ()
 }
 appendrecurse ()
 {
-	rp="$(realpath "$1")"
+	rp="$(realpath -m "$1")"
 	if [ -d "$rp" ] ; then
 		for d in $(find -L "$rp" -type d -not -path '*.git*') ; do
 			append "$d"
