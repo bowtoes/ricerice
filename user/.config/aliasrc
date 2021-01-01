@@ -1,8 +1,7 @@
 # Conditional alias, only aliases if $2 is a valid command on the system
 calias ()
 {
-	[ -n "$(command -v $2)" ] && \
-		alias $1="$2"
+	[ -n "$(command -v $2)" ] && alias $1="$2"
 }
 
 calias bashp "source ~/.bash_profile"
@@ -26,7 +25,7 @@ alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 # all subdirectories and files will also be blacklisted. Instead, it only does
 # 'recursive' blacklisting to a depth of 1.
 # TODO fix
-if [ -n `command -v safe-rm` ] ; then
+if [ -n "$(command -v safe-rm)" ] ; then
 	alias rm="safe-rm -v --preserve-root"
 	alias rmdir="safe-rmdir -v"
 else
@@ -73,12 +72,12 @@ alias LL="ls -1lsA"
 
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 
-[ -n `command -v wget` ] && \
+[ -n "$(command -v wget)" ] && \
 	alias wget="wget -v --no-clobber --timestamping --no-cookies --compression=auto \
 		--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
-[ -n `command -v feh` ] && \
+[ -n "$(command -v feh)" ] && \
 	alias feh="feh --force-aliasing --keep-zoom-vp --zoom-fill"
-[ -n `command -v patch` ] && \
+[ -n "$(command -v patch)" ] && \
 	alias patch="patch -b"
 alias du="du -cs --si"
 alias df="df --si"

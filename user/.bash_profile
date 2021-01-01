@@ -2,6 +2,6 @@
 # ~/.bash_profile
 #
 
-[ -f "$HOME/.bash_login" ] && . "$HOME/.bash_login"
-[ -f "$HOME/.profile" ] && . "$HOME/.profile"
-[ -f "$HOME/.bashrc" ] && . "$HOME/.bashrc"
+[ -f "$HOME/.bash_login" ] && source "$HOME/.bash_login"
+[ -f "$HOME/.profile" ] && source "$HOME/.profile"
+[ -f "$HOME/.bashrc" ] && source "$HOME/.bashrc"
