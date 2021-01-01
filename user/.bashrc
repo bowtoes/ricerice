@@ -13,14 +13,8 @@ stty -ixon # Disable ctrl-s, ctrl-q
 [ -f $HOME/.config/alias2 ] && . $HOME/.config/alias2
 [ -f /usr/share/bash-completion/bash_completion ] && . /usr/share/bash-completion/bash_completion
 
+# Removing this causes an error on login?
 n()
 {
-    export NNN_TMPFILE=${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastdir
-
-    nnn "$@"
-
-    if [ -f $NNN_TMPFILE ]; then
-            . $NNN_TMPFILE
-            rm -f $NNN_TMPFILE > /dev/null
-    fi
+	echo "A" > /dev/null
 }

@@ -297,7 +297,7 @@ augroup Display
     autocmd BufRead,BufNewFile *.compute, set ft=hlsl
     autocmd BufRead,BufNewFile *.todo,*.TODO,TODO,todo set ft=markdown
 
-    autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines* set ft=sh
+    autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines*,.bash* set ft=sh
     autocmd BufRead fonts.conf set ft=html
 
     autocmd FileType markdown let g:whitespacefix=0

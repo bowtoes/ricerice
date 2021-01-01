@@ -120,7 +120,6 @@ export DEFINES="$CONFIGDIR/defines"
 
 export GPG_TTY=$(tty)
 export LPASS_PINENTRY="pinentry-curses"
-export NNN_USE_EDITOR=1
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export GTK_IM_MODULE=ibus
