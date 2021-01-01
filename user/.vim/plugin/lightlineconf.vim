@@ -1,12 +1,12 @@
 let g:lightline = {}
 let g:lightline.enable = { 'statusline': 1, 'tabline': 0 }
 let g:lightline.separator = { 'left': '', 'right': '' }
-let g:lightline.subseparator = { 'left': '|', 'right': '|' }
+let g:lightline.subseparator = { 'left': '', 'right': '|' }
 let g:lightline.tabline_separator = g:lightline.separator
 let g:lightline.tabline_subseparator = g:lightline.subseparator
 let g:lightline.active = {
 	\ 'left':  [[ 'mode', 'paste' ],
-	\           [ 'readonly', 'filename', 'modified' ],
+	\           [ 'readonly', 'modified' ],
 	\           ['synwarn', 'synstatus', 'relativepath']],
 	\ 'right': [[ 'lineinfo', 'charinfo' ],
 	\           [ 'percent', 'foldlevel' ],
@@ -88,4 +88,4 @@ let g:lightline.mode_map = {
 	\ "\<C-s>": 'SB',
 	\      't': 't',
 	\ }
-let g:lightline.colorscheme = 'century'
+let g:lightline.colorscheme = 'terminal'
