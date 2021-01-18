@@ -5,8 +5,8 @@
 ! SOFT CONTRAST:
 !*background: #32302f
 ! HARD CONTRAST
-!*background:  #1d2021
-*background:  #131210
+*background:  #1d2021
+!*background:  #131210
 *cursorColor: #ebdbb2
 
 ! BLACK

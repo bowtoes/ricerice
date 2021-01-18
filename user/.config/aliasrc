@@ -34,11 +34,35 @@ else
 fi
 
 # -- TYPOS
-alias claer="clear"
+alias caelr="clear"
+alias caerl="clear"
+alias carel="clear"
+alias crael="clear"
+alias rcael="clear"
+alias cealr="clear"
+alias cearl="clear"
+alias ceral="clear"
+alias creal="clear"
+alias rceal="clear"
 alias caler="clear"
+alias calre="clear"
+alias carle="clear"
+alias crale="clear"
+alias rcale="clear"
 alias celar="clear"
-alias clera="clear"
+alias celra="clear"
+alias cerla="clear"
+alias crela="clear"
+alias rcela="clear"
+alias claer="clear"
 alias clare="clear"
+alias clrae="clear"
+alias crlae="clear"
+alias rclae="clear"
+alias clera="clear"
+alias clrea="clear"
+alias clrea="clear"
+alias rclea="clear"
 alias cd..="cd .."
 
 # -- DEFAULT SETTINGS
@@ -52,10 +76,7 @@ alias cd..="cd .."
 #  Capital first letter:  '-1' is passed to 'ls' (single column)
 #  Capital second letter: '-s' is passed to 'ls'
 #  The argument that matches the second letter is always passed (except for ls)
-alias l="ls"
-alias L="ls -1"
-
-alias ls="ls -CNFX --si --color=auto --group-directories-first --time-style=long-iso"
+alias ls="ls -xNFX --si --color=auto --group-directories-first --time-style=long-iso"
 alias Ls="ls -1"
 alias lS="ls -s"
 alias LS="ls -1s"
@@ -70,15 +91,19 @@ alias Ll="ls -1ls"
 alias lL="ls -ls"
 alias LL="ls -1lsA"
 
+alias l="ls"
+alias L="ls -1"
+
+alias search="find . -type f | grep "
+alias fileextensions="find . -type f | awk -F. '!a[\$NF]++{print \$NF}' | sort"
+
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 
-[ -n "$(command -v wget)" ] && \
-	alias wget="wget -v --no-clobber --timestamping --no-cookies --compression=auto \
+calias wget "wget -v --no-clobber --timestamping --no-cookies --compression=auto \
 		--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
-[ -n "$(command -v feh)" ] && \
-	alias feh="feh --force-aliasing --keep-zoom-vp --zoom-fill"
-[ -n "$(command -v patch)" ] && \
-	alias patch="patch -b"
+calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
+calias patch "patch -b"
+calias kdiff3 "kdiff3 --qall"
 alias du="du -cs --si"
 alias df="df --si"
 # Ultimate 7z compression
