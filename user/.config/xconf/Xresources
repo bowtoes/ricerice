@@ -2,13 +2,13 @@ st.font: Consolas:pixelsize=12:antialias=true:autohint=true
 ! For some reason, monokai.Xcolor fails to load
 ! TODO: st-betterxresources: add a dmenu patch to allow more convenient changes
 ! 		to settings.
-st.xcolorsFile: ~/.config/xconf/xcolors/century.Xcolor
+st.xcolorsFile: ~/.config/xconf/xcolors/century2.Xcolor
 
 st.cols: 80
 st.rows: 25
 
-st.alpha:         0.80
-st.alphaNoFocus:  0.75
+st.alpha:         0.70
+st.alphaNoFocus:  0.65
 st.alpha2:        0.60
 st.alpha2NoFocus: 0.55
 

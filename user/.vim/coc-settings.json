@@ -1,4 +1,5 @@
 {
+	"diagnostic.checkCurrentLine": true,
 	"clangd.disableDiagnostics": true,
 	"clangd.semanticHighlighting": true
 }
