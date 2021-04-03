@@ -1,5 +1,6 @@
 {
+	"diagnostic.displayByAle": false,
 	"diagnostic.checkCurrentLine": true,
-	"clangd.disableDiagnostics": true,
-	"clangd.semanticHighlighting": true
+	"clangd.disableDiagnostics": false,
+	"clangd.semanticHighlighting": true,
 }

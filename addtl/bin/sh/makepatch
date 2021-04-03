@@ -11,7 +11,17 @@ DIR=$PWD
 PROJECT="$2"
 PATCH="$3"
 
-cd $1 || exit 1
+usage ()
+{
+	echo "Usage: makepatch <git-directory> <project-name> <patch-name> [remote] [branch]"
+	exit $1
+}
+
+if [ $# -lt 3 ] ; then
+	usage 0
+fi
+
+cd $1 >/dev/null 2>&1 || usage 1
 
 if [ -n "$5" ] ; then
 	BRANCH="$5"

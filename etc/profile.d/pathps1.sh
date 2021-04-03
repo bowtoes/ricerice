@@ -29,4 +29,4 @@ unset appendrecurse
 export PATH
 
 # default PS1? I have no idea why this is here and not in /etc/profile
-export PS1='\[\e[1;31m\]\u\[\e[35m\]@\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e[0;39;49m\]\$ '
+#export PS1='\[\e[1;31m\]\u\[\e[35m\]@\[\e[33m\]\h\[\e[0;39m\]:\[\e[1;34m\]\w\[\e[0;39;49m\]\$ '

@@ -34,7 +34,7 @@ export DIRCOLS="$HOME/.config/dircolors"
 
 export DEV="/addtl/dev"
 export RICEDIR="$DEV/other/ricerice"
-export WALLDIR="$DEV/other/wallpapers/include"
+export WALLDIR="$HOME/.wall/include"
 
 export XRESOURCES="$HOME/.config/xconf/Xresources"
 export XMODMAP="$HOME/.config/xconf/Xmodmap"

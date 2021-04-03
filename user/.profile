@@ -59,7 +59,7 @@ appendrecurse ()
 	fi
 }
 
-append "$HOME/.gem/ruby/2.6.0/bin"
+appendrecurse "$HOME/.gem"
 appendrecurse "$HOME/.local/bin"
 appendrecurse "$HOME/bin"
 appendrecurse "$HOME/scripts"

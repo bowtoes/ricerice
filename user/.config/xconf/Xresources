@@ -2,17 +2,20 @@ st.font: Consolas:pixelsize=12:antialias=true:autohint=true
 ! For some reason, monokai.Xcolor fails to load
 ! TODO: st-betterxresources: add a dmenu patch to allow more convenient changes
 ! 		to settings.
-st.xcolorsFile: ~/.config/xconf/xcolors/century2.Xcolor
+st.xcolorsFile: ~/.config/xconf/xcolors/seoul2.Xcolor
 
-st.cols: 80
-st.rows: 25
+st.cols: 120
+! for some reason, on my 1920x1080, more than 36 puts st into a corner.
+st.rows: 36
 
-st.alpha:         0.70
-st.alphaNoFocus:  0.65
+st.alpha:         0.80
+st.alphaNoFocus:  0.75
 st.alpha2:        0.60
 st.alpha2NoFocus: 0.55
 
-st.borderpx: 0
+! this CAN be negative
+st.borderpxx: 50
+st.borderpxy: 37
 
 dwm.borderpx: 2
 dwm.snap: 8

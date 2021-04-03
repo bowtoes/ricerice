@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env sh
 # Global functions available to all users
 
 takeme( )
@@ -7,17 +7,22 @@ takeme( )
 }
 up( )
 {
-    if [ -z "$1" ] ; then
-        cd ..
-    else
-        if strictlypositive "$1" ; then
-            i=0
-            while [ "$i" -lt "$1" ] ; do
-                if [ "$PWD" = "/" ] ; then break ; fi
-                cd ..
-                echo "$PWD"
-                i="$(( i+1 ))"
-            done
-        fi
+	newdir="../"
+    if strictlypositive "$1" ; then
+        i=1
+        while [ "$i" -lt "$1" ] ; do
+            if [ "$PWD" = "/" ] ; then break ; fi
+			newdir="$newdir""../"
+            i="$((i+1))"
+        done
     fi
+	cd "$newdir"
+}
+
+cdmk( )
+{
+	if [ ! -d "$1" ] ; then
+		mkdir -p "$1"
+	fi
+	cd "$1"
 }

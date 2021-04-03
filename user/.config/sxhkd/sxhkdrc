@@ -24,7 +24,7 @@ super + z
     $AUDIO
 
 super + b
-    setbg "$WALLDIR"
+    setbg
 
 # Et cetera...
 super + grave

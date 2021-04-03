@@ -4,6 +4,7 @@ calias ()
 	[ -n "$(command -v $2)" ] && alias $1="$2"
 }
 
+calias remake "make clean; make"
 calias bashp "source ~/.bash_profile"
 calias vfc "vim ~/.vim/vimrc"
 
@@ -14,6 +15,9 @@ calias ms4 "mountspace ext4"
 calias yaysizes "yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
 calias ftpstat "sudo systemctl status vsftpd"
 calias restarteth "sudo modprobe -r r8168; sudo modprobe r8168"
+calias objdump "objdump --source --line-numbers -w -Mintel"
+calias memcheck "valgrind --tool=memcheck --read-var-info=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s"
+calias massif "valgrind --tool=massif --max-snapshots=1000 --detailed-freq=1 --stacks=yes --read-var-info=yes -s"
 
 alias filecounts="itemcount -t f -e ./{.,}*"
 alias linkcounts="itemcount -t l -e ./{.,}*"
@@ -99,13 +103,18 @@ alias fileextensions="find . -type f | awk -F. '!a[\$NF]++{print \$NF}' | sort"
 
 alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
 
-calias wget "wget -v --no-clobber --timestamping --no-cookies --compression=auto \
-		--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
+calias wget "wget -v --show-progress --timestamping --no-cookies --compression=auto \
+--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
+calias dlpage "dlpage -l "$LOGDIR"/wget -h "$CONFIGDIR"/wget/hsts"
 calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
 calias patch "patch -b"
 calias kdiff3 "kdiff3 --qall"
+
 alias du="du -cs --si"
 alias df="df --si"
+alias mcnf="vim -p ~/.config/aliasrc ~/.config/dircolors ~/.config/xconf/"
+alias mxnf="vim -p $XPROFILE2 $XPROFILE"
+
 # Ultimate 7z compression
 alias zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
 alias ytdl="youtube-dl -ci"
