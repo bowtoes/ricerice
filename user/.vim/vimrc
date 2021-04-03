@@ -339,7 +339,7 @@ augroup Display
     autocmd BufRead fonts.conf set ft=html
 
     " trailing whitespace has a purpose in markdown
-    autocmd FileType markdown,html let g:whitespacefix=0
+    autocmd FileType markdown,html,diff,patch let g:whitespacefix=0
                     \| set tabstop=2
                     \| set expandtab
                     \| set spell

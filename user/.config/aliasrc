@@ -4,6 +4,8 @@ calias ()
 	[ -n "$(command -v $2)" ] && alias $1="$2"
 }
 
+calias aliasrc "vim ~/.config/aliasrc"
+
 calias remake "make clean; make"
 calias bashp "source ~/.bash_profile"
 calias vfc "vim ~/.vim/vimrc"
@@ -85,8 +87,8 @@ alias Ls="ls -1"
 alias lS="ls -s"
 alias LS="ls -1s"
 
-alias la="ls -A"
-alias La="ls -1A"
+alias la="ls -a"
+alias La="ls -1a"
 alias lA="ls -sA"
 alias LA="ls -1sA"
 
