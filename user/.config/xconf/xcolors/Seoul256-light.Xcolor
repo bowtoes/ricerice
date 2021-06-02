@@ -1,5 +1,4 @@
 ! seoul256 (light) theme adapted for URxvt
-! append the content of this file to your .Xresources
 
 ! special
 *.foreground:   #4e4e4e

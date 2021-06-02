@@ -1,0 +1,38 @@
+! Fishtank
+
+! special
+*.foreground:   #ecf0fe
+*.background:   #232537
+*.cursorColor:  #ecf0fe
+
+! black
+*.color0:       #03073c
+*.color8:       #6c5b30
+
+! red
+*.color1:       #c6004a
+*.color9:       #da4b8a
+
+! green
+*.color2:       #acf157
+*.color10:      #dbffa9
+
+! yellow
+*.color3:       #fecd5e
+*.color11:      #fee6a9
+
+! blue
+*.color4:       #525fb8
+*.color12:      #b2befa
+
+! magenta
+*.color5:       #986f82
+*.color13:      #fda5cd
+
+! cyan
+*.color6:       #968763
+*.color14:      #a5bd86
+
+! white
+*.color7:       #ecf0fc
+*.color15:      #f6ffec

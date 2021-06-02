@@ -1,0 +1,38 @@
+! Nord Light
+
+! special
+*.foreground:   #004f7c
+*.background:   #ebeaf2
+*.cursorColor:  #439ecf
+
+! black
+*.color0:       #353535
+*.color8:       #535353
+
+! red
+*.color1:       #e64569
+*.color9:       #e4859a
+
+! green
+*.color2:       #89d287
+*.color10:      #a2cca1
+
+! yellow
+*.color3:       #dab752
+*.color11:      #e1e387
+
+! blue
+*.color4:       #439ecf
+*.color12:      #6fbbe2
+
+! magenta
+*.color5:       #d961dc
+*.color13:      #e586e7
+
+! cyan
+*.color6:       #64aaaf
+*.color14:      #96dcda
+
+! white
+*.color7:       #b3b3b3
+*.color15:      #dedede

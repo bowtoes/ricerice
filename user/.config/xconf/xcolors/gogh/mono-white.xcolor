@@ -1,0 +1,38 @@
+! mono-white
+
+! special
+*.foreground:   #fafafa
+*.background:   #262626
+*.cursorColor:  #fafafa
+
+! black
+*.color0:       #3b3b3b
+*.color8:       #fafafa
+
+! red
+*.color1:       #fafafa
+*.color9:       #fafafa
+
+! green
+*.color2:       #fafafa
+*.color10:      #fafafa
+
+! yellow
+*.color3:       #fafafa
+*.color11:      #fafafa
+
+! blue
+*.color4:       #fafafa
+*.color12:      #fafafa
+
+! magenta
+*.color5:       #fafafa
+*.color13:      #fafafa
+
+! cyan
+*.color6:       #fafafa
+*.color14:      #fafafa
+
+! white
+*.color7:       #fafafa
+*.color15:      #fafafa

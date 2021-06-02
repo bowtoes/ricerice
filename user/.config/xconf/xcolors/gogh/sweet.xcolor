@@ -1,0 +1,38 @@
+! Sweet Terminal
+
+! special
+*.foreground:   #ffffff
+*.background:   #222235
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #3f3f54
+*.color8:       #959dcb
+
+! red
+*.color1:       #f60055
+*.color9:       #f60055
+
+! green
+*.color2:       #06c993
+*.color10:      #06c993
+
+! yellow
+*.color3:       #9700be
+*.color11:      #9700be
+
+! blue
+*.color4:       #f69154
+*.color12:      #f69154
+
+! magenta
+*.color5:       #ec89cb
+*.color13:      #ec89cb
+
+! cyan
+*.color6:       #60adec
+*.color14:      #00dded
+
+! white
+*.color7:       #abb2bf
+*.color15:      #ffffff

@@ -1,0 +1,38 @@
+! Fairy Floss Dark
+
+! special
+*.foreground:   #c2ffdf
+*.background:   #42395d
+*.cursorColor:  #ffb8d1
+
+! black
+*.color0:       #42395d
+*.color8:       #75507b
+
+! red
+*.color1:       #a8757b
+*.color9:       #ffb8d1
+
+! green
+*.color2:       #ff857f
+*.color10:      #f1568e
+
+! yellow
+*.color3:       #e6c000
+*.color11:      #d5a425
+
+! blue
+*.color4:       #ae81ff
+*.color12:      #c5a3ff
+
+! magenta
+*.color5:       #716799
+*.color13:      #8077a8
+
+! cyan
+*.color6:       #c2ffdf
+*.color14:      #c2ffff
+
+! white
+*.color7:       #f8f8f2
+*.color15:      #f8f8f0

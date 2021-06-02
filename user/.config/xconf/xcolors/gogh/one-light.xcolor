@@ -1,0 +1,38 @@
+! One Light
+
+! special
+*.foreground:   #2a2b32
+*.background:   #f8f8f8
+*.cursorColor:  #2a2b32
+
+! black
+*.color0:       #000000
+*.color8:       #2a2b32
+
+! red
+*.color1:       #da3e39
+*.color9:       #da3e39
+
+! green
+*.color2:       #41933e
+*.color10:      #41933e
+
+! yellow
+*.color3:       #855504
+*.color11:      #855504
+
+! blue
+*.color4:       #315eee
+*.color12:      #315eee
+
+! magenta
+*.color5:       #930092
+*.color13:      #930092
+
+! cyan
+*.color6:       #0e6fad
+*.color14:      #0e6fad
+
+! white
+*.color7:       #8e8f96
+*.color15:      #fffefe

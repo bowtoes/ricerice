@@ -1,0 +1,38 @@
+! Ura
+
+! special
+*.foreground:   #23476a
+*.background:   #feffee
+*.cursorColor:  #23476a
+
+! black
+*.color0:       #000000
+*.color8:       #808080
+
+! red
+*.color1:       #c21b6f
+*.color9:       #ee84b9
+
+! green
+*.color2:       #6fc21b
+*.color10:      #b9ee84
+
+! yellow
+*.color3:       #c26f1b
+*.color11:      #eeb984
+
+! blue
+*.color4:       #1b6fc2
+*.color12:      #84b9ee
+
+! magenta
+*.color5:       #6f1bc2
+*.color13:      #b984ee
+
+! cyan
+*.color6:       #1bc26f
+*.color14:      #84eeb9
+
+! white
+*.color7:       #808080
+*.color15:      #e5e5e5

@@ -1,0 +1,38 @@
+! Broadcast
+
+! special
+*.foreground:   #e6e1dc
+*.background:   #2b2b2b
+*.cursorColor:  #e6e1dc
+
+! black
+*.color0:       #000000
+*.color8:       #323232
+
+! red
+*.color1:       #da4939
+*.color9:       #ff7b6b
+
+! green
+*.color2:       #519f50
+*.color10:      #83d182
+
+! yellow
+*.color3:       #ffd24a
+*.color11:      #ffff7c
+
+! blue
+*.color4:       #6d9cbe
+*.color12:      #9fcef0
+
+! magenta
+*.color5:       #d0d0ff
+*.color13:      #ffffff
+
+! cyan
+*.color6:       #6e9cbe
+*.color14:      #a0cef0
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

@@ -1,0 +1,38 @@
+! Red Alert
+
+! special
+*.foreground:   #ffffff
+*.background:   #762423
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #000000
+*.color8:       #262626
+
+! red
+*.color1:       #d62e4e
+*.color9:       #e02553
+
+! green
+*.color2:       #71be6b
+*.color10:      #aff08c
+
+! yellow
+*.color3:       #beb86b
+*.color11:      #dfddb7
+
+! blue
+*.color4:       #489bee
+*.color12:      #65aaf1
+
+! magenta
+*.color5:       #e979d7
+*.color13:      #ddb7df
+
+! cyan
+*.color6:       #6bbeb8
+*.color14:      #b7dfdd
+
+! white
+*.color7:       #d6d6d6
+*.color15:      #ffffff

@@ -1,0 +1,38 @@
+! mono-green
+
+! special
+*.foreground:   #0bff00
+*.background:   #022b00
+*.cursorColor:  #0bff00
+
+! black
+*.color0:       #034000
+*.color8:       #0bff00
+
+! red
+*.color1:       #0bff00
+*.color9:       #0bff00
+
+! green
+*.color2:       #0bff00
+*.color10:      #0bff00
+
+! yellow
+*.color3:       #0bff00
+*.color11:      #0bff00
+
+! blue
+*.color4:       #0bff00
+*.color12:      #0bff00
+
+! magenta
+*.color5:       #0bff00
+*.color13:      #0bff00
+
+! cyan
+*.color6:       #0bff00
+*.color14:      #0bff00
+
+! white
+*.color7:       #0bff00
+*.color15:      #0bff00

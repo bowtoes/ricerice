@@ -1,0 +1,38 @@
+! IC Green PPL
+
+! special
+*.foreground:   #d9efd3
+*.background:   #3a3d3f
+*.cursorColor:  #d9efd3
+
+! black
+*.color0:       #1f1f1f
+*.color8:       #032710
+
+! red
+*.color1:       #fb002a
+*.color9:       #a7ff3f
+
+! green
+*.color2:       #339c24
+*.color10:      #9fff6d
+
+! yellow
+*.color3:       #659b25
+*.color11:      #d2ff6d
+
+! blue
+*.color4:       #149b45
+*.color12:      #72ffb5
+
+! magenta
+*.color5:       #53b82c
+*.color13:      #50ff3e
+
+! cyan
+*.color6:       #2cb868
+*.color14:      #22ff71
+
+! white
+*.color7:       #e0ffef
+*.color15:      #daefd0

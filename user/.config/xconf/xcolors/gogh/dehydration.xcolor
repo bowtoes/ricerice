@@ -1,0 +1,38 @@
+! DeHydration
+
+! special
+*.foreground:   #cccccc
+*.background:   #333333
+*.cursorColor:  #cccccc
+
+! black
+*.color0:       #333333
+*.color8:       #666666
+
+! red
+*.color1:       #ff5555
+*.color9:       #ff8080
+
+! green
+*.color2:       #5fd38d
+*.color10:      #87deaa
+
+! yellow
+*.color3:       #ff9955
+*.color11:      #ffb380
+
+! blue
+*.color4:       #3771c8
+*.color12:      #5f8dd3
+
+! magenta
+*.color5:       #bc5fd3
+*.color13:      #cd87de
+
+! cyan
+*.color6:       #5fd3bc
+*.color14:      #87decd
+
+! white
+*.color7:       #999999
+*.color15:      #cccccc

@@ -1,0 +1,38 @@
+! Grass
+
+! special
+*.foreground:   #fff0a5
+*.background:   #13773d
+*.cursorColor:  #fff0a5
+
+! black
+*.color0:       #000000
+*.color8:       #555555
+
+! red
+*.color1:       #bb0000
+*.color9:       #bb0000
+
+! green
+*.color2:       #00bb00
+*.color10:      #00bb00
+
+! yellow
+*.color3:       #e7b000
+*.color11:      #e7b000
+
+! blue
+*.color4:       #0000a3
+*.color12:      #0000bb
+
+! magenta
+*.color5:       #950062
+*.color13:      #ff55ff
+
+! cyan
+*.color6:       #00bbbb
+*.color14:      #55ffff
+
+! white
+*.color7:       #bbbbbb
+*.color15:      #ffffff

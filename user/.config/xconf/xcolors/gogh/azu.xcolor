@@ -1,0 +1,38 @@
+! Azu
+
+! special
+*.foreground:   #d9e6f2
+*.background:   #09111a
+*.cursorColor:  #d9e6f2
+
+! black
+*.color0:       #000000
+*.color8:       #262626
+
+! red
+*.color1:       #ac6d74
+*.color9:       #d6b8bc
+
+! green
+*.color2:       #74ac6d
+*.color10:      #bcd6b8
+
+! yellow
+*.color3:       #aca46d
+*.color11:      #d6d3b8
+
+! blue
+*.color4:       #6d74ac
+*.color12:      #b8bcd6
+
+! magenta
+*.color5:       #a46dac
+*.color13:      #d3b8d6
+
+! cyan
+*.color6:       #6daca4
+*.color14:      #b8d6d3
+
+! white
+*.color7:       #e6e6e6
+*.color15:      #ffffff

@@ -1,0 +1,38 @@
+! Toy Chest
+
+! special
+*.foreground:   #31d07b
+*.background:   #24364b
+*.cursorColor:  #31d07b
+
+! black
+*.color0:       #2c3f58
+*.color8:       #336889
+
+! red
+*.color1:       #be2d26
+*.color9:       #dd5944
+
+! green
+*.color2:       #1a9172
+*.color10:      #31d07b
+
+! yellow
+*.color3:       #db8e27
+*.color11:      #e7d84b
+
+! blue
+*.color4:       #325d96
+*.color12:      #34a6da
+
+! magenta
+*.color5:       #8a5edc
+*.color13:      #ae6bdc
+
+! cyan
+*.color6:       #35a08f
+*.color14:      #42c3ae
+
+! white
+*.color7:       #23d183
+*.color15:      #d5d5d5

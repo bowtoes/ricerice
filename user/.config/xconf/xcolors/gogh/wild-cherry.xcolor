@@ -1,0 +1,38 @@
+! Wild Cherry
+
+! special
+*.foreground:   #dafaff
+*.background:   #1f1726
+*.cursorColor:  #dafaff
+
+! black
+*.color0:       #000507
+*.color8:       #009cc9
+
+! red
+*.color1:       #d94085
+*.color9:       #da6bac
+
+! green
+*.color2:       #2ab250
+*.color10:      #f4dca5
+
+! yellow
+*.color3:       #ffd16f
+*.color11:      #eac066
+
+! blue
+*.color4:       #883cdc
+*.color12:      #308cba
+
+! magenta
+*.color5:       #ececec
+*.color13:      #ae636b
+
+! cyan
+*.color6:       #c1b8b7
+*.color14:      #ff919d
+
+! white
+*.color7:       #fff8de
+*.color15:      #e4838d

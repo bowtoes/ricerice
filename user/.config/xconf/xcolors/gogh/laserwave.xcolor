@@ -1,0 +1,38 @@
+! laserwave
+
+! special
+*.foreground:   #e0e0e0
+*.background:   #1f1926
+*.cursorColor:  #c7c7c7
+
+! black
+*.color0:       #39243a
+*.color8:       #716485
+
+! red
+*.color1:       #eb64b9
+*.color9:       #fc2377
+
+! green
+*.color2:       #afd686
+*.color10:      #50fa7b
+
+! yellow
+*.color3:       #feae87
+*.color11:      #ffe261
+
+! blue
+*.color4:       #40b4c4
+*.color12:      #74dfc4
+
+! magenta
+*.color5:       #b381c5
+*.color13:      #6d75e0
+
+! cyan
+*.color6:       #215969
+*.color14:      #b4dce7
+
+! white
+*.color7:       #91889b
+*.color15:      #ffffff

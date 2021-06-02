@@ -1,0 +1,38 @@
+! Misterioso
+
+! special
+*.foreground:   #e1e1e0
+*.background:   #2d3743
+*.cursorColor:  #e1e1e0
+
+! black
+*.color0:       #000000
+*.color8:       #555555
+
+! red
+*.color1:       #ff4242
+*.color9:       #ff3242
+
+! green
+*.color2:       #74af68
+*.color10:      #74cd68
+
+! yellow
+*.color3:       #ffad29
+*.color11:      #ffb929
+
+! blue
+*.color4:       #338f86
+*.color12:      #23d7d7
+
+! magenta
+*.color5:       #9414e6
+*.color13:      #ff37ff
+
+! cyan
+*.color6:       #23d7d7
+*.color14:      #00ede1
+
+! white
+*.color7:       #e1e1e0
+*.color15:      #ffffff

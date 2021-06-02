@@ -1,0 +1,38 @@
+! Belafonte Day
+
+! special
+*.foreground:   #45373c
+*.background:   #d5ccba
+*.cursorColor:  #45373c
+
+! black
+*.color0:       #20111b
+*.color8:       #5e5252
+
+! red
+*.color1:       #be100e
+*.color9:       #be100e
+
+! green
+*.color2:       #858162
+*.color10:      #858162
+
+! yellow
+*.color3:       #eaa549
+*.color11:      #eaa549
+
+! blue
+*.color4:       #426a79
+*.color12:      #426a79
+
+! magenta
+*.color5:       #97522c
+*.color13:      #97522c
+
+! cyan
+*.color6:       #989a9c
+*.color14:      #989a9c
+
+! white
+*.color7:       #968c83
+*.color15:      #d5ccba

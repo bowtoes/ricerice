@@ -3,4 +3,9 @@
 	"diagnostic.checkCurrentLine": true,
 	"clangd.disableDiagnostics": false,
 	"clangd.semanticHighlighting": true,
+	"clangd.disableSnippetCompletion": true,
+	"clangd.arguments": ["--background-index", "-j=8"],
+	"python.linting.flake8Enabled":true,
+	"python.linting.flake8Args":["--ignore",
+		"E231,E251,E401,E701,E731,E301,E302,E252,E225,E226,E501,E722,E305,E741,E703"],
 }

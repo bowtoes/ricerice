@@ -1,0 +1,38 @@
+! mono-amber
+
+! special
+*.foreground:   #ff9400
+*.background:   #2b1900
+*.cursorColor:  #ff9400
+
+! black
+*.color0:       #402500
+*.color8:       #ff9400
+
+! red
+*.color1:       #ff9400
+*.color9:       #ff9400
+
+! green
+*.color2:       #ff9400
+*.color10:      #ff9400
+
+! yellow
+*.color3:       #ff9400
+*.color11:      #ff9400
+
+! blue
+*.color4:       #ff9400
+*.color12:      #ff9400
+
+! magenta
+*.color5:       #ff9400
+*.color13:      #ff9400
+
+! cyan
+*.color6:       #ff9400
+*.color14:      #ff9400
+
+! white
+*.color7:       #ff9400
+*.color15:      #ff9400

@@ -1,0 +1,38 @@
+! kokuban
+
+! special
+*.foreground:   #d8e2d7
+*.background:   #0d4a08
+*.cursorColor:  #d8e2d7
+
+! black
+*.color0:       #2e8744
+*.color8:       #34934f
+
+! red
+*.color1:       #d84e4c
+*.color9:       #ff4f59
+
+! green
+*.color2:       #95da5a
+*.color10:      #aff56a
+
+! yellow
+*.color3:       #d6e264
+*.color11:      #fcff75
+
+! blue
+*.color4:       #4b9ed7
+*.color12:      #57aeff
+
+! magenta
+*.color5:       #945fc5
+*.color13:      #ae63e9
+
+! cyan
+*.color6:       #d89b25
+*.color14:      #ffaa2b
+
+! white
+*.color7:       #d8e2d7
+*.color15:      #fffefe

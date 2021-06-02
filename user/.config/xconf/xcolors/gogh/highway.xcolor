@@ -1,0 +1,38 @@
+! Highway
+
+! special
+*.foreground:   #ededed
+*.background:   #222225
+*.cursorColor:  #ededed
+
+! black
+*.color0:       #000000
+*.color8:       #5d504a
+
+! red
+*.color1:       #d00e18
+*.color9:       #f07e18
+
+! green
+*.color2:       #138034
+*.color10:      #b1d130
+
+! yellow
+*.color3:       #ffcb3e
+*.color11:      #fff120
+
+! blue
+*.color4:       #006bb3
+*.color12:      #4fc2fd
+
+! magenta
+*.color5:       #6b2775
+*.color13:      #de0071
+
+! cyan
+*.color6:       #384564
+*.color14:      #5d504a
+
+! white
+*.color7:       #ededed
+*.color15:      #ffffff

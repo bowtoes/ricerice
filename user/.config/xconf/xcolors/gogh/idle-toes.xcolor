@@ -1,0 +1,38 @@
+! Idle Toes
+
+! special
+*.foreground:   #ffffff
+*.background:   #323232
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #323232
+*.color8:       #535353
+
+! red
+*.color1:       #d25252
+*.color9:       #f07070
+
+! green
+*.color2:       #7fe173
+*.color10:      #9dff91
+
+! yellow
+*.color3:       #ffc66d
+*.color11:      #ffe48b
+
+! blue
+*.color4:       #4099ff
+*.color12:      #5eb7f7
+
+! magenta
+*.color5:       #f680ff
+*.color13:      #ff9dff
+
+! cyan
+*.color6:       #bed6ff
+*.color14:      #dcf4ff
+
+! white
+*.color7:       #eeeeec
+*.color15:      #ffffff

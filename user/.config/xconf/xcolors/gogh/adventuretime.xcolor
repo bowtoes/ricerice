@@ -1,0 +1,38 @@
+! Adventure Time
+
+! special
+*.foreground:   #f8dcc0
+*.background:   #1f1d45
+*.cursorColor:  #f8dcc0
+
+! black
+*.color0:       #050404
+*.color8:       #4e7cbf
+
+! red
+*.color1:       #bd0013
+*.color9:       #fc5f5a
+
+! green
+*.color2:       #4ab118
+*.color10:      #9eff6e
+
+! yellow
+*.color3:       #e7741e
+*.color11:      #efc11a
+
+! blue
+*.color4:       #0f4ac6
+*.color12:      #1997c6
+
+! magenta
+*.color5:       #665993
+*.color13:      #9b5953
+
+! cyan
+*.color6:       #70a598
+*.color14:      #c8faf4
+
+! white
+*.color7:       #f8dcc0
+*.color15:      #f6f5fb

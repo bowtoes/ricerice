@@ -7,7 +7,7 @@ gettext ()
     # $3 = FG
     # $4 = BG
 
-      if [ $1 -eq 0 ] ; then printf " %-4i %-4i %-4i " $2 $3 $4
+    if [ $1 -eq 0 ] ; then printf " %04i %04i %04i " $2 $3 $4
     elif [ $1 -eq 1 ] ; then
           if [ $2 -eq  0  ] ; then FTS="NORM"
         elif [ $2 -eq  1  ] ; then FTS="BOLD"
@@ -63,8 +63,8 @@ gettext ()
         else BGS="IVLD"
         fi
         printf "%14s" " $FTS $FGS $BGS "
-    else printf "%$1s" "#"
-      fi
+    else printf "%$1.$1s" "################################################################################################################################"
+    fi
 }
 
 # $1 = mode

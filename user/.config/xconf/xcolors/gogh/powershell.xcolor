@@ -1,0 +1,38 @@
+! PowerShell
+
+! special
+*.foreground:   #f6f6f7
+*.background:   #052454
+*.cursorColor:  #f6f6f7
+
+! black
+*.color0:       #000000
+*.color8:       #808080
+
+! red
+*.color1:       #7e0008
+*.color9:       #ef2929
+
+! green
+*.color2:       #098003
+*.color10:      #1cfe3c
+
+! yellow
+*.color3:       #c4a000
+*.color11:      #fefe45
+
+! blue
+*.color4:       #010083
+*.color12:      #268ad2
+
+! magenta
+*.color5:       #d33682
+*.color13:      #fe13fa
+
+! cyan
+*.color6:       #0e807f
+*.color14:      #29fffe
+
+! white
+*.color7:       #7f7c7f
+*.color15:      #c2c1c3

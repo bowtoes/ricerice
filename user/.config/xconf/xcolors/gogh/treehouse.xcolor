@@ -1,0 +1,38 @@
+! Treehouse
+
+! special
+*.foreground:   #786b53
+*.background:   #191919
+*.cursorColor:  #786b53
+
+! black
+*.color0:       #321300
+*.color8:       #433626
+
+! red
+*.color1:       #b2270e
+*.color9:       #ed5d20
+
+! green
+*.color2:       #44a900
+*.color10:      #55f238
+
+! yellow
+*.color3:       #aa820c
+*.color11:      #f2b732
+
+! blue
+*.color4:       #58859a
+*.color12:      #85cfed
+
+! magenta
+*.color5:       #97363d
+*.color13:      #e14c5a
+
+! cyan
+*.color6:       #b25a1e
+*.color14:      #f07d14
+
+! white
+*.color7:       #786b53
+*.color15:      #ffc800

@@ -1,0 +1,38 @@
+! SpaceGray Eighties
+
+! special
+*.foreground:   #bdbaae
+*.background:   #222222
+*.cursorColor:  #bdbaae
+
+! black
+*.color0:       #15171c
+*.color8:       #555555
+
+! red
+*.color1:       #ec5f67
+*.color9:       #ff6973
+
+! green
+*.color2:       #81a764
+*.color10:      #93d493
+
+! yellow
+*.color3:       #fec254
+*.color11:      #ffd256
+
+! blue
+*.color4:       #5486c0
+*.color12:      #4d84d1
+
+! magenta
+*.color5:       #bf83c1
+*.color13:      #ff55ff
+
+! cyan
+*.color6:       #57c2c1
+*.color14:      #83e9e4
+
+! white
+*.color7:       #efece7
+*.color15:      #ffffff

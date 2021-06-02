@@ -1,0 +1,38 @@
+! nighty
+
+! special
+*.foreground:   #dfdfdf
+*.background:   #2f2f2f
+*.cursorColor:  #dfdfdf
+
+! black
+*.color0:       #373d48
+*.color8:       #5c6370
+
+! red
+*.color1:       #9b3e46
+*.color9:       #d0555f
+
+! green
+*.color2:       #095b32
+*.color10:      #119955
+
+! yellow
+*.color3:       #808020
+*.color11:      #dfe048
+
+! blue
+*.color4:       #1d3e6f
+*.color12:      #4674b8
+
+! magenta
+*.color5:       #823065
+*.color13:      #ed86c9
+
+! cyan
+*.color6:       #3a7458
+*.color14:      #70d2a4
+
+! white
+*.color7:       #828282
+*.color15:      #dfdfdf

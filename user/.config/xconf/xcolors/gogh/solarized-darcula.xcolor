@@ -1,0 +1,38 @@
+! Solarized Darcula
+
+! special
+*.foreground:   #d2d8d9
+*.background:   #3d3f41
+*.cursorColor:  #d2d8d9
+
+! black
+*.color0:       #25292a
+*.color8:       #25292a
+
+! red
+*.color1:       #f24840
+*.color9:       #f24840
+
+! green
+*.color2:       #629655
+*.color10:      #629655
+
+! yellow
+*.color3:       #b68800
+*.color11:      #b68800
+
+! blue
+*.color4:       #2075c7
+*.color12:      #2075c7
+
+! magenta
+*.color5:       #797fd4
+*.color13:      #797fd4
+
+! cyan
+*.color6:       #15968d
+*.color14:      #15968d
+
+! white
+*.color7:       #d2d8d9
+*.color15:      #d2d8d9

@@ -1,0 +1,38 @@
+! summer-pop
+
+! special
+*.foreground:   #ffffff
+*.background:   #272822
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #666666
+*.color8:       #666666
+
+! red
+*.color1:       #ff1e8e
+*.color9:       #ff1e8e
+
+! green
+*.color2:       #8eff1e
+*.color10:      #8eff1e
+
+! yellow
+*.color3:       #fffb00
+*.color11:      #fffb00
+
+! blue
+*.color4:       #1e8eff
+*.color12:      #1e8eff
+
+! magenta
+*.color5:       #e500e5
+*.color13:      #e500e5
+
+! cyan
+*.color6:       #00e5e5
+*.color14:      #00e5e5
+
+! white
+*.color7:       #e5e5e5
+*.color15:      #e5e5e5

@@ -1,0 +1,38 @@
+! Horizon Bright
+
+! special
+*.foreground:   #1c1e26
+*.background:   #fdf0ed
+*.cursorColor:  #1c1e26
+
+! black
+*.color0:       #16161c
+*.color8:       #1a1c23
+
+! red
+*.color1:       #da103f
+*.color9:       #f43e5c
+
+! green
+*.color2:       #1eb980
+*.color10:      #07da8c
+
+! yellow
+*.color3:       #f6661e
+*.color11:      #f77d26
+
+! blue
+*.color4:       #26bbd9
+*.color12:      #3fc6de
+
+! magenta
+*.color5:       #ee64ae
+*.color13:      #f075b7
+
+! cyan
+*.color6:       #1d8991
+*.color14:      #1eaeae
+
+! white
+*.color7:       #fadad1
+*.color15:      #fdf0ed

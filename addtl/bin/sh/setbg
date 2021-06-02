@@ -7,7 +7,6 @@ else
     DIR="$HOME/wallpapers/"
 fi
 # $1 = directory
-# $2 = maxdepth
 selectRandomFile()
 {
     [ "$#" -eq 0 ] && exit

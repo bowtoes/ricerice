@@ -1,0 +1,38 @@
+! Symphonic
+
+! special
+*.foreground:   #ffffff
+*.background:   #000000
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #000000
+*.color8:       #1b1d21
+
+! red
+*.color1:       #dc322f
+*.color9:       #dc322f
+
+! green
+*.color2:       #56db3a
+*.color10:      #56db3a
+
+! yellow
+*.color3:       #ff8400
+*.color11:      #ff8400
+
+! blue
+*.color4:       #0084d4
+*.color12:      #0084d4
+
+! magenta
+*.color5:       #b729d9
+*.color13:      #b729d9
+
+! cyan
+*.color6:       #ccccff
+*.color14:      #ccccff
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

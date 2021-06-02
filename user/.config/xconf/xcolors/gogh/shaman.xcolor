@@ -1,0 +1,38 @@
+! Shaman
+
+! special
+*.foreground:   #405555
+*.background:   #001015
+*.cursorColor:  #405555
+
+! black
+*.color0:       #012026
+*.color8:       #384451
+
+! red
+*.color1:       #b2302d
+*.color9:       #ff4242
+
+! green
+*.color2:       #00a941
+*.color10:      #2aea5e
+
+! yellow
+*.color3:       #5e8baa
+*.color11:      #8ed4fd
+
+! blue
+*.color4:       #449a86
+*.color12:      #61d5ba
+
+! magenta
+*.color5:       #00599d
+*.color13:      #1298ff
+
+! cyan
+*.color6:       #5d7e19
+*.color14:      #98d028
+
+! white
+*.color7:       #405555
+*.color15:      #58fbd6

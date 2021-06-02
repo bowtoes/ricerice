@@ -1,0 +1,38 @@
+! Purple People Eater
+
+! special
+*.foreground:   #c9d1d9
+*.background:   #161b22
+*.cursorColor:  #c9d1d9
+
+! black
+*.color0:       #0d1117
+*.color8:       #0d1117
+
+! red
+*.color1:       #e34c26
+*.color9:       #ff7b72
+
+! green
+*.color2:       #238636
+*.color10:      #3bab4a
+
+! yellow
+*.color3:       #ed9a51
+*.color11:      #ffa657
+
+! blue
+*.color4:       #a5d6ff
+*.color12:      #a5d6ff
+
+! magenta
+*.color5:       #6eb0e8
+*.color13:      #79c0ff
+
+! cyan
+*.color6:       #c09aeb
+*.color14:      #b694df
+
+! white
+*.color7:       #c9d1d9
+*.color15:      #c9d1d9

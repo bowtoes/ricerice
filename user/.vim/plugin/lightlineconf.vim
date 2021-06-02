@@ -7,7 +7,7 @@ let g:lightline.tabline_subseparator = g:lightline.subseparator
 let g:lightline.active = {
 	\ 'left':  [[ 'mode', 'paste' ],
 	\           [ 'readonly', 'modified' ],
-	\           ['synwarn', 'synstatus', 'relativepath']],
+	\           [ 'relativepath']],
 	\ 'right': [[ 'lineinfo', 'charinfo' ],
 	\           [ 'percent', 'foldlevel' ],
 	\           [ 'fileformat', 'fileencoding', 'filetype' ]],
@@ -27,6 +27,7 @@ let g:lightline.tab = {
 " Statusline/tabline components.
 let g:lightline.component = {
 	\ 'synwarn': '%warningmsg',
+    \ 'cocstatus': '%{coc#status()}',
 	\ 'mode': '%{lightline#mode()}',
 	\ 'absolutepath': '%F',
 	\ 'relativepath': '%f',

@@ -1,0 +1,38 @@
+! Neopolitan
+
+! special
+*.foreground:   #ffffff
+*.background:   #271f19
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #000000
+*.color8:       #000000
+
+! red
+*.color1:       #800000
+*.color9:       #800000
+
+! green
+*.color2:       #61ce3c
+*.color10:      #61ce3c
+
+! yellow
+*.color3:       #fbde2d
+*.color11:      #fbde2d
+
+! blue
+*.color4:       #253b76
+*.color12:      #253b76
+
+! magenta
+*.color5:       #ff0080
+*.color13:      #ff0080
+
+! cyan
+*.color6:       #8da6ce
+*.color14:      #8da6ce
+
+! white
+*.color7:       #f8f8f8
+*.color15:      #f8f8f8

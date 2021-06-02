@@ -1,0 +1,38 @@
+! mono-yellow
+
+! special
+*.foreground:   #ffd300
+*.background:   #2b2400
+*.cursorColor:  #ffd300
+
+! black
+*.color0:       #403500
+*.color8:       #ffd300
+
+! red
+*.color1:       #ffd300
+*.color9:       #ffd300
+
+! green
+*.color2:       #ffd300
+*.color10:      #ffd300
+
+! yellow
+*.color3:       #ffd300
+*.color11:      #ffd300
+
+! blue
+*.color4:       #ffd300
+*.color12:      #ffd300
+
+! magenta
+*.color5:       #ffd300
+*.color13:      #ffd300
+
+! cyan
+*.color6:       #ffd300
+*.color14:      #ffd300
+
+! white
+*.color7:       #ffd300
+*.color15:      #ffd300

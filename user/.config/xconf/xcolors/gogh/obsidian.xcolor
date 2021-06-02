@@ -1,0 +1,38 @@
+! Obsidian
+
+! special
+*.foreground:   #cdcdcd
+*.background:   #283033
+*.cursorColor:  #cdcdcd
+
+! black
+*.color0:       #000000
+*.color8:       #555555
+
+! red
+*.color1:       #a60001
+*.color9:       #ff0003
+
+! green
+*.color2:       #00bb00
+*.color10:      #93c863
+
+! yellow
+*.color3:       #fecd22
+*.color11:      #fef874
+
+! blue
+*.color4:       #3a9bdb
+*.color12:      #a1d7ff
+
+! magenta
+*.color5:       #bb00bb
+*.color13:      #ff55ff
+
+! cyan
+*.color6:       #00bbbb
+*.color14:      #55ffff
+
+! white
+*.color7:       #bbbbbb
+*.color15:      #ffffff

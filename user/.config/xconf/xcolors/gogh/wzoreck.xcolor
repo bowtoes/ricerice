@@ -1,0 +1,38 @@
+! Wzoreck
+
+! special
+*.foreground:   #fcfcfa
+*.background:   #424043
+*.cursorColor:  #fcfcfa
+
+! black
+*.color0:       #2e3436
+*.color8:       #989595
+
+! red
+*.color1:       #fc6386
+*.color9:       #fc6386
+
+! green
+*.color2:       #424043
+*.color10:      #a9dc76
+
+! yellow
+*.color3:       #fce94f
+*.color11:      #fce94f
+
+! blue
+*.color4:       #fb976b
+*.color12:      #fb976b
+
+! magenta
+*.color5:       #75507b
+*.color13:      #ab9df2
+
+! cyan
+*.color6:       #34e2e2
+*.color14:      #34e2e2
+
+! white
+*.color7:       #ffffff
+*.color15:      #d1d1c0

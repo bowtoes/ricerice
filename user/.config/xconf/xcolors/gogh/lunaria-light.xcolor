@@ -1,0 +1,38 @@
+! Lunaria Light
+
+! special
+*.foreground:   #484646
+*.background:   #ebe4e1
+*.cursorColor:  #484646
+
+! black
+*.color0:       #3e3c3d
+*.color8:       #484646
+
+! red
+*.color1:       #783c1f
+*.color9:       #b06240
+
+! green
+*.color2:       #497d46
+*.color10:      #7bc175
+
+! yellow
+*.color3:       #8f750b
+*.color11:      #dcb735
+
+! blue
+*.color4:       #3f3566
+*.color12:      #5c4f89
+
+! magenta
+*.color5:       #793f62
+*.color13:      #b56895
+
+! cyan
+*.color6:       #3778a9
+*.color14:      #64baff
+
+! white
+*.color7:       #d5cfcc
+*.color15:      #ebe4e1

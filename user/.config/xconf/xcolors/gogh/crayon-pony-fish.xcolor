@@ -1,0 +1,38 @@
+! Crayon Pony Fish
+
+! special
+*.foreground:   #68525a
+*.background:   #150707
+*.cursorColor:  #68525a
+
+! black
+*.color0:       #2b1b1d
+*.color8:       #3d2b2e
+
+! red
+*.color1:       #91002b
+*.color9:       #c5255d
+
+! green
+*.color2:       #579524
+*.color10:      #8dff57
+
+! yellow
+*.color3:       #ab311b
+*.color11:      #c8381d
+
+! blue
+*.color4:       #8c87b0
+*.color12:      #cfc9ff
+
+! magenta
+*.color5:       #692f50
+*.color13:      #fc6cba
+
+! cyan
+*.color6:       #e8a866
+*.color14:      #ffceaf
+
+! white
+*.color7:       #68525a
+*.color15:      #b0949d

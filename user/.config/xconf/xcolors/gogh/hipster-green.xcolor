@@ -1,0 +1,38 @@
+! Hipster Green
+
+! special
+*.foreground:   #84c138
+*.background:   #100b05
+*.cursorColor:  #84c138
+
+! black
+*.color0:       #000000
+*.color8:       #666666
+
+! red
+*.color1:       #b6214a
+*.color9:       #e50000
+
+! green
+*.color2:       #00a600
+*.color10:      #86a93e
+
+! yellow
+*.color3:       #bfbf00
+*.color11:      #e5e500
+
+! blue
+*.color4:       #246eb2
+*.color12:      #0000ff
+
+! magenta
+*.color5:       #b200b2
+*.color13:      #e500e5
+
+! cyan
+*.color6:       #00a6b2
+*.color14:      #00e5e5
+
+! white
+*.color7:       #bfbfbf
+*.color15:      #e5e5e5

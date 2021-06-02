@@ -1,0 +1,38 @@
+! CLRS
+
+! special
+*.foreground:   #262626
+*.background:   #ffffff
+*.cursorColor:  #262626
+
+! black
+*.color0:       #000000
+*.color8:       #555753
+
+! red
+*.color1:       #f8282a
+*.color9:       #fb0416
+
+! green
+*.color2:       #328a5d
+*.color10:      #2cc631
+
+! yellow
+*.color3:       #fa701d
+*.color11:      #fdd727
+
+! blue
+*.color4:       #135cd0
+*.color12:      #1670ff
+
+! magenta
+*.color5:       #9f00bd
+*.color13:      #e900b0
+
+! cyan
+*.color6:       #33c3c1
+*.color14:      #3ad5ce
+
+! white
+*.color7:       #b3b3b3
+*.color15:      #eeeeec

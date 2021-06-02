@@ -1,0 +1,38 @@
+! Molokai
+
+! special
+*.foreground:   #bbbbbb
+*.background:   #1b1d1e
+*.cursorColor:  #bbbbbb
+
+! black
+*.color0:       #1b1d1e
+*.color8:       #555555
+
+! red
+*.color1:       #7325fa
+*.color9:       #9d66f6
+
+! green
+*.color2:       #23e298
+*.color10:      #5fe0b1
+
+! yellow
+*.color3:       #60d4df
+*.color11:      #6df2ff
+
+! blue
+*.color4:       #d08010
+*.color12:      #ffaf00
+
+! magenta
+*.color5:       #ff0087
+*.color13:      #ff87af
+
+! cyan
+*.color6:       #d0a843
+*.color14:      #ffce51
+
+! white
+*.color7:       #bbbbbb
+*.color15:      #ffffff

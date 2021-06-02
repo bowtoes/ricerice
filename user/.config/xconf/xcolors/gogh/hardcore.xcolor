@@ -1,0 +1,38 @@
+! Hardcore
+
+! special
+*.foreground:   #a0a0a0
+*.background:   #121212
+*.cursorColor:  #a0a0a0
+
+! black
+*.color0:       #1b1d1e
+*.color8:       #505354
+
+! red
+*.color1:       #f92672
+*.color9:       #ff669d
+
+! green
+*.color2:       #a6e22e
+*.color10:      #beed5f
+
+! yellow
+*.color3:       #fd971f
+*.color11:      #e6db74
+
+! blue
+*.color4:       #66d9ef
+*.color12:      #66d9ef
+
+! magenta
+*.color5:       #9e6ffe
+*.color13:      #9e6ffe
+
+! cyan
+*.color6:       #5e7175
+*.color14:      #a3babf
+
+! white
+*.color7:       #ccccc6
+*.color15:      #f8f8f2

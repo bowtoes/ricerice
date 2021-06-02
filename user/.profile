@@ -77,6 +77,7 @@ PATH="$(echo "$PATH" | sed "s/::/:/g")"
 #PS1="$PS1\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
 #PS1="$PS1\$"
 export PATH
+export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+$PKG_CONFIG_PATH:}/addtl/lib/pkgconfig"
 PS1=""
 path ()
 {

@@ -1,0 +1,38 @@
+! Square
+
+! special
+*.foreground:   #a1a1a1
+*.background:   #0a1e24
+*.cursorColor:  #a1a1a1
+
+! black
+*.color0:       #050505
+*.color8:       #141414
+
+! red
+*.color1:       #e9897c
+*.color9:       #f99286
+
+! green
+*.color2:       #b6377d
+*.color10:      #c3f786
+
+! yellow
+*.color3:       #ecebbe
+*.color11:      #fcfbcc
+
+! blue
+*.color4:       #a9cdeb
+*.color12:      #b6defb
+
+! magenta
+*.color5:       #75507b
+*.color13:      #ad7fa8
+
+! cyan
+*.color6:       #c9caec
+*.color14:      #d7d9fc
+
+! white
+*.color7:       #f2f2f2
+*.color15:      #e2e2e2

@@ -1,0 +1,38 @@
+! Argonaut
+
+! special
+*.foreground:   #fffaf4
+*.background:   #0e1019
+*.cursorColor:  #fffaf4
+
+! black
+*.color0:       #232323
+*.color8:       #444444
+
+! red
+*.color1:       #ff000f
+*.color9:       #ff2740
+
+! green
+*.color2:       #8ce10b
+*.color10:      #abe15b
+
+! yellow
+*.color3:       #ffb900
+*.color11:      #ffd242
+
+! blue
+*.color4:       #008df8
+*.color12:      #0092ff
+
+! magenta
+*.color5:       #6d43a6
+*.color13:      #9a5feb
+
+! cyan
+*.color6:       #00d8eb
+*.color14:      #67fff0
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

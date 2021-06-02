@@ -1,0 +1,38 @@
+! Ocean Dark
+
+! special
+*.foreground:   #979cac
+*.background:   #1c1f27
+*.cursorColor:  #979cac
+
+! black
+*.color0:       #4f4f4f
+*.color8:       #7b7b7b
+
+! red
+*.color1:       #af4b57
+*.color9:       #af4b57
+
+! green
+*.color2:       #afd383
+*.color10:      #ceffab
+
+! yellow
+*.color3:       #e5c079
+*.color11:      #fffecc
+
+! blue
+*.color4:       #7d90a4
+*.color12:      #b5dcfe
+
+! magenta
+*.color5:       #a4799d
+*.color13:      #fb9bfe
+
+! cyan
+*.color6:       #85a6a5
+*.color14:      #dfdffd
+
+! white
+*.color7:       #eeedee
+*.color15:      #fefffe

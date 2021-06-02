@@ -1,0 +1,38 @@
+! Lunaria Eclipse
+
+! special
+*.foreground:   #c9cdd7
+*.background:   #323f46
+*.cursorColor:  #c9cdd7
+
+! black
+*.color0:       #323f46
+*.color8:       #3d4950
+
+! red
+*.color1:       #83615b
+*.color9:       #ba9088
+
+! green
+*.color2:       #7f9781
+*.color10:      #bedbc1
+
+! yellow
+*.color3:       #a69875
+*.color11:      #f1dfb4
+
+! blue
+*.color4:       #53516f
+*.color12:      #767495
+
+! magenta
+*.color5:       #856880
+*.color13:      #be9cb8
+
+! cyan
+*.color6:       #7d96b2
+*.color14:      #bcdbff
+
+! white
+*.color7:       #c9cdd7
+*.color15:      #dfe2ed

@@ -1,0 +1,38 @@
+! Mar
+
+! special
+*.foreground:   #23476a
+*.background:   #ffffff
+*.cursorColor:  #23476a
+
+! black
+*.color0:       #000000
+*.color8:       #737373
+
+! red
+*.color1:       #b5407b
+*.color9:       #cd73a0
+
+! green
+*.color2:       #7bb540
+*.color10:      #a0cd73
+
+! yellow
+*.color3:       #b57b40
+*.color11:      #cda073
+
+! blue
+*.color4:       #407bb5
+*.color12:      #73a0cd
+
+! magenta
+*.color5:       #7b40b5
+*.color13:      #a073cd
+
+! cyan
+*.color6:       #40b57b
+*.color14:      #73cda0
+
+! white
+*.color7:       #f8f8f8
+*.color15:      #ffffff

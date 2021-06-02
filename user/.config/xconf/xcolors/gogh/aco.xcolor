@@ -1,0 +1,38 @@
+! Aco
+
+! special
+*.foreground:   #b4e1fd
+*.background:   #1f1305
+*.cursorColor:  #b4e1fd
+
+! black
+*.color0:       #3f3f3f
+*.color8:       #474747
+
+! red
+*.color1:       #ff0883
+*.color9:       #ff1e8e
+
+! green
+*.color2:       #83ff08
+*.color10:      #8eff1e
+
+! yellow
+*.color3:       #ff8308
+*.color11:      #ff8e1e
+
+! blue
+*.color4:       #0883ff
+*.color12:      #1e8eff
+
+! magenta
+*.color5:       #8308ff
+*.color13:      #8e1eff
+
+! cyan
+*.color6:       #08ff83
+*.color14:      #1eff8e
+
+! white
+*.color7:       #bebebe
+*.color15:      #c4c4c4

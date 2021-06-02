@@ -1,0 +1,38 @@
+! Earthsong
+
+! special
+*.foreground:   #e5c7a9
+*.background:   #292520
+*.cursorColor:  #e5c7a9
+
+! black
+*.color0:       #121418
+*.color8:       #675f54
+
+! red
+*.color1:       #c94234
+*.color9:       #ff645a
+
+! green
+*.color2:       #85c54c
+*.color10:      #98e036
+
+! yellow
+*.color3:       #f5ae2e
+*.color11:      #e0d561
+
+! blue
+*.color4:       #1398b9
+*.color12:      #5fdaff
+
+! magenta
+*.color5:       #d0633d
+*.color13:      #ff9269
+
+! cyan
+*.color6:       #509552
+*.color14:      #84f088
+
+! white
+*.color7:       #e5c6aa
+*.color15:      #f6f7ec

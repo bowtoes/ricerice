@@ -1,0 +1,38 @@
+! Elemental
+
+! special
+*.foreground:   #807a74
+*.background:   #22211d
+*.cursorColor:  #807a74
+
+! black
+*.color0:       #3c3c30
+*.color8:       #555445
+
+! red
+*.color1:       #98290f
+*.color9:       #e0502a
+
+! green
+*.color2:       #479a43
+*.color10:      #61e070
+
+! yellow
+*.color3:       #7f7111
+*.color11:      #d69927
+
+! blue
+*.color4:       #497f7d
+*.color12:      #79d9d9
+
+! magenta
+*.color5:       #7f4e2f
+*.color13:      #cd7c54
+
+! cyan
+*.color6:       #387f58
+*.color14:      #59d599
+
+! white
+*.color7:       #807974
+*.color15:      #fff1e9

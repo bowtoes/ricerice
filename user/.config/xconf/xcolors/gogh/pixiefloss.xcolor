@@ -1,0 +1,38 @@
+! Pixiefloss
+
+! special
+*.foreground:   #d1cae8
+*.background:   #241f33
+*.cursorColor:  #d1cae8
+
+! black
+*.color0:       #2f2942
+*.color8:       #75507b
+
+! red
+*.color1:       #ff857f
+*.color9:       #f1568e
+
+! green
+*.color2:       #48b685
+*.color10:      #5adba2
+
+! yellow
+*.color3:       #e6c000
+*.color11:      #d5a425
+
+! blue
+*.color4:       #ae81ff
+*.color12:      #c5a3ff
+
+! magenta
+*.color5:       #ef6155
+*.color13:      #ef6155
+
+! cyan
+*.color6:       #c2ffdf
+*.color14:      #c2ffff
+
+! white
+*.color7:       #f8f8f2
+*.color15:      #f8f8f0

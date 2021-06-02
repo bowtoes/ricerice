@@ -1,0 +1,38 @@
+! Lunaria Dark
+
+! special
+*.foreground:   #caced8
+*.background:   #36464e
+*.cursorColor:  #caced8
+
+! black
+*.color0:       #36464e
+*.color8:       #404f56
+
+! red
+*.color1:       #846560
+*.color9:       #bb928b
+
+! green
+*.color2:       #809984
+*.color10:      #bfdcc2
+
+! yellow
+*.color3:       #a79a79
+*.color11:      #f1dfb6
+
+! blue
+*.color4:       #555673
+*.color12:      #777798
+
+! magenta
+*.color5:       #866c83
+*.color13:      #bf9db9
+
+! cyan
+*.color6:       #7e98b4
+*.color14:      #bddcff
+
+! white
+*.color7:       #caced8
+*.color15:      #dfe2ed

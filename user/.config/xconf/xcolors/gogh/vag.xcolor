@@ -1,0 +1,38 @@
+! Vag
+
+! special
+*.foreground:   #d9e6f2
+*.background:   #191f1d
+*.cursorColor:  #d9e6f2
+
+! black
+*.color0:       #303030
+*.color8:       #494949
+
+! red
+*.color1:       #a87139
+*.color9:       #b0763b
+
+! green
+*.color2:       #39a871
+*.color10:      #3bb076
+
+! yellow
+*.color3:       #71a839
+*.color11:      #76b03b
+
+! blue
+*.color4:       #7139a8
+*.color12:      #763bb0
+
+! magenta
+*.color5:       #a83971
+*.color13:      #b03b76
+
+! cyan
+*.color6:       #3971a8
+*.color14:      #3b76b0
+
+! white
+*.color7:       #8a8a8a
+*.color15:      #cfcfcf

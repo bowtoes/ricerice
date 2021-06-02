@@ -1,0 +1,38 @@
+! gooey
+
+! special
+*.foreground:   #ebeef9
+*.background:   #0d101b
+*.cursorColor:  #ebeef9
+
+! black
+*.color0:       #000009
+*.color8:       #1f222d
+
+! red
+*.color1:       #bb4f6c
+*.color9:       #ee829f
+
+! green
+*.color2:       #72ccae
+*.color10:      #a5ffe1
+
+! yellow
+*.color3:       #c65e3d
+*.color11:      #f99170
+
+! blue
+*.color4:       #58b6ca
+*.color12:      #8be9fd
+
+! magenta
+*.color5:       #6488c4
+*.color13:      #97bbf7
+
+! cyan
+*.color6:       #8d84c6
+*.color14:      #c0b7f9
+
+! white
+*.color7:       #858893
+*.color15:      #ffffff

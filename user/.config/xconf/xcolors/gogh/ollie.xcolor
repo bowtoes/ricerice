@@ -1,0 +1,38 @@
+! Ollie
+
+! special
+*.foreground:   #8a8dae
+*.background:   #222125
+*.cursorColor:  #8a8dae
+
+! black
+*.color0:       #000000
+*.color8:       #5b3725
+
+! red
+*.color1:       #ac2e31
+*.color9:       #ff3d48
+
+! green
+*.color2:       #31ac61
+*.color10:      #3bff99
+
+! yellow
+*.color3:       #ac4300
+*.color11:      #ff5e1e
+
+! blue
+*.color4:       #2d57ac
+*.color12:      #4488ff
+
+! magenta
+*.color5:       #b08528
+*.color13:      #ffc21d
+
+! cyan
+*.color6:       #1fa6ac
+*.color14:      #1ffaff
+
+! white
+*.color7:       #8a8eac
+*.color15:      #5b6ea7

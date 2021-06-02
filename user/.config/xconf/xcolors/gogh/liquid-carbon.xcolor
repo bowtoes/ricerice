@@ -1,0 +1,38 @@
+! Liquid Carbon
+
+! special
+*.foreground:   #afc2c2
+*.background:   #303030
+*.cursorColor:  #afc2c2
+
+! black
+*.color0:       #000000
+*.color8:       #000000
+
+! red
+*.color1:       #ff3030
+*.color9:       #ff3030
+
+! green
+*.color2:       #559a70
+*.color10:      #559a70
+
+! yellow
+*.color3:       #ccac00
+*.color11:      #ccac00
+
+! blue
+*.color4:       #0099cc
+*.color12:      #0099cc
+
+! magenta
+*.color5:       #cc69c8
+*.color13:      #cc69c8
+
+! cyan
+*.color6:       #7ac4cc
+*.color14:      #7ac4cc
+
+! white
+*.color7:       #bccccc
+*.color15:      #bccccc

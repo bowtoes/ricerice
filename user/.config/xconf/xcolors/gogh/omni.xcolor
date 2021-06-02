@@ -1,0 +1,38 @@
+! Omni
+
+! special
+*.foreground:   #abb2bf
+*.background:   #191622
+*.cursorColor:  #abb2bf
+
+! black
+*.color0:       #191622
+*.color8:       #000000
+
+! red
+*.color1:       #e96379
+*.color9:       #e96379
+
+! green
+*.color2:       #67e480
+*.color10:      #67e480
+
+! yellow
+*.color3:       #e89e64
+*.color11:      #e89e64
+
+! blue
+*.color4:       #78d1e1
+*.color12:      #78d1e1
+
+! magenta
+*.color5:       #988bc7
+*.color13:      #988bc7
+
+! cyan
+*.color6:       #ff79c6
+*.color14:      #ff79c6
+
+! white
+*.color7:       #abb2bf
+*.color15:      #ffffff

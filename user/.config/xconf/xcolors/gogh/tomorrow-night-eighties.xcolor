@@ -1,0 +1,38 @@
+! Tomorrow Night Eighties
+
+! special
+*.foreground:   #cccccc
+*.background:   #2c2c2c
+*.cursorColor:  #cccccc
+
+! black
+*.color0:       #000000
+*.color8:       #000000
+
+! red
+*.color1:       #f27779
+*.color9:       #f17779
+
+! green
+*.color2:       #99cc99
+*.color10:      #99cc99
+
+! yellow
+*.color3:       #ffcc66
+*.color11:      #ffcc66
+
+! blue
+*.color4:       #6699cc
+*.color12:      #6699cc
+
+! magenta
+*.color5:       #cc99cc
+*.color13:      #cc99cc
+
+! cyan
+*.color6:       #66cccc
+*.color14:      #66cccc
+
+! white
+*.color7:       #fffefe
+*.color15:      #fffefe

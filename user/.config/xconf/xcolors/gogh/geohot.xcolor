@@ -1,0 +1,38 @@
+! GeoHot
+
+! special
+*.foreground:   #ffffff
+*.background:   #1f1e1f
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #f9f5f5
+*.color8:       #555753
+
+! red
+*.color1:       #cc0000
+*.color9:       #ef2929
+
+! green
+*.color2:       #1f1e1f
+*.color10:      #ff0000
+
+! yellow
+*.color3:       #ada110
+*.color11:      #ada110
+
+! blue
+*.color4:       #ff004e
+*.color12:      #5f4aa6
+
+! magenta
+*.color5:       #75507b
+*.color13:      #b74438
+
+! cyan
+*.color6:       #06919a
+*.color14:      #408f0c
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

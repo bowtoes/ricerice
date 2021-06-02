@@ -1,0 +1,38 @@
+! Afterglow
+
+! special
+*.foreground:   #d0d0d0
+*.background:   #222222
+*.cursorColor:  #d0d0d0
+
+! black
+*.color0:       #151515
+*.color8:       #505050
+
+! red
+*.color1:       #a53c23
+*.color9:       #a53c23
+
+! green
+*.color2:       #7b9246
+*.color10:      #7b9246
+
+! yellow
+*.color3:       #d3a04d
+*.color11:      #d3a04d
+
+! blue
+*.color4:       #6c99bb
+*.color12:      #547c99
+
+! magenta
+*.color5:       #9f4e85
+*.color13:      #9f4e85
+
+! cyan
+*.color6:       #7dd6cf
+*.color14:      #7dd6cf
+
+! white
+*.color7:       #d0d0d0
+*.color15:      #f5f5f5

@@ -1,0 +1,38 @@
+! Vaughn
+
+! special
+*.foreground:   #dcdccc
+*.background:   #25234f
+*.cursorColor:  #dcdccc
+
+! black
+*.color0:       #25234f
+*.color8:       #709080
+
+! red
+*.color1:       #705050
+*.color9:       #dca3a3
+
+! green
+*.color2:       #60b48a
+*.color10:      #60b48a
+
+! yellow
+*.color3:       #dfaf8f
+*.color11:      #f0dfaf
+
+! blue
+*.color4:       #5555ff
+*.color12:      #5555ff
+
+! magenta
+*.color5:       #f08cc3
+*.color13:      #ec93d3
+
+! cyan
+*.color6:       #8cd0d3
+*.color14:      #93e0e3
+
+! white
+*.color7:       #709080
+*.color15:      #ffffff

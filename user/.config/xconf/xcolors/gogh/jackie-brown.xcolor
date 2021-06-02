@@ -1,0 +1,38 @@
+! Jackie Brown
+
+! special
+*.foreground:   #ffcc2f
+*.background:   #2c1d16
+*.cursorColor:  #ffcc2f
+
+! black
+*.color0:       #2c1d16
+*.color8:       #666666
+
+! red
+*.color1:       #ef5734
+*.color9:       #e50000
+
+! green
+*.color2:       #2baf2b
+*.color10:      #86a93e
+
+! yellow
+*.color3:       #bebf00
+*.color11:      #e5e500
+
+! blue
+*.color4:       #246eb2
+*.color12:      #0000ff
+
+! magenta
+*.color5:       #d05ec1
+*.color13:      #e500e5
+
+! cyan
+*.color6:       #00acee
+*.color14:      #00e5e5
+
+! white
+*.color7:       #bfbfbf
+*.color15:      #e5e5e5

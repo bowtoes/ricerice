@@ -1,0 +1,38 @@
+! neon-night
+
+! special
+*.foreground:   #c7c8ff
+*.background:   #20242d
+*.cursorColor:  #c7c8ff
+
+! black
+*.color0:       #20242d
+*.color8:       #20242d
+
+! red
+*.color1:       #ff8e8e
+*.color9:       #ff8e8e
+
+! green
+*.color2:       #7efdd0
+*.color10:      #7efdd0
+
+! yellow
+*.color3:       #fcad3f
+*.color11:      #fcad3f
+
+! blue
+*.color4:       #69b4f9
+*.color12:      #69b4f9
+
+! magenta
+*.color5:       #dd92f6
+*.color13:      #dd92f6
+
+! cyan
+*.color6:       #8ce8ff
+*.color14:      #8ce8ff
+
+! white
+*.color7:       #c9cccd
+*.color15:      #c9cccd

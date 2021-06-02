@@ -1,0 +1,38 @@
+! Pali
+
+! special
+*.foreground:   #d9e6f2
+*.background:   #232e37
+*.cursorColor:  #d9e6f2
+
+! black
+*.color0:       #0a0a0a
+*.color8:       #5d5d5d
+
+! red
+*.color1:       #ab8f74
+*.color9:       #ff1d62
+
+! green
+*.color2:       #74ab8f
+*.color10:      #9cc3af
+
+! yellow
+*.color3:       #8fab74
+*.color11:      #ffd00a
+
+! blue
+*.color4:       #8f74ab
+*.color12:      #af9cc3
+
+! magenta
+*.color5:       #ab748f
+*.color13:      #ff1d62
+
+! cyan
+*.color6:       #748fab
+*.color14:      #4bb8fd
+
+! white
+*.color7:       #f2f2f2
+*.color15:      #a020f0

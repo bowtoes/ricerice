@@ -1,0 +1,38 @@
+! Flatland
+
+! special
+*.foreground:   #b8dbef
+*.background:   #1d1f21
+*.cursorColor:  #b8dbef
+
+! black
+*.color0:       #1d1d19
+*.color8:       #1d1d19
+
+! red
+*.color1:       #f18339
+*.color9:       #d22a24
+
+! green
+*.color2:       #9fd364
+*.color10:      #a7d42c
+
+! yellow
+*.color3:       #f4ef6d
+*.color11:      #ff8949
+
+! blue
+*.color4:       #5096be
+*.color12:      #61b9d0
+
+! magenta
+*.color5:       #695abc
+*.color13:      #695abc
+
+! cyan
+*.color6:       #d63865
+*.color14:      #d63865
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

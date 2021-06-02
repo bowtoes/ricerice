@@ -1,0 +1,38 @@
+! SynthWave
+
+! special
+*.foreground:   #ffffff
+*.background:   #262335
+*.cursorColor:  #03edf9
+
+! black
+*.color0:       #011627
+*.color8:       #575656
+
+! red
+*.color1:       #fe4450
+*.color9:       #fe4450
+
+! green
+*.color2:       #72f1b8
+*.color10:      #72f1b8
+
+! yellow
+*.color3:       #fede5d
+*.color11:      #fede5d
+
+! blue
+*.color4:       #03edf9
+*.color12:      #03edf9
+
+! magenta
+*.color5:       #ff7edb
+*.color13:      #ff7edb
+
+! cyan
+*.color6:       #03edf9
+*.color14:      #03edf9
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

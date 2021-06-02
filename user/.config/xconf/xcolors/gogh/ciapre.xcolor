@@ -1,0 +1,38 @@
+! Ciapre
+
+! special
+*.foreground:   #aea47a
+*.background:   #191c27
+*.cursorColor:  #aea47a
+
+! black
+*.color0:       #181818
+*.color8:       #555555
+
+! red
+*.color1:       #810009
+*.color9:       #ac3835
+
+! green
+*.color2:       #48513b
+*.color10:      #a6a75d
+
+! yellow
+*.color3:       #cc8b3f
+*.color11:      #dcdf7c
+
+! blue
+*.color4:       #576d8c
+*.color12:      #3097c6
+
+! magenta
+*.color5:       #724d7c
+*.color13:      #d33061
+
+! cyan
+*.color6:       #5c4f4b
+*.color14:      #f3dbb2
+
+! white
+*.color7:       #aea47f
+*.color15:      #f4f4f4

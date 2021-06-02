@@ -1,0 +1,38 @@
+! Urple
+
+! special
+*.foreground:   #877a9b
+*.background:   #1b1b23
+*.cursorColor:  #877a9b
+
+! black
+*.color0:       #000000
+*.color8:       #5d3225
+
+! red
+*.color1:       #b0425b
+*.color9:       #ff6388
+
+! green
+*.color2:       #37a415
+*.color10:      #29e620
+
+! yellow
+*.color3:       #ad5c42
+*.color11:      #f08161
+
+! blue
+*.color4:       #564d9b
+*.color12:      #867aed
+
+! magenta
+*.color5:       #6c3ca1
+*.color13:      #a05eee
+
+! cyan
+*.color6:       #808080
+*.color14:      #eaeaea
+
+! white
+*.color7:       #87799c
+*.color15:      #bfa3ff

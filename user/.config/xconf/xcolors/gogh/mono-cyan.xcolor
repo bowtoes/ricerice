@@ -1,0 +1,38 @@
+! mono-cyan
+
+! special
+*.foreground:   #00ccff
+*.background:   #00222b
+*.cursorColor:  #00ccff
+
+! black
+*.color0:       #003340
+*.color8:       #00ccff
+
+! red
+*.color1:       #00ccff
+*.color9:       #00ccff
+
+! green
+*.color2:       #00ccff
+*.color10:      #00ccff
+
+! yellow
+*.color3:       #00ccff
+*.color11:      #00ccff
+
+! blue
+*.color4:       #00ccff
+*.color12:      #00ccff
+
+! magenta
+*.color5:       #00ccff
+*.color13:      #00ccff
+
+! cyan
+*.color6:       #00ccff
+*.color14:      #00ccff
+
+! white
+*.color7:       #00ccff
+*.color15:      #00ccff

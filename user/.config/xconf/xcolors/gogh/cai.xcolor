@@ -1,0 +1,38 @@
+! Cai
+
+! special
+*.foreground:   #d9e6f2
+*.background:   #09111a
+*.cursorColor:  #d9e6f2
+
+! black
+*.color0:       #000000
+*.color8:       #808080
+
+! red
+*.color1:       #ca274d
+*.color9:       #e98da3
+
+! green
+*.color2:       #4dca27
+*.color10:      #a3e98d
+
+! yellow
+*.color3:       #caa427
+*.color11:      #e9d48d
+
+! blue
+*.color4:       #274dca
+*.color12:      #8da3e9
+
+! magenta
+*.color5:       #a427ca
+*.color13:      #d48de9
+
+! cyan
+*.color6:       #27caa4
+*.color14:      #8de9d4
+
+! white
+*.color7:       #808080
+*.color15:      #ffffff

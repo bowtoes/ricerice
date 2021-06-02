@@ -1,0 +1,38 @@
+! Chalkboard
+
+! special
+*.foreground:   #d9e6f2
+*.background:   #29262f
+*.cursorColor:  #d9e6f2
+
+! black
+*.color0:       #000000
+*.color8:       #323232
+
+! red
+*.color1:       #c37372
+*.color9:       #dbaaaa
+
+! green
+*.color2:       #72c373
+*.color10:      #aadbaa
+
+! yellow
+*.color3:       #c2c372
+*.color11:      #dadbaa
+
+! blue
+*.color4:       #7372c3
+*.color12:      #aaaadb
+
+! magenta
+*.color5:       #c372c2
+*.color13:      #dbaada
+
+! cyan
+*.color6:       #72c2c3
+*.color14:      #aadadb
+
+! white
+*.color7:       #d9d9d9
+*.color15:      #ffffff

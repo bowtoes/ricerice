@@ -1,0 +1,38 @@
+! Bluloco Light
+
+! special
+*.foreground:   #383a42
+*.background:   #f9f9f9
+*.cursorColor:  #383a42
+
+! black
+*.color0:       #d5d6dd
+*.color8:       #e4e5ed
+
+! red
+*.color1:       #d52753
+*.color9:       #ff6480
+
+! green
+*.color2:       #23974a
+*.color10:      #3cbc66
+
+! yellow
+*.color3:       #df631c
+*.color11:      #c5a332
+
+! blue
+*.color4:       #275fe4
+*.color12:      #0099e1
+
+! magenta
+*.color5:       #823ff1
+*.color13:      #ce33c0
+
+! cyan
+*.color6:       #27618d
+*.color14:      #6d93bb
+
+! white
+*.color7:       #000000
+*.color15:      #26272d

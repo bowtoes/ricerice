@@ -1,0 +1,38 @@
+! Kibble
+
+! special
+*.foreground:   #f7f7f7
+*.background:   #0e100a
+*.cursorColor:  #f7f7f7
+
+! black
+*.color0:       #4d4d4d
+*.color8:       #5a5a5a
+
+! red
+*.color1:       #c70031
+*.color9:       #f01578
+
+! green
+*.color2:       #29cf13
+*.color10:      #6ce05c
+
+! yellow
+*.color3:       #d8e30e
+*.color11:      #f3f79e
+
+! blue
+*.color4:       #3449d1
+*.color12:      #97a4f7
+
+! magenta
+*.color5:       #8400ff
+*.color13:      #c495f0
+
+! cyan
+*.color6:       #0798ab
+*.color14:      #68f2e0
+
+! white
+*.color7:       #e2d1e3
+*.color15:      #ffffff

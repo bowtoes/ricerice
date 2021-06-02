@@ -1,0 +1,38 @@
+! Foxnightly
+
+! special
+*.foreground:   #d7d7db
+*.background:   #2a2a2e
+*.cursorColor:  #d7d7db
+
+! black
+*.color0:       #2a2a2e
+*.color8:       #a40000
+
+! red
+*.color1:       #b98eff
+*.color9:       #bf4040
+
+! green
+*.color2:       #ff7de9
+*.color10:      #66a05b
+
+! yellow
+*.color3:       #729fcf
+*.color11:      #ffb86c
+
+! blue
+*.color4:       #66a05b
+*.color12:      #729fcf
+
+! magenta
+*.color5:       #75507b
+*.color13:      #8f5902
+
+! cyan
+*.color6:       #acacae
+*.color14:      #c4a000
+
+! white
+*.color7:       #ffffff
+*.color15:      #5c3566

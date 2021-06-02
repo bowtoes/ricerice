@@ -1,0 +1,38 @@
+! VS Code Dark+
+
+! special
+*.foreground:   #cccccc
+*.background:   #1e1e1e
+*.cursorColor:  #cccccc
+
+! black
+*.color0:       #6a787a
+*.color8:       #598489
+
+! red
+*.color1:       #e9653b
+*.color9:       #e65029
+
+! green
+*.color2:       #39e9a8
+*.color10:      #00ff9a
+
+! yellow
+*.color3:       #e5b684
+*.color11:      #e89440
+
+! blue
+*.color4:       #44aae6
+*.color12:      #009afb
+
+! magenta
+*.color5:       #e17599
+*.color13:      #ff578f
+
+! cyan
+*.color6:       #3dd5e7
+*.color14:      #5fffff
+
+! white
+*.color7:       #c3dde1
+*.color15:      #d9fbff

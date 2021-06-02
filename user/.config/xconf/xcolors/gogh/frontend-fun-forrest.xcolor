@@ -1,0 +1,38 @@
+! Frontend Fun Forrest
+
+! special
+*.foreground:   #dec165
+*.background:   #251200
+*.cursorColor:  #dec165
+
+! black
+*.color0:       #000000
+*.color8:       #7f6a55
+
+! red
+*.color1:       #d6262b
+*.color9:       #e55a1c
+
+! green
+*.color2:       #919c00
+*.color10:      #bfc65a
+
+! yellow
+*.color3:       #be8a13
+*.color11:      #ffcb1b
+
+! blue
+*.color4:       #4699a3
+*.color12:      #7cc9cf
+
+! magenta
+*.color5:       #8d4331
+*.color13:      #d26349
+
+! cyan
+*.color6:       #da8213
+*.color14:      #e6a96b
+
+! white
+*.color7:       #ddc265
+*.color15:      #ffeaa3

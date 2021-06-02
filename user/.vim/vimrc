@@ -18,6 +18,7 @@ Plug 'mbbill/undotree'
 Plug 'pseewald/vim-anyfold'
 Plug 'airblade/vim-gitgutter'
 Plug 'bronson/vim-trailing-whitespace'
+"nerdtree
 Plug 'preservim/nerdtree'
 Plug 'dsimidzija/vim-nerdtree-ignore'
 Plug 'wsdjeg/vim-fetch'
@@ -74,15 +75,6 @@ endfunction
 function! ToggleWhitespaceFix()
     let g:whitespacefix = !get(g:, 'whitespacefix', 1)
 endfunction
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
 "}}} FUNCTIONS
 "{{{ PLUGIN CONFIG
 " TRIM OUT THE FAT - GlaDOS
@@ -96,7 +88,7 @@ let g:gitgutter_sign_modified           = '~'
 let g:gitgutter_sign_removed_first_line = 'K'
 let g:gitgutter_sign_modified_removed   = '`'
 let g:gitgutter_map_keys = 0
-""}}}
+"}}}
 "{{{ CoC
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -109,12 +101,43 @@ inoremap <silent><expr> <Tab>
       \ <SID>check_back_space() ? "\<Tab>" :
       \ coc#refresh()
 
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 " Use K to show documentation in preview window.
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 "}}}
 "{{{ ALE
 let g:ale_sign_error = '!'
@@ -161,19 +184,23 @@ set encoding=UTF-8
 set exrc
 set secure
 set number
-set hidden
+set nohidden
 set ttyfast
 set laststatus=2
 set noshowmode
 set showcmd
 "commandmode autocomplete
 set wildmode=longest,list,full
+set wildmenu
 "create a backup file
 set writebackup
 "do not delete backup file
 set backup
 set undofile
+set undolevels=1000
+set undoreload=0
 set swapfile
+
 set updatetime=300
 set signcolumn=number
 set colorcolumn=80
@@ -183,18 +210,22 @@ set textwidth=0
 set tabstop=4
 "defaults to tabstop when 0
 set shiftwidth=0
+set shiftround
 set noexpandtab
 set autoindent
 set smartindent
 
-set listchars=tab:→\ \ ,space:·,eol:~,extends:¬,precedes:⏗
-set fillchars=vert:\ ,fold:-,stl:\ ,stlnc:-
+set listchars=tab:→\ \ ,space:·,eol:~,extends:>,precedes:⏗,trail:¬
+set fillchars=vert:\ ,fold:\ ,stl:\ ,stlnc:\ ,eob:\ 
 set scrolloff=3
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+"modified default
+set shortmess=inxtoO
+set shortmess+=cwmsI
 set completeopt-=preview
+set completeopt+=popup,noinsert
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
+set foldnestmax=1
 set foldmethod=marker
 set hlsearch
 set incsearch
@@ -236,7 +267,7 @@ nnoremap <space>u  :lcd %:p:h:h<cr>:pwd<cr>
 "{{{ Folds
 nnoremap <silent> fa za
 nnoremap <silent> fA zA
-nnoremap <silent> tf @=(&foldlevel?'zm':'zr')<CR>
+nnoremap <silent> tf @=(&foldlevel?'zm':'zR')<CR>
 nnoremap <silent> tF @=(&foldlevel?'zM':'zR')<CR>
 "}}}
 "{{{ Toggles
@@ -252,11 +283,8 @@ noremap <F1> :call ToggleWhitespaceFix() <bar> echo "Whitespace fix ".OnOff(get(
 nnoremap <c-j> mZddp`Zj
 nnoremap <c-k> mZddkP`Z2k
 nnoremap <c-c> mZyyp`Zj
-inoremap <c-c> <esc>mZyyp`Zjli
 inoremap <c-d> <esc>Vdi
-
-nnoremap <c-h> <i{<CR>
-nnoremap <c-l> >i{<CR>
+inoremap <c-c> <esc>mZyyp`Zjli
 "}}}
 "{{{ split nav
 nnoremap <space>h <c-w>h
@@ -268,8 +296,10 @@ nnoremap <space>J <c-w>+
 nnoremap <space>K <c-w>-
 nnoremap <space>L <c-w>>
 
-nnoremap <space>v :vsplit<cr>
-nnoremap <space>s :split<cr>
+nnoremap <space>v <c-w>h
+nnoremap <space>s <c-w>j
+nnoremap <space>V <c-w>k
+nnoremap <space>S <c-w>l
 nnoremap <space><space>t :tabe<cr>
 "}}}
 "{{{ Tabs
@@ -304,17 +334,7 @@ nnoremap <silent> <space>o :Tabularize<cr>
 "{{{ Display
 augroup Display
     autocmd!
-    " CS folding: http://vim.wikia.com/wiki/Syntax-based_folding, see comment by Ostrygen
-    autocmd FileType cs set omnifunc=syntaxcomplete#Complete
-                    \| set foldmethod=marker
-                    \| set foldmarker={,}
-                    \| set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
-                    \| set foldlevelstart=2
-
-    autocmd FileType vim setlocal foldmethod=marker
-                    \| setlocal expandtab
     autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-    autocmd FileType c,h,hpp,cpp,diff,cs,python,vim,sh,cfg,sp,inc,tex set nowrap nospell
 
     " TeX stuff
     autocmd FileType tex let g:tex_no_error=1
@@ -325,9 +345,12 @@ augroup Display
     autocmd BufWritePre *.tex let g:tex_modified = &modified
     autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
 
-    autocmd BufRead,BufNewFile *.Xcolor,xcolor set ft=xdefaults
+    autocmd BufRead,BufNewFile Make.*,make.* set ft=make
+    autocmd BufRead,BufNewFile *.Xcolor,*.xcolor set ft=xdefaults
     autocmd BufRead,BufNewFile *.conf,*.cfg set ft=conf
     autocmd BufRead,BufNewFile *.inc set ft=include | set syntax=sourcepawn
+    autocmd BufRead,BufNewFile *.c,*.h,*.ck set ft=c
+    autocmd BufRead,BufNewFile *.cpp,*.hpp,*.cxx,*.hxx,*.c++,*.h++ set ft=cpp
     " OpenGL shader files
     autocmd BufRead,BufNewFile *.vt,*.ft set ft=glsl
     autocmd BufRead,BufNewFile *.vth,*.fth,*.compute set ft=hlsl
@@ -338,11 +361,28 @@ augroup Display
     autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines*,.bash* set ft=sh
     autocmd BufRead fonts.conf set ft=html
 
+    " CS folding: http://vim.wikia.com/wiki/Syntax-based_folding, see comment by Ostrygen
+    autocmd FileType cs,make set foldmethod=marker
+                    \| set foldmarker={,}
+    autocmd FileType cs set omnifunc=syntaxcomplete#Complete
+                    \| set foldtext=substitute(getline(v:foldstart),'{.*','{...}',)
+                    \| set foldlevelstart=2
+
+    autocmd FileType vim setlocal foldmethod=marker
+                    \| setlocal expandtab
+    autocmd FileType c,h,cpp,hpp,diff,cs,python,sh,cfg,sp,inc,tex set nowrap
+                    \| set nospell
+                    \| set foldmethod=syntax
+    autocmd FileType vim set nowrap
+                    \| set nospell
+    autocmd FileType c,h,cpp,hpp syn match comment "\v(^\s*//.*\n)+" fold
     " trailing whitespace has a purpose in markdown
     autocmd FileType markdown,html,diff,patch let g:whitespacefix=0
                     \| set tabstop=2
                     \| set expandtab
                     \| set spell
+    autocmd FileType gitcommit set spell
+                    \| set expandtab
 
     "continue where you left off
     autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
@@ -354,6 +394,7 @@ augroup Display
     autocmd FileType glsl,hlsl set nowrap
     autocmd BufEnter,WinEnter,WinNew,VimResized *,*.*
                 \  let &scrolloff=winheight(win_getid())/2
+    autocmd BufRead,BufNewFile *.vim set ft=vim
 augroup END
 "}}}
 "{{{ Snippets
@@ -381,8 +422,6 @@ augroup Snippets
 
     autocmd FileType c,cpp,glsl,hlsl,cs inoremap <C-{> <esc>V:s/^\t\\|^ \{4\}//<cr>i
 
-    autocmd FileType c,cpp nnoremap <silent> <space>= :set ft=c<cr>
-    autocmd FileType c,cpp nnoremap <silent> <space>+ :set ft=cpp<cr>
     autocmd FileType cs nnoremap <silent> <space>R :echo "Restarting OmniSharp Server" <bar> OmniSharpRestartServer <bar> echo "Server restarted"<cr>
     autocmd FileType cs nnoremap <silent> <space>P :OmniSharpHighlightEcho<cr>
 "}}}
@@ -423,12 +462,11 @@ set background=light
 "colorscheme gruvbox
 " Highlighting
 
-highlight Comment      ctermfg=darkmagenta                         cterm=none
+highlight Comment      ctermfg=darkmagenta                      cterm=none
 highlight String       ctermfg=darkyellow                       cterm=none
 highlight Type         ctermfg=darkgreen
 highlight StorageClass ctermfg=yellow                           cterm=bold,italic
 highlight link Structure StorageClass
-highlight cTypedef     ctermfg=darkmagenta                      cterm=italic
 highlight Special                                               cterm=bold
 highlight Identifier   ctermfg=red                              cterm=bold
 highlight Function     ctermfg=blue                             cterm=bold
@@ -442,16 +480,17 @@ highlight Todo         ctermfg=green        ctermbg=none        cterm=bold,itali
 highlight PreProc      ctermfg=magenta
 highlight Include      ctermfg=magenta
 highlight Define       ctermfg=magenta                          cterm=bold
-highlight link cDefine Define
 highlight Macro        ctermfg=red
-highlight link cMacro Macro
 highlight PreCond      ctermfg=darkred                          cterm=bold
-highlight link cPreCondit PreCond
 highlight Character    ctermfg=yellow
+highlight cTypedef     ctermfg=darkmagenta                      cterm=italic
+highlight link cDefine Define
+highlight link cMacro Macro
+highlight link cPreCondit PreCond
 
 highlight Search       ctermfg=black        ctermbg=darkyellow
 highlight IncSearch                                             cterm=reverse
-highlight VertSplit    ctermfg=black        ctermbg=black       cterm=none
+highlight VertSplit    ctermfg=black        ctermbg=white       cterm=none
 highlight link StatusLine VertSplit
 highlight link StatusLineNC VertSplit
 highlight Normal                            ctermbg=none
@@ -462,7 +501,7 @@ highlight CursorColumn                      ctermbg=darkgrey        cterm=none
 highlight ColorColumn  ctermfg=none         ctermbg=black
 highlight Folded       ctermfg=grey         ctermbg=none
 highlight Pmenu        ctermfg=white        ctermbg=black       cterm=bold
-highlight PmenuSel     ctermfg=white        ctermbg=darkyellow  cterm=bold
+highlight PmenuSel     ctermfg=white        ctermbg=darkgrey  cterm=bold
 highlight LineNrAbove  ctermfg=darkgrey     ctermbg=none
 highlight LineNr       ctermfg=grey         ctermbg=none        cterm=bold,italic
 highlight LineNrBelow  ctermfg=darkgrey     ctermbg=none

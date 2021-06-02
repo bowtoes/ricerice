@@ -1,0 +1,38 @@
+! Tin
+
+! special
+*.foreground:   #ffffff
+*.background:   #2e2e35
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #000000
+*.color8:       #000000
+
+! red
+*.color1:       #8d534e
+*.color9:       #b57d78
+
+! green
+*.color2:       #4e8d53
+*.color10:      #78b57d
+
+! yellow
+*.color3:       #888d4e
+*.color11:      #b0b578
+
+! blue
+*.color4:       #534e8d
+*.color12:      #7d78b5
+
+! magenta
+*.color5:       #8d4e88
+*.color13:      #b578b0
+
+! cyan
+*.color6:       #4e888d
+*.color14:      #78b0b5
+
+! white
+*.color7:       #ffffff
+*.color15:      #ffffff

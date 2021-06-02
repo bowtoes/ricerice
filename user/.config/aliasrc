@@ -1,12 +1,17 @@
 # Conditional alias, only aliases if $2 is a valid command on the system
 calias ()
 {
-	[ -n "$(command -v $2)" ] && alias $1="$2"
+	if [ -n "$(command -v $2)" ]; then
+		alias $1="$2"
+	elif [ -n "$(command -v $3)" ]; then
+		alias $1="$3"
+	fi
 }
 
 calias aliasrc "vim ~/.config/aliasrc"
+calias xconf "vim ~/.config/xconf/Xresources"
+calias dircolors "vim ~/.config/dircolors"
 
-calias remake "make clean; make"
 calias bashp "source ~/.bash_profile"
 calias vfc "vim ~/.vim/vimrc"
 
@@ -82,7 +87,7 @@ alias cd..="cd .."
 #  Capital first letter:  '-1' is passed to 'ls' (single column)
 #  Capital second letter: '-s' is passed to 'ls'
 #  The argument that matches the second letter is always passed (except for ls)
-alias ls="ls -xNFX --si --color=auto --group-directories-first --time-style=long-iso"
+alias ls="ls -xNF --si --color=auto --group-directories-first --time-style=long-iso"
 alias Ls="ls -1"
 alias lS="ls -s"
 alias LS="ls -1s"
@@ -96,9 +101,32 @@ alias ll="ls -ls"
 alias Ll="ls -1ls"
 alias lL="ls -ls"
 alias LL="ls -1lsA"
+alias LLL="ls -1lsa"
 
 alias l="ls"
 alias L="ls -1"
+
+# git stuff
+alias gc="git commit"
+alias ga="git add"
+alias gp="git push"
+alias gd="git diff"
+alias gdc="git diff --cached"
+alias gs="git status"
+alias gl="git log"
+alias gls="git log --stat"
+alias gap="git add --patch"
+alias grs="git restore --staged"
+alias grb="git rebase -i HEAD~10"
+alias gsu="git submodule update"
+alias gsur="git submodule update --remote"
+
+# yay
+alias yss="yay -Ss"
+alias yqs="yay -Qs"
+alias yrs="yay -Rns"
+
+alias locallib="LD_LIBRARY_PATH=."
 
 alias search="find . -type f | grep "
 alias fileextensions="find . -type f | awk -F. '!a[\$NF]++{print \$NF}' | sort"
@@ -111,6 +139,7 @@ calias dlpage "dlpage -l "$LOGDIR"/wget -h "$CONFIGDIR"/wget/hsts"
 calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
 calias patch "patch -b"
 calias kdiff3 "kdiff3 --qall"
+calias wineexplorer "wine explorer"
 
 alias du="du -cs --si"
 alias df="df --si"
@@ -118,7 +147,8 @@ alias mcnf="vim -p ~/.config/aliasrc ~/.config/dircolors ~/.config/xconf/"
 alias mxnf="vim -p $XPROFILE2 $XPROFILE"
 
 # Ultimate 7z compression
-alias zult="7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
+calias zult "lrztar -L 9 -z -p 1 -U" "7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
+calias sizes "du ./* ./.*  -h | sort -h"
 alias ytdl="youtube-dl -ci"
 alias bcdl="bandcamp-dl -ry"
 alias pacgraph="pacgraph -b black -l cyan -t green -d red -p 12 60"
