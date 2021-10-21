@@ -4,26 +4,28 @@ MAX=0
 MIN=0
 CUR=0
 N=0
-p="5";
+p_high="30"
+p_out="5";
 
 for i in $(find '/sys/devices/system/cpu/cpufreq/' -maxdepth 1 -type d -name 'policy*') ; do
     CPU_MAX=$(cat $i/scaling_max_freq)
     CPU_MIN=$(cat $i/scaling_min_freq)
     CPU_CUR=$(cat $i/scaling_cur_freq)
-	MAX=$((MAX + CPU_MAX))
+    MAX=$((MAX + CPU_MAX))
     MIN=$((MIN + CPU_MIN))
     CUR=$((CUR + CPU_CUR))
-	N=$((N + 1))
+    N=$((N + 1))
 done
 
 if [ -n "$1" ] ; then
-    p="$1";
+    p_out="$1";
 fi
-MAX=$(echo "scale=$p;$MAX / $N" | bc)
-MIN=$(echo "scale=$p;$MIN / $N" | bc)
-CUR=$(echo "scale=$p;$CUR / $N" | bc)
+MAX=$(echo "scale=$p_high;$MAX / $N" | bc)
+MIN=$(echo "scale=$p_high;$MIN / $N" | bc)
+CUR=$(echo "scale=$p_high;$CUR / $N" | bc)
 
-cmd="scale=$p;100 * ($CUR - $MIN) / ($MAX - $MIN)"
-echo "$cmd" | bc
+cur=$(echo "scale=$p_out;$CUR/1000000" | bc)
+max=$(echo "scale=$p_out;$MAX/1000000" | bc)
+echo "$cur/$max"" GHz"
 
 #mpstat | grep all | awk '{print 100 - $NF}'

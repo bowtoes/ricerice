@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
-# Apparently printf is safer than echo? idk
+echo "Doesn't work, broken, do not use"
+exit 1
 
 helptext( )
 {

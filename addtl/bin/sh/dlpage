@@ -1,10 +1,14 @@
 #!/usr/bin/env sh
 
+# Download a web page with wget.
+
 cmd="wget -v --show-progress --timestamping --no-cookies --compression=auto \
 --adjust-extension --convert-links --page-requisites --force-directories \
 --hsts-file="$CONFIGDIR"/wget/hsts --append-output="$LOGDIR"/wget"
+# If non-zero, create files in page directories that store the url downloaded
+genlinks=0
 
-dl()
+dlpages()
 {
 	i=1
 	cnt="$#"
@@ -21,7 +25,7 @@ dl()
 		if [ -n "$pass" ]; then
 			user="$(printf "%s" "$userpass" | grep : | cut -d: -f1)"
 		else
-		    user=$userpass
+			user=$userpass
 		fi
 
 		# extract the host -- updated
@@ -30,7 +34,7 @@ dl()
 		if [ -n "$port" ]; then
 			host="$(printf "%s" "$hostport" | grep : | cut -d: -f1)"
 		else
-		    host=$hostport
+			host=$hostport
 		fi
 
 		# extract the path (if any)
@@ -39,40 +43,57 @@ dl()
 		printf "Downloading %i/%i : %s\\n" "$i" "$cnt" "$1"
 		cc="$cmd '$1'"
 		eval $cc
-		printf "%s\\n" "$1" >> "$path/link"
+		if [ "$genlinks" -ne 0 ] ; then
+			printf "%s\\n" "$1" >> "$path/link"
+			cod=$?
+			[ "$cod" -ne 0 ] && exit $cod
+		fi
 		i=$((i+1))
 		shift
 	done
 }
 
-lst=" "
+dllst=" "
 app=""
 hst=""
 cnt=0
 while [ "$#" -gt 0 ] ; do
-	if [ "$1" = "-r" ] ; then
-		cmd="$cmd --recursive -e robots=off"
+	if [ "$1" = "-L" ] ; then
+		# Toggle link generation
+		genlinks=$((1-genlinks))
+	elif [ "$1" = "-r" ] ; then
+		# Recurse for a little while
+		cmd="$cmd --recursive --execute robots=off"
 	elif [ "$1" = "-R" ] ; then
+		# Recurse downwards forever
 		cmd="$cmd --level=inf --no-parent"
 	elif [ "$1" = "-l" ] ; then
+		# Set custom log file
 		app="--append-output="$2""
 		shift
 	elif [ "$1" = "-h" ] ; then
+		# Set custom history file
 		hst="--hsts-file="$2""
 		shift
 	else
 		if [ "$1" = "" ] ; then
+			# Empty url
 			shift
 			continue
-		elif [ -z "${lst##*$1}" ] ; then
+		elif [ -z "${dllst##*$1}" ] ; then
+			# Already set for download
 			shift
 			continue
 		else
-			lst="$lst $1"
+			dllst="$dllst $1"
 			cnt=$((cnt+1))
 		fi
 	fi
 	shift
 done
+if [ "$cnt" -eq 0 ] ; then
+	echo "No urls passed"
+	exit
+fi
 cmd="$cmd $app $hst"
-dl $lst
+dlpages $dllst

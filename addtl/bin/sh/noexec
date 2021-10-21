@@ -6,8 +6,10 @@ types="${types}\|ani"
 
 types="${types}\|ba2"
 types="${types}\|bin"
+types="${types}\|bnk"
 types="${types}\|bsa"
 types="${types}\|bsp"
+types="${types}\|bxm"
 types="${types}\|blend"
 types="${types}\|blend1"
 
@@ -16,11 +18,13 @@ types="${types}\|cc"
 types="${types}\|cs"
 types="${types}\|cfg"
 types="${types}\|cnf"
+types="${types}\|cpk"
 types="${types}\|cpp"
 types="${types}\|cur"
 types="${types}\|conf"
 types="${types}\|cache"
 types="${types}\|config"
+types="${types}\|csproj"
 
 types="${types}\|dat"
 types="${types}\|dll"
@@ -29,6 +33,7 @@ types="${types}\|dxf"
 types="${types}\|docx"
 
 types="${types}\|ent"
+types="${types}\|enlMeta"
 
 types="${types}\|fbx"
 types="${types}\|fnt"
@@ -73,7 +78,9 @@ types="${types}\|pack"
 types="${types}\|qc"
 
 types="${types}\|rc"
+types="${types}\|rss"
 
+types="${types}\|sln"
 types="${types}\|smd"
 types="${types}\|smx"
 types="${types}\|spr"
@@ -87,6 +94,8 @@ types="${types}\|txt"
 types="${types}\|tmod"
 types="${types}\|tmtheme"
 
+types="${types}\|usm"
+
 types="${types}\|vbr"
 types="${types}\|vdf"
 types="${types}\|vpk"
@@ -96,11 +105,15 @@ types="${types}\|vmt"
 types="${types}\|vssettings"
 
 types="${types}\|wad"
+types="${types}\|wai"
 types="${types}\|wav"
+types="${types}\|wem"
+types="${types}\|wsp"
 types="${types}\|webm"
 types="${types}\|woff"
 
 types="${types}\|xcf"
+types="${types}\|xml"
 types="${types}\|xspf"
 
 types="${types}\|zip"
@@ -109,16 +122,13 @@ DEPTH=-1
 ARGS=""
 
 while [ $# -gt 0 ] ; do
-	case "$1" in
-		-d)
-			DEPTH=$2
-			shift 2
-			;;
-		*)
-			ARGS="$ARGS $1"
-			shift
-			;;
-	esac
+	if [ "$1" = "-d" ] ; then
+		DEPTH=$2
+		shift
+	else
+		ARGS="$ARGS $1"
+	fi
+	shift
 done
 
 if [ $DEPTH -ge 0 ] ; then

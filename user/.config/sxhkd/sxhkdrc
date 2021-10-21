@@ -1,49 +1,84 @@
 # Basic binds
 super + Return
-    $TERMINAL $TERMINALCMD
+	$TERMINAL $TERMINALCMD
 super + shift + Return
-    $TABCMD $TERMINALCMD
+	$TABCMD $TERMINALCMD
 super + d
-    dmenu_run
+	dmenu_run
 super + r
-    $TERMINAL
+	$TERMINAL
 super + shift + w
-    $BROWSER
+	$BROWSER
 super + ctrl + w
-    $TABBROWSER2
+	$TABBROWSER2
 super + e
-    $EXPLORERCMD
+	$EXPLORERCMD
 super + ctrl + e
 	$TERMINAL $EXPLORER2CMD
 super + ctrl + shift + e
 	$TABEXPLORER2
 super + a
-    $AUDIO
+	$AUDIO
 super + z
-    $EXPLORERCMD "$MUSICDIR" & \
-    $AUDIO
+	$EXPLORERCMD "$MUSICDIR" & \
+	$AUDIO
 
 super + b
-    setbg
+	setbg
 
 # Et cetera...
 super + grave
-    dmenuunicode
-super + ctrl + e
-    $EDITORCMD
+	dmenuunicode
+#super + ctrl + e
+#    $EDITORCMD
 
 # Function keys
 super + F1
-    dmenuprompt "Reload sxhkdrc?" "refreshsxhkd"
+	dmenuprompt "Reload sxhkdrc?" "refreshsxhkd"
 super + F2
-    dmenuprompt "Shutdown dwm?" "killall dwm"
+	dmenuprompt "Shutdown dwm?" "killall dwm"
 super + F3
-    dmenuprompt "Shutdown X?" "killall Xorg"
+	dmenuprompt "Shutdown X?" "$HOME/.config/xconf/Xlogout"
 super + F4
-    dmenuprompt "Shutdown computer?" "poweroff"
+	dmenuprompt "Shutdown computer?" "poweroff"
 super + F5
-    dmenuprompt "Reboot computer?" "reboot"
+	dmenuprompt "Reboot computer?" "reboot"
 super + shift + F5
 	dmenuprompt "Restart sxhkd?" "kill -10 `pgrep sxhkd`"
 super + F6
-    dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
+	dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
+
+# Audio keys, when using alsa
+XF86AudioLowerVolume
+	amixer -q sset PCM 1dB-
+XF86AudioRaiseVolume
+	amixer -q sset PCM 1dB+
+super + XF86AudioLowerVolume
+	amixer -q sset PCM 5dB-
+super + XF86AudioRaiseVolume
+	amixer -q sset PCM 5dB+
+XF86AudioMute
+	amixer -q sset PCM toggle
+XF86AudioPlay
+	playerctl -a play-pause
+XF86AudioPause
+	playerctl -a play-pause
+XF86AudioPrev
+	playerctl -a previous
+XF86AudioNext
+	playerctl -a next
+XF86AudioStop
+	playerctl -a stop
+super + XF86AudioStop
+	playerctl -a play-pause
+
+super + m
+	amixer -q sset PCM toggle
+super + p
+	playerctl -a play-pause
+super + shift + p
+	playerctl -a stop
+super + apostrophe
+	playerctl -a next
+super + semicolon
+	playerctl -a previous

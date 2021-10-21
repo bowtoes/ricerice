@@ -2,48 +2,51 @@
 
 # Personal environment variables
 
+export TERMCOLORS="$CONFIGDIR/termcolors"
+[ -r "$TERMCOLORS" ] && . "$TERMCOLORS"
+export DIRCOLORS="$CONFIGDIR/dircolors"
+[ -r "$DIRCOLORS" ] && . "$DIRCOLORS"
+
+export ALIASRC="$CONFIGDIR/aliasrc"
+export SXHKDRC="$CONFIGDIR/sxhkd/sxhkdrc"
+
 export LOGDIR="$HOME/.log"
-
-export TERMINAL="st"
-export TERMINALCMD="-e bash -l"
-export TABCMD="tabbed -r 2 $TERMINAL -w ''"
-
-export EDITOR="vim"
-export EDITORCMD="-e $EDITOR"
-export TABEDITOR="$TABCMD $EDITORCMD"
-
-export BROWSER="brave"
-export BROWSERCMD="$BROWSER"
-
-export BROWSER2="surf"
-export TABBROWSER2="tabbed $BROWSER2 -e"
-
-export AUDIO="vlc"
-
-export EXPLORER="thunar"
-export EXPLORERCMD="$EXPLORER"
-
-export EXPLORER2="nnn"
-export EXPLORER2CMD="-e $EXPLORER2 -dxrog"
-export TABEXPLORER2="$TABCMD $EXPLORER2CMD"
-
-export TERMCOLS="$HOME/.config/termcolors"
-export DIRCOLS="$HOME/.config/dircolors"
-[ -f "$TERMCOLS" ] && . "$TERMCOLS"
-[ -f "$DIRCOLS" ] && . "$DIRCOLS"
-
-export DEV="/addtl/dev"
-export RICEDIR="$DEV/other/ricerice"
+export DEVDIR="/addtl/dev"
+export RICEDIR="$DEVDIR/other/ricerice"
 export WALLDIR="$HOME/.wall/include"
 
-export XRESOURCES="$HOME/.config/xconf/Xresources"
-export XMODMAP="$HOME/.config/xconf/Xmodmap"
-export XPROFILE="$HOME/.config/xconf/Xprofile"
-export XPROFILE2="$HOME/.config/Xprofile2"
+export XCONFDIR="$CONFIGDIR/xconf"
+export XRESOURCES="$XCONFDIR/Xresources"
+export XMODMAP="$XCONFDIR/Xmodmap"
+export XPROFILE="$XCONFDIR/Xprofile"
+export XENVIRONMENT="$XCONFDIR/Xenvironment"
 
 export LESSHISTFILE="$LOGDIR/lesshst"
 export HISTFILE="$LOGDIR/bash_history"
 export FIT_LOG="$LOGDIR/fit_log"
 
+export TERMINAL="st"
+export EDITOR="vim"
+export BROWSER="brave"
+export BROWSER2="surf"
+export AUDIO="vlc"
+export EXPLORER="thunar"
+export EXPLORER2="nnn"
+
+export TERMINALCMD="-e bash -l"
+export TABCMD="tabbed -r 2 $TERMINAL -w ''"
+
+export EDITORCMD="-e $EDITOR"
+export TABEDITOR="$TABCMD $EDITORCMD"
+export BROWSERCMD="$BROWSER"
+export TABBROWSER2="tabbed $BROWSER2 -e"
+
+export EXPLORERCMD="$EXPLORER"
+
+export EXPLORER2CMD="-e $EXPLORER2 -dxrog"
+export TABEXPLORER2="$TABCMD $EXPLORER2CMD"
+
+export CFLAGS=
+
 export DEFINES2="$DEFINES""2"
-[ -f "$DEFINES2" ] && . "$DEFINES2"
+[ -r "$DEFINES2" ] && . "$DEFINES2"

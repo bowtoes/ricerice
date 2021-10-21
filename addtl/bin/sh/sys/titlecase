@@ -1,15 +1,13 @@
 #!/usr/bin/env sh
 
+title=""
 for f in "$@" ; do
 	wd=("$f")
-	title=""
-	wc=0
 	for word in $wd ; do
 		first=$(echo $word | cut -c1 | tr '[[:lower:]]' '[[:upper:]]')
 		others=$(echo $word | cut -c2- | tr '[[:upper:]]' '[[:lower:]]')
 		word="$first$others"
 		title="$title$word"" "
-		wc=$(($wc + 1))
 	done
-	echo "$title"
 done
+echo "$title"

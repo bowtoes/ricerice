@@ -3,32 +3,64 @@ calias ()
 {
 	if [ -n "$(command -v $2)" ]; then
 		alias $1="$2"
-	elif [ -n "$(command -v $3)" ]; then
+	elif [ -n "$3" -a "$(command -v $3)" ]; then
 		alias $1="$3"
 	fi
 }
 
-calias aliasrc "vim ~/.config/aliasrc"
-calias xconf "vim ~/.config/xconf/Xresources"
-calias dircolors "vim ~/.config/dircolors"
+calias cnf_cols "$EDITOR $DIRCOLORS"
+if [ "$EDITOR" = "vim" ] ; then
+	calias cnf_defs "$EDITOR -O $DEFINES $DEFINES2"
+else
+	calias cnf_defs "$EDITOR $DEFINES $DEFINES2"
+fi
+calias cnf_alias "$EDITOR $ALIASRC"
+calias cnf_sxhkd "$EDITOR $SXHKDRC"
+calias cnf_xres "$EDITOR $XRESOURCES"
+calias cnf_xprf "$EDITOR $XPROFILE"
+calias cnf_xenv "$EDITOR $XENVIRONMENT"
+calias cnf_xinit "$EDITOR ~/.xinitrc"
+calias cnf_prf "$EDITOR ~/.profile"
 
 calias bashp "source ~/.bash_profile"
-calias vfc "vim ~/.vim/vimrc"
+calias vfc "$EDITOR ~/.vim/vimrc"
+calias vi "$EDITOR"
 
-# -- SYSTEM QUERY/CONTROL
-calias ms "mountspace"
-calias ms4 "mountspace ext4"
-# List the size of all installed packages, sorted least-to-most size.
-calias yaysizes "yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
 calias ftpstat "sudo systemctl status vsftpd"
 calias restarteth "sudo modprobe -r r8168; sudo modprobe r8168"
-calias objdump "objdump --source --line-numbers -w -Mintel"
 calias memcheck "valgrind --tool=memcheck --read-var-info=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s"
 calias massif "valgrind --tool=massif --max-snapshots=1000 --detailed-freq=1 --stacks=yes --read-var-info=yes -s"
+calias cmd "wine cmd"
 
-alias filecounts="itemcount -t f -e ./{.,}*"
-alias linkcounts="itemcount -t l -e ./{.,}*"
-alias dircounts="itemcount -t d -e ./{.,}*"
+calias du "du -cs --si"
+calias df "df --si"
+calias objdump "objdump --source --line-numbers -w -Mintel"
+calias wget "wget -v --show-progress --timestamping --no-cookies --compression=auto \
+--hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
+calias dlpage "dlpage -l "$LOGDIR"/wget -h "$CONFIGDIR"/wget/hsts"
+calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
+calias patch "patch -b"
+calias kdiff3 "kdiff3 --qall"
+calias nvidia-settings "nvidia-settings --config=~/.config/nvidia-settings-rc"
+calias pacgraph "pacgraph -b black -l cyan -t green -d red -p 12 60"
+
+calias mcnf "vim -p ~/.config/aliasrc ~/.config/dircolors ~/.config/xconf/"
+calias mxnf "vim -p $XPROFILE2 $XPROFILE"
+calias sizes "du ./* ./.*  -h | sort -h"
+calias wineexplorer "wine explorer"
+calias zult "lrztar -L 9 -z -p 1 -U" "7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
+calias clock "date +'%a, %02m/%02d/%y, %02I:%02M:%02S'"
+
+# yay
+calias yss "yay -Ss"
+calias yqs "yay -Qs"
+calias yrs "yay -Rns"
+calias yqo "yay -Qo"
+# List the size of all installed packages, sorted least-to-most size.
+calias yaysizes "yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
+
+calias grep "grep --color=auto -E"
+
 alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
 # Currently, safe-rm and safe-rmdir don't quite work the way I want.
@@ -37,10 +69,10 @@ alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 # 'recursive' blacklisting to a depth of 1.
 # TODO fix
 if [ -n "$(command -v safe-rm)" ] ; then
-	alias rm="safe-rm -v --preserve-root"
+	alias rm="safe-rm -vi --preserve-root"
 	alias rmdir="safe-rmdir -v"
 else
-	alias rm="rm -v --preserve-root"
+	alias rm="rm -vi --preserve-root"
 	alias rmdir="rmdir -v"
 fi
 
@@ -106,53 +138,38 @@ alias LLL="ls -1lsa"
 alias l="ls"
 alias L="ls -1"
 
-# git stuff
-alias gc="git commit"
-alias ga="git add"
-alias gp="git push"
-alias gd="git diff"
-alias gdc="git diff --cached"
-alias gs="git status"
-alias gl="git log"
-alias gls="git log --stat"
-alias gap="git add --patch"
-alias grs="git restore --staged"
-alias grb="git rebase -i HEAD~10"
-alias gsu="git submodule update"
-alias gsur="git submodule update --remote"
+alias less="less --LINE-NUMBERS"
 
-# yay
-alias yss="yay -Ss"
-alias yqs="yay -Qs"
-alias yrs="yay -Rns"
+# git stuff
+calias ga "git add"
+calias gck "git checkout"
+calias gam "git commit --amend --no-edit"
+calias guc "git reset HEAD~1"
+calias gc "git commit"
+calias gp "git push"
+calias gd "git diff"
+calias gdc "git diff --cached"
+calias gs "git status"
+calias gl "git log"
+calias gls "git log --stat"
+calias gap "git add --patch"
+calias grs "git restore --staged"
+calias grb "git rebase -i HEAD~10"
+calias gsu "git submodule update"
+calias gsui "git submodule update --init"
+calias gsur "git submodule update --remote"
+calias gsurm "git submodule update --remote --merge"
+calias gsuR "git submodule update --recursive"
+calias gss "git submodule status"
+calias gsi "git submodule init"
 
 alias locallib="LD_LIBRARY_PATH=."
 
-alias search="find . -type f | grep "
-alias fileextensions="find . -type f | awk -F. '!a[\$NF]++{print \$NF}' | sort"
-
-alias nvidia-settings="nvidia-settings --config=~/.config/nvidia-settings-rc"
-
-calias wget "wget -v --show-progress --timestamping --no-cookies --compression=auto \
---hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
-calias dlpage "dlpage -l "$LOGDIR"/wget -h "$CONFIGDIR"/wget/hsts"
-calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
-calias patch "patch -b"
-calias kdiff3 "kdiff3 --qall"
-calias wineexplorer "wine explorer"
-
-alias du="du -cs --si"
-alias df="df --si"
-alias mcnf="vim -p ~/.config/aliasrc ~/.config/dircolors ~/.config/xconf/"
-alias mxnf="vim -p $XPROFILE2 $XPROFILE"
-
-# Ultimate 7z compression
-calias zult "lrztar -L 9 -z -p 1 -U" "7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
-calias sizes "du ./* ./.*  -h | sort -h"
-alias ytdl="youtube-dl -ci"
-alias bcdl="bandcamp-dl -ry"
-alias pacgraph="pacgraph -b black -l cyan -t green -d red -p 12 60"
-alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
+calias ytdl "youtube-dl --continue --ignore-errors"
+calias yt-album-dl "youtube-dl --verbose --continue --ignore-errors --extract-audio \
+	--output \"%(playlist_index)s - %(title)s.%(ext)s\" --audio-format best"
+calias bcdl "bandcamp-dl -ry"
+calias neofetch "neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
 	--cpu_temp C --distro_shorthand of --kernel_shorthand off \
 	--uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all \
 	--de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on \
@@ -161,3 +178,14 @@ alias neofetch="neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
 	--block_height 1 --block_width 2 --cpu_display infobar \
 	--memory_display infobar --battery_display infobar --disk_display infobar \
 	--bar_char '#' '-'"
+
+unset calias
+
+mcd()
+{
+	#$1=dir
+	dir="$1"
+	shift
+	[ ! -d "$dir" ] && mkdir $@ "$dir" || return 1
+	cd "$dir" || return 1
+}

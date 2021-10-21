@@ -1,15 +1,14 @@
 #!/usr/bin/env sh
 
-if [ ! -z "$1" ]; then
-    echo "$1"
+if [ "$#" -eq 0 ]; then
+	echo "Do you want to continue? (y/n)"
 else
-    echo "Do you want to continue? (y/n)"
+	printf "$@"
 fi
-while true; do
-    read -r yn
-    case $yn in
-        [Yy]|[Yy][Ee][Ss] ) break;;
-        * ) exit;
-    esac
-done
+
+read -r yn
+case $yn in
+	[Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) exit 0;;
+	* ) exit 1;;
+esac
 

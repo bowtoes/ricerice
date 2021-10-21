@@ -2,21 +2,23 @@
 
 awkcmd='
 FNR==1 {
-	printf("%-9s |%-7s |%-9s |%-7s | %s\n","Used","Used %","Free","Free %","Mount")
+	printf("%-9s |%-9s |%-9s |%-9s |%-7s |%-7s | %s\n","Size","Total","Used","Free","Used %","Free %","Mount")
 }
-{
+NR!=1 {
 	size = $2
 	used = $3
 	avail = $4
 	mount = $6
 
-	guse = (((used / 1000) / 1000) / 1000)
-	gfree = (((avail / 1000) / 1000) / 1000)
+	gsize = size / 1000000000
+	guse = used / 1000000000
+	gfree = avail / 1000000000
+	total = (used + avail) / 1000000000
 
 	puse = 100 * used/size
 	pfree = 100 * avail/size
 
-	printf("%-7.2fGB |%-6.2f%% |%-7.2fGB |%-6.2f%% | %s\n",guse,puse,gfree,pfree,mount)
+	printf("%-7.2fGB |%-7.2fGB |%-7.2fGB |%-7.2fGB |%-6.2f%% |%-6.2f%% | %s\n",gsize,total,guse,gfree,puse,pfree,mount)
 }
 '
 
@@ -26,4 +28,4 @@ while [ "$#" -gt 0 ] ; do
 	shift
 done
 
-df --block-size=1 --portability $TYPE | awk "$awkcmd"
+df --block-size=1 $TYPE | awk "$awkcmd"

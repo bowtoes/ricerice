@@ -1,8 +1,9 @@
+!st.font: Px437 IBM PS/2thin4:pixelsize=13:antialias=true:autohint=true
 st.font: Roboto Mono:pixelsize=12:antialias=true:autohint=true
 ! For some reason, monokai.Xcolor fails to load
 ! TODO: st-betterxresources: add a dmenu patch to allow more convenient changes
 ! 		to settings.
-st.xcolorsFile: ~/.config/xconf/xcolors/century2.Xcolor
+st.xcolorsFile: ~/.config/xconf/xcolors/gruvboxdark.Xcolor
 !st.xcolorsFile: ~/.config/xconf/xcolors/century2.Xcolor
 
 ! for some reason, on my 1920x1080, more than 120 cols or 36 rows puts st into a corner.

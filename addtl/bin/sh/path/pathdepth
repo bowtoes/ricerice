@@ -4,21 +4,19 @@ ONLYCOUNT=0
 RELBASE="/"
 while [ $# -gt 0 ] ; do
 	case "$1" in
-		-[Dd])
-			ONLYCOUNT=1
-			;;
+		-[Dd]) ONLYCOUNT=$((1-ONLYCOUNT)) ;;
 		-r)
 			RELBASE="$2"
-			shift 1
+			shift
 			;;
 		*)
-			PTH=`realpath --relative-to "$RELBASE" -sm "$1"`
+			PTH="$(realpath --relative-to "$RELBASE" -sm "$1")"
 			if [ $ONLYCOUNT -eq 0 ] ; then
-				printf "%2d %s\n" `charcount -s "/" "$PTH"` "$PTH"
+				printf "%2d %s\\n" "$(charcount -s "/" "$PTH")" "$PTH"
 			else
-				printf "%d\n" `charcount -s "/" "$PTH"`
+				printf "%d\\n" "$(charcount -s "/" "$PTH")"
 			fi
 			;;
-		esac
+	esac
 		shift
 done

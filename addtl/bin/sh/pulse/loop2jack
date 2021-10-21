@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+alsa_out -j ploop -dploop -q1 > /dev/null 2>&1 &
+alsa_in -j cloop -dcloop -q1 > /dev/null 2>&1 &
+
+sleep 1
+
+jack_connect cloop:capture_1 system:playback_1
+jack_connect cloop:capture_2 system:playback_2
+
+jack_connect cloop:capture_3 system:playback_1
+jack_connect cloop:capture_3 system:playback_2

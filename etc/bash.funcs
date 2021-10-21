@@ -1,11 +1,27 @@
 #!/usr/bin/env sh
 # Global functions available to all users
 
-takeme( )
+wedit()
 {
-    [ -n "$1" ] && cd "$( where "$1" )"
+	[ -n "$1" ] && "$EDITOR" "$(command -v "$1")"
 }
-up( )
+wat()
+{
+	cat "$(which "$1")"
+}
+what()
+{
+	[ -n "$(command -v "$1")" ] && ls --color=auto -lAs "$(which "$1")"
+}
+where()
+{
+	[ -n "$(command -v "$1")" ] && dirname "$(command -v "$1")"
+}
+takeme()
+{
+    [ -n "$1" ] && cd "$(where "$1")"
+}
+up()
 {
 	newdir="../"
     if strictlypositive "$1" ; then
@@ -19,10 +35,8 @@ up( )
 	cd "$newdir"
 }
 
-cdmk( )
+cdmk()
 {
-	if [ ! -d "$1" ] ; then
-		mkdir -p "$1"
-	fi
+	[ ! -d "$1" ] && mkdir -p "$1" || return
 	cd "$1"
 }

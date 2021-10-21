@@ -1,0 +1,39 @@
+#!/usr/bin/env sh
+
+while true; do
+	# TODO replace this while loop with a little C program
+	# Pass the program a directory and time in seconds, update
+	# wallpaper every interval of seconds. Run the program again
+	# while the original is running and you can change the directory
+	# or interval time, or force an immediate change and reset the
+	# interval countdown.
+	# updates wallpaper yayayayyayayayayayay
+	setbg
+	# every hour woohohohohohohohohoooooooooooooo
+	sleep 3600
+done &
+if false; then
+	while true; do
+		updatestatus &
+		xset r rate 250 20 &
+		sleep 1
+	done &
+	while true; do
+		dwm > "$LOGDIR"/dwm 2>&1 &
+	done
+else
+	#nvidia-settings --load-config-only
+	while true; do
+		sleep 1
+		pulseaudio &
+		qjackctl &
+		break
+	done &
+	xfce4-session > "$LOGDIR/xfce4" 2>&1
+	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH
+	# I AM ANGERY
+fi

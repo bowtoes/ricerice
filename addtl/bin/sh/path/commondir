@@ -1,7 +1,5 @@
 #!/usr/bin/env sh
 
 a=$(commonpath $1 $2)
-if [ -f $a ] ; then
-    a=$(dirname $a)
-fi
+[ -f $a ] && a=$(dirname $a)
 echo $a

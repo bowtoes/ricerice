@@ -4,4 +4,8 @@
 # For example:
 # `./dmenuprompt "Do you want to shutdown?" "shutdown -h now"`
 
-[ "$(printf "No\nYes" | dmenu -p "$1")" = "Yes" ] && $2
+val="$(printf "No\nYes" | dmenu -p "$1")"
+case $val in
+	[Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) $2 ;;
+	* ) ;;
+esac

@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-time="$(clock)"
+time="$(date +"%a %02m/%02d/%02y %02I:%02M%p")"
 #uptime="$(getuptime)"
 #mem="$(mempercent | xargs printf "%3.3s%%")"
 mem="$(memfraction)"

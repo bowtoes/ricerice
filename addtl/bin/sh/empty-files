@@ -1,0 +1,5 @@
+#!/usr/bin/env sh
+
+for i in "$@" ; do
+	cat '/dev/null' > "$i"
+done

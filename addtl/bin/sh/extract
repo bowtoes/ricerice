@@ -18,7 +18,7 @@
 #	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)")"
 #fi
 
-__N=0
+N=0
 for i in "$@" ; do
 	# Absolute filepath
 	archive="$(readlink -f "$i")" &&
@@ -27,8 +27,8 @@ for i in "$@" ; do
 
 	[ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
 
-	__N=$((__N+1))
-	printf "Extracting %d/%d : %s\\n" "$__N" "$#" "$i"
+	N=$((N+1))
+	printf "Extracting %d/%d : %s\\n" "$N" "$#" "$i"
 	if [ -f "$archive" ] ; then
 		case "$archive" in
 			*.tar.bz2|*.tar.xz|*.tbz2)

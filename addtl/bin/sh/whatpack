@@ -1,5 +1,0 @@
-#!/usr/bin/env sh
-
-for i in $@; do
-	yay -Qs "$(yay -Qqo "$i")" --color=always | head -n 2
-done

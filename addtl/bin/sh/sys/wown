@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-yay -Qo "$(which "$1")"

@@ -11,26 +11,26 @@ lhs=$(realpath -mq "$1")
 rhs=$(realpath -mq "$2")
 
 if [ -z "$lhs" ] ; then
-    if [ -n "$rhs" ] ; then
-        lhs="$rhs"
-    else
-        exit 0
-    fi
+	if [ -n "$rhs" ] ; then
+		lhs="$rhs"
+	else
+		exit 0
+	fi
 else
-    if [ -z "$rhs" ] ; then
-        rhs="$lhs"
-    fi
+	if [ -z "$rhs" ] ; then
+		rhs="$lhs"
+	fi
 fi
 
 path=
 OLD_IFS=$IFS; IFS=/
 for w in $rhs; do
-    test "$path" = / && try="/$w" || try="$path/$w"
-    case $lhs in
-        $try*) ;;
-        *) break ;;
-    esac
-    path=$try
+	test "$path" = / && try="/$w" || try="$path/$w"
+	case $lhs in
+		$try*) ;;
+		*) break ;;
+	esac
+	path=$try
 done
 IFS=$OLD_IFS
 echo $path

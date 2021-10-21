@@ -1,9 +1,25 @@
 #!/usr/bin/env sh
 
-export QT_IM_MODULE=ibus
+prf_chk ()
+{
+	#$1==Command
+	#$2==Logfile
+	#$3==CommandName
+	if [ -n "$(command -v "$3")" ] ; then
+		printf "Running '%s'...\\n" "$1" >> "$LOGDIR"/xinit
+		$1 > "$LOGDIR"/"$2" 2>&1 &
+	else
+		printf "'%s' not found on system.\\n" "$3" >> "$LOGDIR"/xinit
+	fi
+}
 
-sxhkd > $LOGDIR/sxhkd 2>&1 &                    # Bind keys
-unclutter > $LOGDIR/unclutter 2>&1 &            # Remove mouse when idle
-xcompmgr > $LOGDIR/xcompmgr 2>&1 &              # xcompmgr for transparency
-#tint2 &
-ibus-daemon -drx &
+prf_chk "sxhkd" "sxhkd" "sxhkd" # Bind extra keys
+prf_chk "unclutter" "unclutter" "unclutter" # Remove mouse when idle
+prf_chk "xcompmgr" "xcompmgr" "xcompmgr" # Transparency
+
+if [ -n "$(command -v ibus-daemon)" ] ; then
+	export QT_IM_MODULE=ibus
+fi
+prf_chk "ibus-daemon -drx" "ibus-daemon" "ibus-daemon"
+
+unset prf_chk

@@ -1,0 +1,4 @@
+#/user/.local/share/icons/
+#/user/.vim/autoload/
+!/user/.vim/plugged/lightline.vim/autoload/lightline/colorscheme/terminal.vim
+tags

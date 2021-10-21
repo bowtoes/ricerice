@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+
+for i in $@; do
+	if [ ! -f "$i" ]; then continue; fi
+	printf '' > "$i"
+done

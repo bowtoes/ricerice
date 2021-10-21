@@ -23,17 +23,8 @@ fi
 
 cd $1 >/dev/null 2>&1 || usage 1
 
-if [ -n "$5" ] ; then
-	BRANCH="$5"
-else
-	BRANCH="master"
-fi
-
-if [ -n "$4" ] ; then
-	REMOTE="$4"
-else
-	REMOTE="origin"
-fi
+BRANCH="${5:-"master"}"
+REMOT="${5:-"origin"}"
 
 REVISION=`git rev-parse --short $REMOTE/$BRANCH` || exit 1
 OUTPUT="$DIR"/"$PROJECT-$PATCH-`date +%Y%m%d`-$REVISION.diff"

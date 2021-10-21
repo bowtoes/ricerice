@@ -59,27 +59,19 @@ appendrecurse ()
 	fi
 }
 
-appendrecurse "$HOME/.gem"
-appendrecurse "$HOME/.local/bin"
 appendrecurse "$HOME/bin"
-appendrecurse "$HOME/scripts"
+appendrecurse "$HOME/.local/bin"
 unset append
 unset appendrecurse
 
 PATH="$(echo "$PATH" | sed "s/::/:/g")"
-
-#PS1="$PS1\[\e[1;31m\]\u"
-#PS1="$PS1\[\e[35m\]-"
-#PS1="$PS1\[\e[33m\]\h"
-#PS1="$PS1\[\e[0;39m\]:"
-#PS1="$PS1\[\e[1;34m\]\W"
-#PS1="$PS1\[\e[0;39;49m\]"
-#PS1="$PS1\$(A=\$? ; if [ \$A -ne 0 ] ; then echo [\$A] ; fi)"
-#PS1="$PS1\$"
 export PATH
+export CPATH="$PATH"
+export LIBRARY_PATH="${LIBRARY_PATH:+$LIBRARY_PATH:}/addtl/lib"
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+$PKG_CONFIG_PATH:}/addtl/lib/pkgconfig"
+
 PS1=""
-path ()
+sh_path ()
 {
 	case "$PWD" in
 		"$HOME"*)
@@ -97,7 +89,7 @@ path ()
 		printf ".../%s" "`echo "$PTH" | cut -d '/' -f$((P_D - M_D + 2))-`"
 	fi
 }
-errorcode ()
+sh_errorcode ()
 {
 	A=$?
 	if [ $A -ne 0 ] ; then
@@ -107,20 +99,21 @@ errorcode ()
 
 PS1="$PS1\[\e[00;31;49m\]\u"
 PS1="$PS1\[\e[02;39;49m\]:"
-PS1="$PS1\[\e[00;32;49m\]\$(errorcode)"
-PS1="$PS1\[\e[01;34;49m\]\$(path)"
+PS1="$PS1\[\e[00;32;49m\]\$(sh_errorcode)"
+PS1="$PS1\[\e[01;34;49m\]\$(sh_path)"
 PS1="$PS1\[\e[00;33;49m\]\$ "
-
 PS1="$PS1\[\e[00;97;49m\]"
 export PS1
 
-# TODO automatically choose CONFIGDIR if ~/.config does not exist.
-export CONFIGDIR="$HOME/.config"
+if [ -d "$HOME/.config" ] ; then
+	export CONFIGDIR="$HOME/.config"
+else
+	export CONFIGDIR="$HOME"
+fi
 export DEFINES="$CONFIGDIR/defines"
 [ -f "$DEFINES" ] && . "$DEFINES"
 
 export GPG_TTY=$(tty)
-export LPASS_PINENTRY="pinentry-curses"
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export GTK_IM_MODULE=ibus

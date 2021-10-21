@@ -1,17 +1,40 @@
 #!/usr/bin/env sh
 
-# $1 = Input
+cmd="convert -strip -interlace Plane -quality 85% -sampling-factor 4:2:0 \
+	-define jpeg:dct-method=float"
+lst=" "
+inplace=0
+quiet=0
 
-while [ ! -z "$1" ]; do
-    if [ "$(ftype "$1")" =  "jpg" ] || \
-       [ "$(ftype "$1")" = "jpeg" ] || \
-       [ -z "$(ftype "$1")" ]; then
-        echo "Compressing "$1"..."
-        convert -strip -interlace Plane -quality 85% \
-            -sampling-factor 4:2:0 -define jpeg:dct-method=float \
-            "$1" "$1"
-    else
-        echo "Invalid file for jpg compression "$1""
-    fi
-    shift 1
+while [ "$#" -gt 0 ] ; do
+	case "$1" in
+	-[Ii]) inplace=$((1-inplace)) ;;
+	-[Qq]) quiet=$((1-quiet)) ;;
+	*)
+		if [ ! -e "$1" ] ; then
+			[ "$quiet" -eq 0 ] && printf "Input '%s' does not exist\\n" "$1"
+		elif [ ! -f "$1" ] ; then
+			[ "$quiet" -eq 0 ] && printf "Input '%s' is not a file\\n" "$1"
+		else
+			lst="$lst ""$1"
+		fi
+	esac
+	shift
+done
+
+for i in "$lst"; do
+	[ "$quiet" -eq 0 ] && printf "Compressing '%s'...\\n" "$i"
+	if [ "$inplace" -ne 0 ] ; then
+		"$cmd" "$i" "$i"
+	else
+		cmpr="$i"".cmpr.jpg"
+		if [ -e "$cmpr" ] ; then
+			[ "$quiet" -eq 0 ] && printf "Output '%s' already exists\\n" "$cmpr"
+			continue
+		else
+			"$cmd" "$i" "$cmpr"
+		fi
+	fi
+	cod="$?"
+	[ "$cod" -ne 0 ] && exit "$cod"
 done
