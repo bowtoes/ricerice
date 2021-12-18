@@ -1,138 +1,138 @@
 #!/usr/bin/env sh
 
-types=""
-types="${types}\|abr"
-types="${types}\|ani"
+patterns=""
+# File extensions
+add_extensions ()
+{
+	while [ "$#" -gt 0 ] ; do
+		patterns="${patterns:+$patterns\|}.*\.$1"
+		shift 1
+	done
+}
+# Name patterns
+add_patterns ()
+{
+	while [ "$#" -gt 0 ] ; do
+		patterns="${patterns:+$patterns\|}.*\/$1"
+		shift 1
+	done
+}
 
-types="${types}\|ba2"
-types="${types}\|bin"
-types="${types}\|bnk"
-types="${types}\|bsa"
-types="${types}\|bsp"
-types="${types}\|bxm"
-types="${types}\|blend"
-types="${types}\|blend1"
 
-types="${types}\|c"
-types="${types}\|cc"
-types="${types}\|cs"
-types="${types}\|cfg"
-types="${types}\|cnf"
-types="${types}\|cpk"
-types="${types}\|cpp"
-types="${types}\|cur"
-types="${types}\|conf"
-types="${types}\|cache"
-types="${types}\|config"
-types="${types}\|csproj"
-
-types="${types}\|dat"
-types="${types}\|dll"
-types="${types}\|dem"
-types="${types}\|dxf"
-types="${types}\|docx"
-
-types="${types}\|ent"
-types="${types}\|enlMeta"
-
-types="${types}\|fbx"
-types="${types}\|fnt"
-types="${types}\|fon"
-
-types="${types}\|gz"
-types="${types}\|gbr"
-types="${types}\|ggr"
-types="${types}\|gif"
-types="${types}\|gpl"
-
-types="${types}\|h"
-types="${types}\|hh"
-types="${types}\|hpp"
-
-types="${types}\|ico"
-types="${types}\|idx"
-types="${types}\|ini"
-types="${types}\|inf"
-
-types="${types}\|jpg"
-types="${types}\|jpeg"
-
-types="${types}\|lmp"
-
-types="${types}\|md"
-types="${types}\|mdl"
-types="${types}\|mp3"
-types="${types}\|mp2"
-types="${types}\|mp4"
-types="${types}\|mp4"
-types="${types}\|ms2"
-types="${types}\|mtl"
-
-types="${types}\|obj"
-types="${types}\|otf"
-
-types="${types}\|pdf"
-types="${types}\|png"
-types="${types}\|pack"
-
-types="${types}\|qc"
-
-types="${types}\|rc"
-types="${types}\|rss"
-
-types="${types}\|sln"
-types="${types}\|smd"
-types="${types}\|smx"
-types="${types}\|spr"
-types="${types}\|svg"
-types="${types}\|swf"
-types="${types}\|sample"
-types="${types}\|settings"
-
-types="${types}\|ttf"
-types="${types}\|txt"
-types="${types}\|tmod"
-types="${types}\|tmtheme"
-
-types="${types}\|usm"
-
-types="${types}\|vbr"
-types="${types}\|vdf"
-types="${types}\|vpk"
-types="${types}\|vtf"
-types="${types}\|vmf"
-types="${types}\|vmt"
-types="${types}\|vssettings"
-
-types="${types}\|wad"
-types="${types}\|wai"
-types="${types}\|wav"
-types="${types}\|wem"
-types="${types}\|wsp"
-types="${types}\|webm"
-types="${types}\|woff"
-
-types="${types}\|xcf"
-types="${types}\|xml"
-types="${types}\|xspf"
-
-types="${types}\|zip"
+add_extensions "abr" "ani"
+add_extensions "ba2" "bin" "bnk" "bsa" "bsp" "bxm"
+add_extensions "blend"
+add_extensions "blend1"
+add_extensions "c"
+add_extensions "cc" "cs"
+add_extensions "cfg" "cnf" "cpk" "cpp" "cur" "css" "cxx"
+add_extensions "conf"
+add_extensions "cache" "config" "csproj"
+add_extensions "dat" "def" "dem" "dll" "dox" "dxf"
+add_extensions "docx"
+add_extensions "ent"
+add_extensions "enlMeta"
+add_extensions "entitlements"
+add_extensions "fbx" "fnt" "fon"
+add_extensions "filters"
+add_extensions "gz"
+add_extensions "gbr" "ggr" "gif" "gpl" "gui"
+add_extensions "gradle"
+add_extensions "h"
+add_extensions "hh"
+add_extensions "hpp"
+add_extensions "html" "hint"
+add_extensions "ico" "idx" "ini" "inf"
+add_extensions "js"
+add_extensions "jpg"
+add_extensions "java" "jpeg" "json"
+add_extensions "lh"
+add_extensions "led" "lmp" "lua"
+add_extensions "md" "mf"
+add_extensions "mak" "mdl" "mod" "mp2" "mp3" "mp4" "ms2" "mtl"
+add_extensions "manifest"
+add_extensions "obj" "otf"
+add_extensions "pdf" "png" "pro"
+add_extensions "pack" "pptx"
+add_extensions "plist" "props"
+add_extensions "pbxproj"
+add_extensions "properties"
+add_extensions "qc"
+add_extensions "rc"
+add_extensions "rss"
+add_extensions "sln" "smd" "smx" "spr" "svg" "swf"
+add_extensions "sample"
+add_extensions "settings"
+add_extensions "storyboard"
+add_extensions "ttf" "txt"
+add_extensions "tmod"
+add_extensions "tmtheme"
+add_extensions "usm"
+add_extensions "vbr" "vdf" "vfm" "vpk" "vtf" "vmf" "vmt"
+add_extensions "vcxproj"
+add_extensions "vssettings"
+add_extensions "wad" "wai" "wav" "wem" "wsp"
+add_extensions "webm" "wlua" "woff"
+add_extensions "xcf" "xib" "xml" "xspf"
+add_extensions "xccheckout"
+add_extensions "xcworkspacedata"
+add_extensions "zip"
 
 DEPTH=-1
-ARGS=""
+_mode_find_args="find_args"
+_mode_add_exts="add_exts"
+_mode_add_patterns="add_patterns"
+ARG_MODE="find_args"
+#ARG_MODE="add_exts"
+_directory="."
+_regex="iregex"
 
 while [ $# -gt 0 ] ; do
-	if [ "$1" = "-d" ] ; then
-		DEPTH=$2
-		shift
-	else
-		ARGS="$ARGS $1"
-	fi
-	shift
+	case "$1" in
+		# Toggle mode
+		-f|-find)
+			ARG_MODE="$_mode_find_args"
+			;;
+		-a|-add)
+			ARG_MODE="$_mode_add_exts"
+			;;
+		-A|-ADD)
+			ARG_MODE="$_mode_add_patterns"
+			;;
+		*)
+
+		# Parse argument based on mode
+		case "$ARG_MODE" in
+			$_mode_find_args)
+				case "$1" in
+					-d|-depth)
+						DEPTH=$2
+						shift 1
+						;;
+					-i|-ignore|-c|-case-insensitive)
+						_regex="iregex"
+						;;
+					-C|-case-sensitive)
+						_regex="regex"
+						;;
+					*)
+						_directory="$1"
+						;;
+				esac
+				;;
+			$_mode_add_exts)
+				add_extensions "$1"
+				;;
+			$_mode_add_patterns)
+				add_patterns "$1"
+		esac
+		;;
+	esac
+	shift 1
 done
 
-if [ $DEPTH -ge 0 ] ; then
-	find $ARGS -maxdepth $DEPTH -type f -iregex ".*\.\($types\)" -exec chmod -x -c {} +
+if [ "$DEPTH" -ge 0 ] ; then
+	find "$_directory" -maxdepth $DEPTH -type f -$_regex "\($patterns\)" -exec chmod -x -c {} +
 else
-	find $ARGS -type f -iregex ".*\.\($types\)" -exec chmod -x -c {} +
+	find "$_directory"                  -type f -$_regex "\($patterns\)" -exec chmod -x -c {} +
 fi

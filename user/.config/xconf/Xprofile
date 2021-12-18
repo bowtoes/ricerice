@@ -16,10 +16,8 @@ prf_chk ()
 prf_chk "sxhkd" "sxhkd" "sxhkd" # Bind extra keys
 prf_chk "unclutter" "unclutter" "unclutter" # Remove mouse when idle
 prf_chk "xcompmgr" "xcompmgr" "xcompmgr" # Transparency
-
-if [ -n "$(command -v ibus-daemon)" ] ; then
-	export QT_IM_MODULE=ibus
-fi
 prf_chk "ibus-daemon -drx" "ibus-daemon" "ibus-daemon"
+
+printf "Starting X...\\n" >> "$LOGDIR"/xinit
 
 unset prf_chk

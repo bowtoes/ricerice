@@ -63,7 +63,8 @@ gettext ()
 		else BGS="IVLD"
 		fi
 		printf "%14s" " $FTS $FGS $BGS "
-	else printf "%$1.$1s" "################################################################################################################################"
+	else
+		printf "%$1.$1s" "this is a test string that happens to have some length to it but to be honest I'm not really sure how long it actually is, cus' like, it could just go on forever, like, some sort of book or something but I don't really care cus' like, I can't read; I'm totally illiterate."
 	fi
 }
 

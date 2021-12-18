@@ -1,5 +1,8 @@
 #!/usr/bin/env sh
 
-killall pulseaudio
-killall jackd
-killall Xorg
+printf "Killing 'pulseaudio'...\n" > "$LOGDIR"/.xlogout
+killall pulseaudio >> "$LOGDIR"/.xlogout 2>&1
+printf "Killing 'jackd'...\n" >> "$LOGDIR"/.xlogout
+killall jackd >> "$LOGDIR"/.xlogout 2>&1
+printf "Killing 'Xorg'...\n" >> "$LOGDIR"/.xlogout
+killall Xorg >> "$LOGDIR"/.xlogout 2>&1

@@ -34,18 +34,22 @@ super + grave
 
 # Function keys
 super + F1
-	dmenuprompt "Reload sxhkdrc?" "refreshsxhkd"
+	dmenuprompt "Kill sxhkdrc?" "pkill -9 -n -x -u `whoami` sxhkd"
+super + shift + F1
+	dmenuprompt "Restart sxhkd?" "pkill -9 -n -x -u `whoami` sxhkd ; sxhkd > \"$LOGDIR\"/sxhkd 2>&1"
+super + ctrl + F1
+	dmenuprompt "Reload sxhkdrc?" "pkill -10 -n -x -u `whoami` sxhkd"
 super + F2
-	dmenuprompt "Shutdown dwm?" "killall dwm"
+	dmenuprompt "Shutdown dwm?" "pkill -9 dwm"
 super + F3
 	dmenuprompt "Shutdown X?" "$HOME/.config/xconf/Xlogout"
+super + shift + F3
+	dmenuprompt "Restart X?" "$HOME/.config/xconf/Xlogout ; xstart"
 super + F4
 	dmenuprompt "Shutdown computer?" "poweroff"
-super + F5
+super + shift + F4
 	dmenuprompt "Reboot computer?" "reboot"
-super + shift + F5
-	dmenuprompt "Restart sxhkd?" "kill -10 `pgrep sxhkd`"
-super + F6
+super + ctrl + F4
 	dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
 
 # Audio keys, when using alsa
@@ -78,7 +82,7 @@ super + p
 	playerctl -a play-pause
 super + shift + p
 	playerctl -a stop
-super + apostrophe
-	playerctl -a next
-super + semicolon
+super + comma
 	playerctl -a previous
+super + period
+	playerctl -a next

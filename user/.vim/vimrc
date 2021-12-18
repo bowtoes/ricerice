@@ -11,6 +11,7 @@ let g:ale_linters = {
 \ 'python':['flake8'],
 \ 'html':[''],
 \}
+let g:ale_linters_explicit=1
 let g:ale_python_flake8_options = '--jobs 8 --ignore
       \ F401,F403,
       \ E111,E114,E115,E116,E117,E121,E122,E123,E124,E125,E126,E127,E128,E129,E131,
@@ -53,18 +54,18 @@ let g:ale_sign_style_warning = '?'
 call plug#begin('~/.vim/plugged')
 "{{{SYNTAX
 "Plug 'dense-analysis/ale'
-Plug '~/.vim/plugged/ale-custom'
-Plug 'OmniSharp/omnisharp-vim'
-Plug 'FooSoft/vim-argwrap'
+"Plug '~/.vim/plugged/ale-custom'
+"Plug 'OmniSharp/omnisharp-vim'
+"Plug 'FooSoft/vim-argwrap'
 
-Plug 'Shougo/deoplete.nvim'
-Plug 'roxma/nvim-yarp'
-Plug 'deoplete-plugins/deoplete-tag'
-Plug 'roxma/vim-hug-neovim-rpc'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-easytags'
-"Plug 'sheerun/vim-polyglot'
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'roxma/nvim-yarp'
+"Plug 'deoplete-plugins/deoplete-tag'
+"Plug 'roxma/vim-hug-neovim-rpc'
+"Plug 'ludovicchabant/vim-gutentags'
+"Plug 'xolox/vim-misc'
+"Plug 'xolox/vim-easytags'
+Plug 'sheerun/vim-polyglot'
 "}}}SYNTAX
 "{{{MISC
 Plug 'godlygeek/tabular'
@@ -82,25 +83,33 @@ call plug#end()
   let g:OmniSharp_server_stdio_quickload=1
 "}}}OmniSharp
 "{{{deoplete
-  let g:deoplete#enable_at_startup=1
-  call deoplete#custom#option({
-  \ 'auto_complete': v:true,
-  \ 'auto_complete_delay': 0,
-  \ 'auto_complete_popup': 'auto',
-  \ 'num_processes': 8,
-  \ 'sources': {
-    \ '_': [],
-    \ 'c': ['tag', 'ale'],
-    \ 'cs': ['omnisharp'],
-    \ 'html': [],
-    \ },
-  \ })
+"  let g:deoplete#enable_at_startup=1
+"  call deoplete#custom#option({
+"  \ 'auto_complete': v:true,
+"  \ 'auto_complete_delay': 0,
+"  \ 'auto_complete_popup': 'auto',
+"  \ 'num_processes': 8,
+"  \ 'sources': {
+"    \ '_': [],
+"    \ 'c': ['ale','tag'],
+"    \ 'cs': ['omnisharp'],
+"    \ 'html': [],
+"    \ },
+"  \ })
 "}}}deoplete
 "{{{gutentags
 let g:gutentags_enabled = 1
-let g:gutentags_ctags_extra_args = [ '--fields=+liaSszt', '--exclude=docs', '--exclude=Documentation', '--c-kinds=+p', '--c++-kinds=+p' ]
+let g:gutentags_ctags_extra_args = [
+      \ '--fields=+liaSszt',
+      \'--c-kinds=+p', '--c++-kinds=+p',
+      \'--exclude=docs', '--exclude=Documentation',
+      \'--exclude=vendor/sqlite3', '--exclude=vendor/tcl', '--exclude=vendor/tk',
+      \'--exclude=build'
+      \]
 let g:gutentags_generate_on_missing = 0
 let g:gutentags_generate_on_write = 0
+let g:gutentags_dont_load = 0
+let g:gutentags_project_root = ['config.mk', 'Makefile']
 "}}}gutentags
 "{{{easytags
 let g:easytags_async = 1
@@ -108,9 +117,9 @@ let g:easytags_dynamic_files = 1
 let g:easytags_always_enabled = 0
 let g:easytags_on_cursorhold = 0
 let g:easytags_auto_update = 0
-let g:easytags_auto_highlight = 0
+let g:easytags_auto_highlight = 1
 let g:easytags_autorecurse = 0
-let g:easytags_evenets = ['']
+"let g:easytags_events = []
 "}}}easytags
 "{{{Undotree
 let g:undotree_WindowLayout=2
@@ -247,7 +256,6 @@ augroup Plugins
   autocmd User ALECompletePost ALEHover
   autocmd BufReadPost config.h ALEDisableBuffer
 "}}}
-  autocmd User GutentagsUpdated if exists(':HighlightTags') | HighlightTags | endif
 "{{{NERDTree
   "open NERDTree automatically when vim starts up on opening a directory
   autocmd StdinReadPre * let s:std_in=1
@@ -258,6 +266,7 @@ augroup Plugins
         \| ene
         \| endif
 "}}}NERDTree
+  autocmd User GutentagsUpdated :HighlightTags
 augroup END
 "}}}Plugins
 "{{{FT choosing
@@ -274,7 +283,8 @@ augroup FT_choose
 
   " OpenGL shader files
   autocmd BufRead,BufNewFile *.vt,*.ft set ft=glsl
-  autocmd BufRead,BufNewFile *.vth,*.fth,*.compute set ft=hlsl
+  autocmd BufRead,BufNewFile *.vth,*.fth,*.compute set ft=fx
+  autocmd BufRead,BufNewFile *.fx set ft=fx
 
   autocmd BufRead,BufNewFile *.todo,*.TODO,TODO,todo set ft=markdown
   autocmd BufRead,BufNewFile *.vim set ft=vim
@@ -282,8 +292,13 @@ augroup FT_choose
   " witcher script is an extension on typescript
   autocmd BufRead,BufNewFile *.ws set ft=typescript
 
+  autocmd BufRead,BufNewFile *.INI,inI,Ini,iNi,iNI,INi,InI set ft=dosini
+  autocmd BufRead,BufNewFile *.nemo_action set ft=dosini
+
   autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines*,.bash* set ft=sh
   autocmd BufRead fonts.conf set ft=html
+
+  autocmd BufRead,BufNewFile *.qss set ft=css
 augroup END
 "}}} FT detection
 "{{{Display
@@ -296,6 +311,7 @@ augroup Display
   autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\""
         \| endif
+
 "{{{TEX stuff
   autocmd FileType tex let g:tex_no_error=1
   " 'texclear', when given *.tex, should remove all files generated as a
@@ -336,7 +352,8 @@ augroup FiletypeSettings
   autocmd FileType python let g:pyindent_disable_parentheses_indenting=0
 "}}}PYTHON
 "{{{SH
-  autocmd FileType sh setlocal list | setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
+  autocmd FileType sh setlocal list | setlocal nowrap | setlocal nospell | setlocal tabstop=2
+  autocmd FileType sh setlocal foldmethod=indent " vim shell folding is a fucking menace
 "}}}SH
 "{{{MAKE
   autocmd FileType make setlocal foldmethod=marker | setlocal foldmarker={,}
@@ -379,8 +396,7 @@ augroup FiletypeSettings
   autocmd FileType glsl,hlsl setlocal nowrap | setlocal iskeyword=@,48-57,_,192-255 " ???
 "}}}G/HLSL
 "{{{TEXT
-  autocmd FileType text setlocal spell
-  autocmd FileType text setlocal complete+=kspell
+  autocmd FileType text setlocal ft=pdugc
 "}}}TEXT
 "{{{TEX
   autocmd FileType tex setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
@@ -400,23 +416,24 @@ augroup Snippets
   "header guard                  goto SOF   insert filename
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;hg <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_I#ifndef <esc>lv$h""yo#define <esc>""po<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3ji
   "header guard but case is that of filename
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yo#define <esc>""po<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3ji
+  autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yA<esc>o#define <esc>""pA<esc>o<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3ji
+  autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VI#ifndef __<esc>lv$h""yA__<esc>o#define __<esc>""pA__<esc>o<esc>Go<cr><esc>I#endif /* __<esc>""pA__ */<esc>gg3ji
   "header include from current filename
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;hi <esc>ggO<del><c-r>=expand("%:t")<cr><esc>I#include "<esc>$rhA"<cr><esc>o
   " automatically insert '/*  */' when '/**' is done
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap /** **/<esc>hhi/<esc>lli<space><space><esc>i
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap /** **/<esc>hhi/<esc>lli<space><space><esc>i
   " when '{<cr>', create a block. Any text after cursor when done will be
   " placed in block
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap {<cr> }<esc>i{<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap [<cr> ]<esc>i[<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap (<cr> )<esc>i(<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap /*<cr> <space><esc>DA/*<cr>*/<esc>O<space><esc>PA<bs><bs>
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap {<cr> }<esc>i{<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap [<cr> ]<esc>i[<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap (<cr> )<esc>i(<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap /*<cr> <space><esc>DA/*<cr>*/<esc>O<space><esc>PA<bs><bs>
 
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap {;<cr> };<esc>hi{<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap [;<cr> ];<esc>hi[<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap (;<cr> );<esc>hi(<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap {;<cr> };<esc>hi{<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap [;<cr> ];<esc>hi[<cr><esc>O
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap (;<cr> );<esc>hi(<cr><esc>O
 
-  autocmd FileType c,cpp,glsl,hlsl,cs inoremap <C-{> <esc>V:s/^\t\\|^ \{4\}//<cr>i
+  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap <C-{> <esc>V:s/^\t\\|^ \{4\}//<cr>i
 "}}}
 "{{{C#
   autocmd FileType cs nnoremap <silent> <space>R :echo "Restarting OmniSharp Server" <bar> OmniSharpRestartServer <bar> echo "Server restarted"<cr>
@@ -452,6 +469,8 @@ nnoremap <silent> K :call <SID>show_documentation()<CR>
 inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
 inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
 inoremap <silent><expr> <cr> pumvisible() ? deoplete#close_popup() : "\<cr>"
+
+nnoremap <silent> <space>m :ALEDetail<cr>
 
 "{{{ALE Motions
 nnoremap <silent> [g :ALEPrevious -nostyle
@@ -531,6 +550,8 @@ nnoremap <c-j> mZddp`Zj
 nnoremap <c-k> mZddkP`Z2k
 nnoremap <c-c> mZyyp`Zj
 inoremap <c-c> <esc>mZyyp`Zjli
+
+vnoremap ;rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
 "}}}Lines
 "{{{Windows
 nnoremap <space>h <c-w>h
@@ -582,29 +603,30 @@ set t_Co=256
 set t_ut=
 set background=light
 "{{{Defaults
-highlight Comment ctermfg=darkmagenta cterm=none
-highlight String ctermfg=darkyellow cterm=none
-highlight Type ctermfg=darkgreen
-highlight StorageClass ctermfg=yellow cterm=bold,italic
+highlight Comment                     ctermfg=darkmagenta cterm=none
+highlight String                      ctermfg=darkyellow  cterm=none
+highlight Type                        ctermfg=darkgreen
+highlight StorageClass                ctermfg=yellow      cterm=italic
 highlight link Structure StorageClass
-highlight Special cterm=bold
-highlight Identifier ctermfg=red cterm=bold
-highlight Function ctermfg=blue cterm=bold
-highlight Statement ctermfg=darkcyan
-highlight Conditional ctermfg=darkcyan
-highlight Repeat ctermfg=darkcyan
-highlight Operator ctermfg=darkcyan
-highlight Keyword ctermfg=darkcyan
-highlight Label ctermfg=blue
-highlight Todo ctermfg=green ctermbg=none cterm=bold,underline
-highlight PreProc ctermfg=magenta
-highlight Include ctermfg=magenta
-highlight Define ctermfg=magenta cterm=bold
-highlight Macro ctermfg=red
-highlight PreCond ctermfg=darkred cterm=bold
-highlight Character ctermfg=yellow
+highlight Special                     cterm=bold
+highlight Identifier                  ctermfg=lightmagenta
+highlight Function                    ctermfg=blue        cterm=none
+highlight Statement                   ctermfg=darkcyan
+highlight Conditional                 ctermfg=darkcyan
+highlight Repeat                      ctermfg=darkcyan
+highlight Operator                    ctermfg=darkcyan
+highlight Keyword                     ctermfg=darkcyan
+highlight Label                       ctermfg=blue
+highlight Todo                        ctermfg=green       ctermbg=none cterm=bold,underline
+highlight Include                     ctermfg=magenta
+highlight Define                      ctermfg=magenta     cterm=bold
+highlight Macro                       ctermfg=red
+highlight PreProc                     ctermfg=red         cterm=italic
+highlight PreCond                     ctermfg=darkred     cterm=bold
+highlight Character                   ctermfg=yellow
 "}}}Defaults
 "{{{C
+highlight cFixme ctermfg=darkyellow cterm=underline
 highlight cTypedef ctermfg=darkmagenta cterm=italic
 highlight link cDefine Define
 highlight link cMacro Macro

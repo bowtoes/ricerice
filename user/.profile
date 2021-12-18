@@ -66,8 +66,6 @@ unset appendrecurse
 
 PATH="$(echo "$PATH" | sed "s/::/:/g")"
 export PATH
-export CPATH="$PATH"
-export LIBRARY_PATH="${LIBRARY_PATH:+$LIBRARY_PATH:}/addtl/lib"
 export PKG_CONFIG_PATH="${PKG_CONFIG_PATH:+$PKG_CONFIG_PATH:}/addtl/lib/pkgconfig"
 
 PS1=""
@@ -110,8 +108,8 @@ if [ -d "$HOME/.config" ] ; then
 else
 	export CONFIGDIR="$HOME"
 fi
-export DEFINES="$CONFIGDIR/defines"
-[ -f "$DEFINES" ] && . "$DEFINES"
+export SHELL_DEFINES="$CONFIGDIR/defines"
+[ -f "$SHELL_DEFINES" ] && . "$SHELL_DEFINES"
 
 export GPG_TTY=$(tty)
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
@@ -128,3 +126,6 @@ export QT_IM_MODULE=xim
 # 4.5 works for vim-omnisharp
 [ -n "`command -v mono`" ] && \
 	export FrameworkPathOverride="/usr/lib/mono/4.5"
+
+[ -n "$(command -v ibus-daemon)" ] && \
+	export QT_IM_MODULE=ibus

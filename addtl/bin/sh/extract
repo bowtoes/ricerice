@@ -4,86 +4,75 @@
 # Default behavior: Extract archive into new directory
 # Behavior with `-c` option: Extract contents into current directory
 
-#while getopts "hc" o; do case "${o}" in
-#	c) extracthere="True" ;;
-#	*) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
-#esac done
-#
-#if [ -z "$extracthere" ]; then
-#	archive="$(readlink -f "$*")" &&
-#	directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')" &&
-#	mkdir -p "$directory" &&
-#	cd "$directory" || exit
-#else
-#	archive="$(readlink -f "$(echo "$*" | cut -d' ' -f2)")"
-#fi
+_name="$(basename "$0")"
+
+_extract_here=0
+while getopts "hc" o; do case "${o}" in
+	c) _extract_here=1 && shift 1;;
+	*) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
+esac done
 
 N=0
 for i in "$@" ; do
 	# Absolute filepath
-	archive="$(readlink -f "$i")" &&
-	# Absolute filepath without extension
-	directory="$(echo "$archive" | sed 's/\.[^\/.]*$//')"
-
-	[ "$archive" = "" ] && printf "Give archive to extract as argument.\\n" && exit
+	_archive="$(realpath -m "$i")"
+	_name="$(basename "$_archive")"
+	_directory="$(dirname "$_archive")"
+	_subdirectory="$_directory/"$_name"_out"
+	if [ ! -e "$_archive" ] ; then
+		printf "%s: Could not extract '%s': Could not find '%s'\\n" "$_name" "$i" "$_archive"
+		continue
+	elif [ ! -f "$_archive" ] ; then
+		printf "%s: Can't extract '%s': Not a regular file '%s'\\n" "$_name" "$i" "$_archive"
+		continue
+	fi
 
 	N=$((N+1))
-	printf "Extracting %d/%d : %s\\n" "$N" "$#" "$i"
-	if [ -f "$archive" ] ; then
-		case "$archive" in
+	printf "Extracting %d/%d: %s\\n" "$N" "$#" "$i"
+	if [ -f "$_archive" ] ; then
+		case "$_archive" in
 			*.tar.bz2|*.tar.xz|*.tbz2)
-				cmd="tar xvjf"
-				;;
+				cmd="tar xvjf" ;;
 			*.tar.gz|*.tgz)
-				cmd="tar xvzf"
-				;;
+				cmd="tar xvzf" ;;
 			*.lzma)
-				cmd="unlzma"
-				;;
+				cmd="unlzma" ;;
 			*.bz2)
-				cmd="bunzip2"
-				;;
+				cmd="bunzip2" ;;
 			*.rar)
-				cmd="unrar x"
-				;;
+				cmd="unrar x" ;;
 			*.gz)
-				cmd="gunzip"
-				;;
+				cmd="gunzip" ;;
 			*.tar)
-				cmd="tar xvf"
-				;;
+				cmd="tar xvf" ;;
 			*.zip)
-				cmd="unzip"
-				;;
+				cmd="unzip" ;;
 			*.Z)
-				cmd="uncompress"
-				;;
+				cmd="uncompress" ;;
 			*.7z|*.iso)
-				cmd="7z x"
-				;;
+				cmd="7z x" ;;
 			*.xz)
-				cmd="unxz"
-				;;
+				cmd="unxz" ;;
 			*.exe)
-				cmd="cabextract"
-				;;
+				cmd="cabextract" ;;
 			*)
-				printf "extract: '%s' - unknown archive method\\n" "$archive"
-				continue
-				;;
+				printf "%s: '%s' - unknown archive method\\n" "$_name" "$_archive"
+				continue ;;
 		esac
 
-		if [ -e "$directory" ] ; then
-			printf "'%s' already exists.\\n" "$directory"
-			continue
+		if [ "$_extract_here" -eq 0 ] ; then
+			if [ -e "$_subdirectory" ] ; then
+				printf "%s: '%s' already exists.\\n" "$_name" "$_subdirectory"
+				continue
+			fi
+			mkdir -p "$_subdirectory" || exit
+			cd "$_subdirectory"
 		fi
-
-		mkdir -p "$directory" || exit
-		cd "$directory"
-
-		$cmd "$archive"
-		cd "$OLDPWD"
+		$cmd "$_archive"
+		if [ "$_extract_here" -ne 0 ] ; then
+			cd -
+		fi
 	else
-		printf "File \"%s\" not found.\\n" "$archive"
+		printf "%s: File '%s' not found.\\n" "$_name" "$_archive"
 	fi
 done

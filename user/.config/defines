@@ -30,7 +30,7 @@ export EDITOR="vim"
 export BROWSER="brave"
 export BROWSER2="surf"
 export AUDIO="vlc"
-export EXPLORER="thunar"
+export EXPLORER="nemo"
 export EXPLORER2="nnn"
 
 export TERMINALCMD="-e bash -l"
@@ -48,5 +48,5 @@ export TABEXPLORER2="$TABCMD $EXPLORER2CMD"
 
 export CFLAGS=
 
-export DEFINES2="$DEFINES""2"
-[ -r "$DEFINES2" ] && . "$DEFINES2"
+export SHELL_DEFINES2="$SHELL_DEFINES""2"
+[ -r "$SHELL_DEFINES2" ] && . "$SHELL_DEFINES2"
