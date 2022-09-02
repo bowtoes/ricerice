@@ -23,16 +23,17 @@ if false; then
 	done
 else
 	#nvidia-settings --load-config-only
-	while true; do
-		# Sleep because if qjackctl starts too early, some bs occurs with xfce4
-		# (it can't find the status bar) so it doesn't use it and big bad
-		sleep 4
-		printf "Starting qjackctl...\\n"
-		qjackctl > "$LOGDIR"/qjackctl 2>&1 &
-		printf "Starting pulseaudio...\\n"
-		pulseaudio > "$LOGDIR"/pulseaudio 2>&1 &
-		break
-	done &
+	#while true; do
+	#	# Sleep because if qjackctl starts too early, some bs occurs with xfce4
+	#	# (it can't find the status bar) so it doesn't use it and big bad
+	#	# WHY IS JACK SO SHIT
+	#	sleep 4
+	#	printf "Starting qjackctl...\\n"
+	#	qjackctl > "$LOGDIR"/qjackctl 2>&1 &
+	#	printf "Starting pulseaudio...\\n"
+	#	pulseaudio > "$LOGDIR"/pulseaudio 2>&1 &
+	#	break
+	#done &
 	xfce4-session > "$LOGDIR/xfce4" 2>&1
 	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 	# AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA

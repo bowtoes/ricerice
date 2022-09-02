@@ -1,21 +1,23 @@
 #!/usr/bin/env sh
+# Prints time-last-modified using Git's builtin capability
+
 get_date ()
 {
-	date_format="+%Y-%m-%d %H:%M:%S"
-	if [ -n "$1" ] ; then
-		date -d "1970-01-01 + $(stat -c '%Y' "$1") sec" "$date_format"
-	else
-		date -d "0000-01-01" "$date_format"
-	fi
+  date_format="+%Y-%m-%d %H:%M:%S"
+  if [ -n "$1" ] ; then
+    date -d "1970-01-01 + $(stat -c '%Y' "$1") sec" "$date_format"
+  else
+    date -d "0000-01-01" "$date_format"
+  fi
 }
 git status -s | \
 while read mode file; do
-	if [ "$mode" = "D" ] ; then
-		printf "%s \033[31m%s\033[39m" "$(get_date "")" "$file"
-	elif [ "$mode" = "M" ] ; then
-		printf "%s \033[32m%s\033[39m" "$(get_date "$file")" "$file"
-	elif [ "$mode" = "??" ] ; then
-		printf "%s \033[36m%s\033[39m" "$(get_date "$file")" "$file"
-	fi
-	printf "\\n"
+  if [ "$mode" = "D" ] ; then
+    printf "%s \033[31m%s\033[39m" "$(get_date "")" "$file"
+  elif [ "$mode" = "M" ] ; then
+    printf "%s \033[32m%s\033[39m" "$(get_date "$file")" "$file"
+  elif [ "$mode" = "??" ] ; then
+    printf "%s \033[36m%s\033[39m" "$(get_date "$file")" "$file"
+  fi
+  printf "\\n"
 done

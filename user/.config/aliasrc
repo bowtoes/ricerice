@@ -8,62 +8,75 @@ calias ()
 	fi
 }
 
-calias cnf_cols "$EDITOR $DIRCOLORS"
-if [ "$EDITOR" = "vim" ] ; then
-	calias cnf_defs "$EDITOR -O $DEFINES $DEFINES2"
-else
-	calias cnf_defs "$EDITOR $DEFINES $DEFINES2"
-fi
-calias cnf_alias "$EDITOR $ALIASRC"
-calias cnf_sxhkd "$EDITOR $SXHKDRC"
-calias cnf_xres "$EDITOR $XRESOURCES"
-calias cnf_xprf "$EDITOR $XPROFILE"
-calias cnf_xenv "$EDITOR $XENVIRONMENT"
-calias cnf_xinit "$EDITOR ~/.xinitrc"
-calias cnf_prf "$EDITOR ~/.profile"
+# Resource all config files (does not however unset removed aliases)
+calias bashp "source ~/.bash_profile"
+
+# Command to print default cc compiler defines
 calias cc_defines "cc -dM -E - < /dev/null"
+# Command to print default gcc compiler defines
 calias gcc_defines "gcc -dM -E - < /dev/null"
 
-calias bashp "source ~/.bash_profile"
-calias vfc "$EDITOR ~/.vim/vimrc"
-calias vi "$EDITOR"
+calias ed "$EDITORCMD"
+calias exp "$EXPLORERCMD"
 
+#calias vim "nvim"
+calias efc "ed ~/.emacs.d/init.el"
+calias vfc "vim ~/.vim/vimrc"
+calias vnc "vim ~/.vim/plugged/_custom/N"
+#calias nfc "nvim ~/.config/nvim/init.vim"
+calias vi "ed"
+calias sued "sudoedit"
+
+# Quickly edit predefined config files
+calias cnf_cols "$EDITORCMD $DIRCOLORS"
+if [ "$EDITOR" = "vim" ] ; then
+	calias cnf_defs "$EDITORCMD -O $SHELL_DEFINES $SHELL_DEFINES2"
+else
+	calias cnf_defs "$EDITORCMD $SHELL_DEFINES $SHELL_DEFINES2"
+fi
+calias cnf_alias "$EDITORCMD $ALIASRC"
+calias cnf_sxhkd "$EDITORCMD $SXHKDRC"
+calias cnf_xres "$EDITORCMD $XRESOURCES"
+calias cnf_xprf "$EDITORCMD $XPROFILE"
+calias cnf_xenv "$EDITORCMD $XENVIRONMENT"
+calias cnf_xinit "$EDITORCMD ~/.xinitrc"
+calias cnf_prf "$EDITORCMD ~/.profile"
+
+# Check status of the vsftp server, if one is running
 calias ftpstat "sudo systemctl status vsftpd"
-calias restarteth "sudo modprobe -r r8168; sudo modprobe r8168"
+# Restart the ethernet driver, for some reason
+#calias restarteth "sudo modprobe -r r8168; sudo modprobe r8168"
+# Valgrind the program with preconfigured memcheck arguments
 calias memcheck "valgrind --tool=memcheck --read-var-info=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s"
+# Valgrind the program with preconfigured massif arguments
 calias massif "valgrind --tool=massif --max-snapshots=1000 --detailed-freq=1 --stacks=yes --read-var-info=yes -s"
-calias cmd "wine cmd"
 
-calias du "du -cs --si"
+# Default arguments for various programs
+calias du "du -s --si"
 calias df "df --si"
+calias grep "grep --color=auto"
+calias grepc "grep --color=always"
 calias objdump "objdump --source --line-numbers -w -Mintel"
-calias wget "wget -v --show-progress --timestamping --no-cookies --compression=auto \
---hsts-file="$CONFIGDIR"/wget/hsts --convert-links --append-output="$LOGDIR"/wget"
-calias dlpage "dlpage -l "$LOGDIR"/wget -h "$CONFIGDIR"/wget/hsts"
-calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
+calias wget "wget --no-cookies --compression=auto --hsts-file=$CONFIGDIR/wget/hsts --append-output=$LOGDIR/wget"
+calias dlpage "dlpage -l $LOGDIR/wget -h $CONFIGDIR/wget/hsts"
 calias patch "patch -b"
 calias kdiff3 "kdiff3 --qall"
 calias nvidia-settings "nvidia-settings --config=~/.config/nvidia-settings-rc"
-calias pacgraph "pacgraph -b black -l cyan -t green -d red -p 12 60"
+calias feh "feh --force-aliasing --keep-zoom-vp --zoom-fill"
+calias sudoedit "EDITOR='$EDITORCMD' sudoedit"
+calias tmux "tmux -f $HOME/.config/tmux.conf"
 
-calias mcnf "vim -p ~/.config/aliasrc ~/.config/dircolors ~/.config/xconf/"
-calias mxnf "vim -p $XPROFILE2 $XPROFILE"
-calias sizes "du ./* ./.*  -h | sort -h"
+# Windows 'cmd'
+calias cmd "wine cmd"
 calias wineexplorer "wine explorer"
-calias zult "lrztar -L 9 -z -p 1 -U" "7z a -t7z -m0=lzma2 -mx=9 -mfb=64 -md=32m -ms=on"
-calias clock "date +'%a, %02m/%02d/%y, %02I:%02M:%02S'"
 
-# yay
+# pacman/yay
+calias pacgraph "pacgraph -b black -l cyan -t green -d red -p 12 60"
 calias yss "yay -Ss"
 calias yqs "yay -Qs"
 calias yrs "yay -Rns"
 calias yqo "yay -Qo"
-# List the size of all installed packages, sorted least-to-most size.
 calias yaysizes "yay -Qi | awk '/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}' | sort -h"
-
-calias grep "grep --color=auto -E"
-
-alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
 # Currently, safe-rm and safe-rmdir don't quite work the way I want.
 # I'd like it to be so that if I blacklist a folder like '/root/**',
@@ -77,6 +90,13 @@ else
 	alias rm="rm -vi --preserve-root"
 	alias rmdir="rmdir -v"
 fi
+
+# Custom commands
+calias ytdl "youtube-dl --continue --ignore-errors"
+calias yt-album-dl "youtube-dl --verbose --continue --ignore-errors --extract-audio \
+	--output \"%(playlist_index)s - %(title)s.%(ext)s\" --audio-format best"
+calias bcdl "bandcamp-dl -ry"
+alias itemsizes="du --exclude='..' --exclude='.' ./{.,}*"
 
 # -- TYPOS
 alias caelr="clear"
@@ -110,8 +130,6 @@ alias clrea="clear"
 alias rclea="clear"
 alias cd..="cd .."
 
-# -- DEFAULT SETTINGS
-
 # TODO replace ls with a script that uses stat to generate a listing.
 #	Give it an option to do normal 'ls' instead.
 # On my system,     'ls -s'  prints the logical size/allocated space.
@@ -140,55 +158,45 @@ alias LLL="ls -1lsa"
 alias l="ls"
 alias L="ls -1"
 
-alias less="less --LINE-NUMBERS"
+calias less "less --LINE-NUMBERS"
+calias lessr "less -R"
 calias xstart "startx > $LOGDIR/xlog 2>&1"
 
-# git stuff
+# git shortcuts
 calias ga   "git add"
-calias gck  "git checkout"
 calias gam  "git commit --amend --no-edit"
-calias guc  "git reset HEAD~1"
+calias gap  "git add --patch"
 calias gc   "git commit"
-calias gp   "git push"
+calias gck  "git checkout"
 calias gd   "git diff"
-calias gdc  "git diff --cached"
-calias gs   "git status"
 calias gl   "git log"
 calias gls  "git log --stat"
-calias gap  "git add --patch"
-calias grs  "git restore --staged"
+calias gp   "git push"
+calias gpf  "git push -f"
+calias gfr  "git fetch && git reset --hard"
+calias gamp "git add . && git commit --amend --no-edit && git push -f && git push -f --tags"
 calias grb  "git rebase -i HEAD~10"
+calias grs  "git restore --staged"
+calias gs   "git status"
+calias gsi  "git submodule init"
+calias gss  "git submodule status"
 calias gsu  "git submodule update"
+calias gsuR "git submodule update --recursive"
 calias gsui "git submodule update --init"
 calias gsur "git submodule update --remote"
 calias gsurm"git submodule update --remote --merge"
-calias gsuR "git submodule update --recursive"
-calias gss  "git submodule status"
-calias gsi  "git submodule init"
+calias guc  "git reset HEAD~1" # undo commit
 
+# Used for programs with local sharedlibraries, like 'locallib [program]...'
 alias locallib="LD_LIBRARY_PATH=."
-
-calias ytdl "youtube-dl --continue --ignore-errors"
-calias yt-album-dl "youtube-dl --verbose --continue --ignore-errors --extract-audio \
-	--output \"%(playlist_index)s - %(title)s.%(ext)s\" --audio-format best"
-calias bcdl "bandcamp-dl -ry"
-calias neofetch "neofetch --cpu_speed on --cpu_cores logical --cpu_brand on \
-	--cpu_temp C --distro_shorthand of --kernel_shorthand off \
-	--uptime_shorthand off --refresh_rate on --gpu_brand on --gpu_type all \
-	--de_version on --gtk_shorthand off --gtk2 on --gtk3 on --shell_path on \
-	--shell_version on --disk_percent on --memory_percent on --os_arch on \
-	--package_managers on --speed_shorthand off --underline on --bold on \
-	--block_height 1 --block_width 2 --cpu_display infobar \
-	--memory_display infobar --battery_display infobar --disk_display infobar \
-	--bar_char '#' '-'"
 
 unset calias
 
 mcd()
 {
-	#$1=dir
-	dir="$1"
+	directory="$1"
 	shift
-	[ ! -d "$dir" ] && mkdir $@ "$dir" || return 1
-	cd "$dir" || return 1
+	[ -z "$directory" ] && return 0
+	[ ! -d "$directory" ] && mkdir $@ "$directory" || return 1
+	cd "$directory" || return 1
 }

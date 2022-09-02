@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 
 if [ -n "$(command -v awk)" ] ; then
-	awk -v val="$1" 'BEGIN{exit !(val > 0)}'
+  awk -v val="$1" 'BEGIN{exit !(val > 0)}'
 else
-	echo "awk is not installed, cannot do comparison"
-	exit 1
+  echo "awk is not installed, cannot do comparison"
+  exit 1
 fi

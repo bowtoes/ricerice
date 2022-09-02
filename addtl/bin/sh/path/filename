@@ -1,23 +1,23 @@
 #!/usr/bin/env sh
 
 while [ "$#" -gt 0 ] ; do
-	file="${1##*/}"
-	dir="${1%/*}"
-	lext="${file#*.}"
-	sext="${file##*.}"
-	name="${file%.$lext}"
-	if [ -n "$name" ] ; then
-		if [ ! "$dir" = "$file" ] ; then
-			echo "$dir/$name"
-		else
-			echo "$name"
-		fi
-	else
-		if [ ! "$dir" = "$file" ] ; then
-			echo "$dir/$lext"
-		else
-			echo "$lext"
-		fi
-	fi
-	shift
+  file="${1##*/}"
+  dir="${1%/*}"
+  lext="${file#*.}"
+  sext="${file##*.}"
+  name="${file%.$lext}"
+  if [ -n "$name" ] ; then
+    if [ ! "$dir" = "$file" ] ; then
+      echo "$dir/$name"
+    else
+      echo "$name"
+    fi
+  else
+    if [ ! "$dir" = "$file" ] ; then
+      echo "$dir/$lext"
+    else
+      echo "$lext"
+    fi
+  fi
+  shift
 done

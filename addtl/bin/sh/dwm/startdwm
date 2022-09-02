@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+# Supposed to start dwm
+echo "Depcrated, don't use"
+exit 1
 
 # It works, but it somehow conflicts with the statusbar loop
 # so it ends blinking constantly
@@ -7,8 +10,8 @@ FILE="$LOGDIR/dwmlog"
 [ -n "$1" ] && FILE="$1"
 echo "" > "$FILE"
 while true; do
-    # Log stderror to a file
-    dwm >> "$FILE" 2>&1
-    # No error logging
-    #dwm >/dev/null 2>&1
+  # Log stderror to a file
+  dwm >> "$FILE" 2>&1
+  # No error logging
+  #dwm >/dev/null 2>&1
 done

@@ -1,14 +1,15 @@
 #!/usr/bin/env sh
+# Simple yes/no prompt
 
 if [ "$#" -eq 0 ]; then
-	echo "Do you want to continue? (y/n)"
+  echo "Do you want to continue? (y/n)"
 else
-	printf "$@"
+  printf "$@"
 fi
 
 read -r yn
 case $yn in
-	[Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) exit 0;;
-	* ) exit 1;;
+  [Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) exit 0;;
+  * ) exit 1;;
 esac
 

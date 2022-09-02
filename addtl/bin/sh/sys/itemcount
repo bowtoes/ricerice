@@ -3,55 +3,55 @@
 EXCLUDEDOT=0
 SUM=0
 while [ $# -gt 0 ] ; do
-    case $1 in
-        -d)
-            DEPTH=$((1+$2))
-            shift 2
-            ;;
-        -t)
-            TYPES="$2"
-            shift 2
-            ;;
-        -e)
-            EXCLUDEDOT=$((1 - EXCLUDEDOT))
+  case $1 in
+    -d)
+      DEPTH=$((1+$2))
+      shift 2
+      ;;
+    -t)
+      TYPES="$2"
+      shift 2
+      ;;
+    -e)
+      EXCLUDEDOT=$((1 - EXCLUDEDOT))
+      shift
+      ;;
+    *)
+      if [ -d "$1" ] ; then
+        if [ $EXCLUDEDOT -eq 1 ] ; then
+          dirname="`realpath "$1"`"
+          pwdname="`realpath "$PWD"`"
+          prvname="`realpath "$PWD/.."`"
+          if [ "$dirname" = "$pwdname" ] ||
+             [ "$dirname" = "$prvname" ] ; then
             shift
-            ;;
-        *)
-            if [ -d "$1" ] ; then
-                if [ $EXCLUDEDOT -eq 1 ] ; then
-                    dirname="`realpath "$1"`"
-                    pwdname="`realpath "$PWD"`"
-                    prvname="`realpath "$PWD/.."`"
-                    if [ "$dirname" = "$pwdname" ] ||
-                       [ "$dirname" = "$prvname" ] ; then
-                        shift
-                        continue
-                    fi
-                fi
+            continue
+          fi
+        fi
 
-                # How to clean this up?
-                # Find complains when using variables for '-maxdepth $DEPTH' or '-type $TYPES'
-                # 'unkown predicate' it says
-                if [ -n "$DEPTH" ] ; then
-                    if [ -n "$TYPES" ] ; then
-                        NUM=`find -O3 "$1" -maxdepth $DEPTH -type $TYPES -print0 | awk -F'\0' '{print NF - 1}'`
-                    else
-                        NUM=`find -O3 "$1" -maxdepth $DEPTH -print0 | awk -F'\0' '{print NF - 1}'`
-                    fi
-                else
-                    if [ -n "$TYPES" ] ; then
-                        NUM=`find -O3 "$1" -type $TYPES -print0 | awk -F'\0' '{print NF - 1}'`
-                    else
-                        NUM=`find -O3 "$1" -print0 | awk -F'\0' '{print NF - 1}'`
-                    fi
-                fi
+        # How to clean this up?
+        # Find complains when using variables for '-maxdepth $DEPTH' or '-type $TYPES'
+        # 'unkown predicate' it says
+        if [ -n "$DEPTH" ] ; then
+          if [ -n "$TYPES" ] ; then
+            NUM=`find -O3 "$1" -maxdepth $DEPTH -type $TYPES -print0 | awk -F'\0' '{print NF - 1}'`
+          else
+            NUM=`find -O3 "$1" -maxdepth $DEPTH -print0 | awk -F'\0' '{print NF - 1}'`
+          fi
+        else
+          if [ -n "$TYPES" ] ; then
+            NUM=`find -O3 "$1" -type $TYPES -print0 | awk -F'\0' '{print NF - 1}'`
+          else
+            NUM=`find -O3 "$1" -print0 | awk -F'\0' '{print NF - 1}'`
+          fi
+        fi
 
-                [ -z "$NUM" ] && NUM=0
-                SUM=$((SUM+NUM))
-                printf "%-7s %s\n" "$NUM" "$1"
-            fi
-            shift
-            ;;
-    esac
+        [ -z "$NUM" ] && NUM=0
+        SUM=$((SUM+NUM))
+        printf "%-7s %s\n" "$NUM" "$1"
+      fi
+      shift
+      ;;
+  esac
 done
 printf "%-7d %s\n" "$SUM" "TOTAL"

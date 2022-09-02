@@ -2,70 +2,70 @@
 clear
 gettext ()
 {
-	# $1 = type
-	# $2 = FMT
-	# $3 = FG
-	# $4 = BG
+  # $1 = type
+  # $2 = FMT
+  # $3 = FG
+  # $4 = BG
 
-	if [ $1 -eq 0 ] ; then printf " %04i %04i %04i " $2 $3 $4
-	elif [ $1 -eq 1 ] ; then
-		  if [ $2 -eq  0  ] ; then FTS="NORM"
-		elif [ $2 -eq  1  ] ; then FTS="BOLD"
-		elif [ $2 -eq  2  ] ; then FTS="DIM_"
-		elif [ $2 -eq  3  ] ; then FTS="ITLX"
-		elif [ $2 -eq  4  ] ; then FTS="UDRL"
-		elif [ $2 -eq  5  ] ; then FTS="BLNK"
-		elif [ $2 -eq  6  ] ; then FTS="BLNK"
-		elif [ $2 -eq  7  ] ; then FTS="RVRS"
-		elif [ $2 -eq  8  ] ; then FTS="CLER"
-		elif [ $2 -eq  9  ] ; then FTS="STRK"
-		else FTS="IVLD"
-		fi
-		  if [ $3 -eq 39  ] ; then FGS="DFLT"
-		elif [ $3 -eq 30  ] ; then FGS="BLCK"
-		elif [ $3 -eq 31  ] ; then FGS="RED_"
-		elif [ $3 -eq 32  ] ; then FGS="GREN"
-		elif [ $3 -eq 33  ] ; then FGS="YLLW"
-		elif [ $3 -eq 34  ] ; then FGS="BLUE"
-		elif [ $3 -eq 35  ] ; then FGS="MGTA"
-		elif [ $3 -eq 36  ] ; then FGS="CYN_"
-		elif [ $3 -eq 37  ] ; then FGS="LTGY"
+  if [ "$1" -eq 0 ] ; then printf " %04i %04i %04i " "$2" "$3" "$4"
+  elif [ "$1" -eq 1 ] ; then
+      if [ "$2" -eq  0  ] ; then FTS="NORM"
+    elif [ "$2" -eq  1  ] ; then FTS="BOLD"
+    elif [ "$2" -eq  2  ] ; then FTS="DIM_"
+    elif [ "$2" -eq  3  ] ; then FTS="ITLX"
+    elif [ "$2" -eq  4  ] ; then FTS="UDRL"
+    elif [ "$2" -eq  5  ] ; then FTS="BLNK"
+    elif [ "$2" -eq  6  ] ; then FTS="BLNK"
+    elif [ "$2" -eq  7  ] ; then FTS="RVRS"
+    elif [ "$2" -eq  8  ] ; then FTS="CLER"
+    elif [ "$2" -eq  9  ] ; then FTS="STRK"
+    else FTS="----"
+    fi
+      if [ "$3" -eq 39  ] ; then FGS="DFLT"
+    elif [ "$3" -eq 30  ] ; then FGS="BLCK"
+    elif [ "$3" -eq 31  ] ; then FGS="RED_"
+    elif [ "$3" -eq 32  ] ; then FGS="GREN"
+    elif [ "$3" -eq 33  ] ; then FGS="YLLW"
+    elif [ "$3" -eq 34  ] ; then FGS="BLUE"
+    elif [ "$3" -eq 35  ] ; then FGS="MGTA"
+    elif [ "$3" -eq 36  ] ; then FGS="CYN_"
+    elif [ "$3" -eq 37  ] ; then FGS="LTGY"
 
-		elif [ $3 -eq 99  ] ; then FGS="LTDF"
-		elif [ $3 -eq 90  ] ; then FGS="DKGY"
-		elif [ $3 -eq 91  ] ; then FGS="LTRD"
-		elif [ $3 -eq 92  ] ; then FGS="LTGN"
-		elif [ $3 -eq 93  ] ; then FGS="LTYW"
-		elif [ $3 -eq 94  ] ; then FGS="LTBL"
-		elif [ $3 -eq 95  ] ; then FGS="LTMT"
-		elif [ $3 -eq 96  ] ; then FGS="LTCN"
-		elif [ $3 -eq 97  ] ; then FGS="WHTE"
-		else FGS="IVLD"
-		fi
-		  if [ $4 -eq 49  ] ; then BGS="DFLT"
-		elif [ $4 -eq 40  ] ; then BGS="BLCK"
-		elif [ $4 -eq 41  ] ; then BGS="RED_"
-		elif [ $4 -eq 42  ] ; then BGS="GREN"
-		elif [ $4 -eq 43  ] ; then BGS="YLLW"
-		elif [ $4 -eq 44  ] ; then BGS="BLUE"
-		elif [ $4 -eq 45  ] ; then BGS="MGTA"
-		elif [ $4 -eq 46  ] ; then BGS="CYN_"
-		elif [ $4 -eq 47  ] ; then BGS="LTGY"
+    elif [ "$3" -eq 99  ] ; then FGS="LTDF"
+    elif [ "$3" -eq 90  ] ; then FGS="DKGY"
+    elif [ "$3" -eq 91  ] ; then FGS="LTRD"
+    elif [ "$3" -eq 92  ] ; then FGS="LTGN"
+    elif [ "$3" -eq 93  ] ; then FGS="LTYW"
+    elif [ "$3" -eq 94  ] ; then FGS="LTBL"
+    elif [ "$3" -eq 95  ] ; then FGS="LTMT"
+    elif [ "$3" -eq 96  ] ; then FGS="LTCN"
+    elif [ "$3" -eq 97  ] ; then FGS="WHTE"
+    else FGS="----"
+    fi
+      if [ "$4" -eq 49  ] ; then BGS="DFLT"
+    elif [ "$4" -eq 40  ] ; then BGS="BLCK"
+    elif [ "$4" -eq 41  ] ; then BGS="RED_"
+    elif [ "$4" -eq 42  ] ; then BGS="GREN"
+    elif [ "$4" -eq 43  ] ; then BGS="YLLW"
+    elif [ "$4" -eq 44  ] ; then BGS="BLUE"
+    elif [ "$4" -eq 45  ] ; then BGS="MGTA"
+    elif [ "$4" -eq 46  ] ; then BGS="CYN_"
+    elif [ "$4" -eq 47  ] ; then BGS="LTGY"
 
-		elif [ $4 -eq 100 ] ; then BGS="DKGY"
-		elif [ $4 -eq 101 ] ; then BGS="LTRD"
-		elif [ $4 -eq 102 ] ; then BGS="LTGN"
-		elif [ $4 -eq 103 ] ; then BGS="LTYW"
-		elif [ $4 -eq 104 ] ; then BGS="LTBL"
-		elif [ $4 -eq 105 ] ; then BGS="LTMT"
-		elif [ $4 -eq 106 ] ; then BGS="LTCN"
-		elif [ $4 -eq 107 ] ; then BGS="WHTE"
-		else BGS="IVLD"
-		fi
-		printf "%14s" " $FTS $FGS $BGS "
-	else
-		printf "%$1.$1s" "this is a test string that happens to have some length to it but to be honest I'm not really sure how long it actually is, cus' like, it could just go on forever, like, some sort of book or something but I don't really care cus' like, I can't read; I'm totally illiterate."
-	fi
+    elif [ "$4" -eq 100 ] ; then BGS="DKGY"
+    elif [ "$4" -eq 101 ] ; then BGS="LTRD"
+    elif [ "$4" -eq 102 ] ; then BGS="LTGN"
+    elif [ "$4" -eq 103 ] ; then BGS="LTYW"
+    elif [ "$4" -eq 104 ] ; then BGS="LTBL"
+    elif [ "$4" -eq 105 ] ; then BGS="LTMT"
+    elif [ "$4" -eq 106 ] ; then BGS="LTCN"
+    elif [ "$4" -eq 107 ] ; then BGS="WHTE"
+    else BGS="----"
+    fi
+    printf "%14s" " $FTS $FGS $BGS "
+  else
+    printf "%$1.$1s" "this is a test string that happens to have some length to it but to be honest I'm not really sure how long it actually is, cus' like, it could just go on forever, like, some sort of book or something but I don't really care cus' like, I can't read; I'm totally illiterate."
+  fi
 }
 
 # $1 = mode
@@ -85,70 +85,70 @@ FMT_LIST_B='4 5 6 7 8 9'
  FG_LIST_B='90 91 92 93 94 95 96 97 99'
  BG_LIST_B='100 101 102 103 104 105 106 107 109'
 
-if [ -z "$1" -o "$1" = "0" ] ; then
-	VAL=0
+if [ -z "$1" ] || [ "$1" = "0" ] ; then
+  VAL=0
 elif [ "$1" = "1" ] ; then
-	VAL=1
+  VAL=1
 else
-	VAL=$1
+  VAL=$1
 fi
 
-if [ -z "$2" -o "$2" = "0" ] ; then
-	FMT_LIST=$FMT_LIST_A
-	 FG_LIST=$FG_LIST_A
-	 BG_LIST=$BG_LIST_A
+if [ -z "$2" ] || [ "$2" = "0" ] ; then
+  FMT_LIST=$FMT_LIST_A
+   FG_LIST=$FG_LIST_A
+   BG_LIST=$BG_LIST_A
 elif [ "$2" = "1" ] ; then
-	FMT_LIST=$FMT_LIST_B
-	 FG_LIST=$FG_LIST_A
-	 BG_LIST=$BG_LIST_A
+  FMT_LIST=$FMT_LIST_B
+   FG_LIST=$FG_LIST_A
+   BG_LIST=$BG_LIST_A
 elif [ "$2" = "2" ] ; then
-	FMT_LIST=$FMT_LIST_A
-	 FG_LIST=$FG_LIST_B
-	 BG_LIST=$BG_LIST_A
+  FMT_LIST=$FMT_LIST_A
+   FG_LIST=$FG_LIST_B
+   BG_LIST=$BG_LIST_A
 elif [ "$2" = "3" ] ; then
-	FMT_LIST=$FMT_LIST_B
-	 FG_LIST=$FG_LIST_B
-	 BG_LIST=$BG_LIST_A
+  FMT_LIST=$FMT_LIST_B
+   FG_LIST=$FG_LIST_B
+   BG_LIST=$BG_LIST_A
 elif [ "$2" = "4" ] ; then
-	FMT_LIST=$FMT_LIST_A
-	 FG_LIST=$FG_LIST_A
-	 BG_LIST=$BG_LIST_B
+  FMT_LIST=$FMT_LIST_A
+   FG_LIST=$FG_LIST_A
+   BG_LIST=$BG_LIST_B
 elif [ "$2" = "5" ] ; then
-	FMT_LIST=$FMT_LIST_B
-	 FG_LIST=$FG_LIST_A
-	 BG_LIST=$BG_LIST_B
+  FMT_LIST=$FMT_LIST_B
+   FG_LIST=$FG_LIST_A
+   BG_LIST=$BG_LIST_B
 elif [ "$2" = "6" ] ; then
-	FMT_LIST=$FMT_LIST_A
-	 FG_LIST=$FG_LIST_B
-	 BG_LIST=$BG_LIST_B
+  FMT_LIST=$FMT_LIST_A
+   FG_LIST=$FG_LIST_B
+   BG_LIST=$BG_LIST_B
 elif [ "$2" = "7" ] ; then
-	FMT_LIST=$FMT_LIST_B
-	 FG_LIST=$FG_LIST_B
-	 BG_LIST=$BG_LIST_B
+  FMT_LIST=$FMT_LIST_B
+   FG_LIST=$FG_LIST_B
+   BG_LIST=$BG_LIST_B
 else
-	FMT_LIST="$FMT_LIST_A $FMT_LIST_B"
-	 FG_LIST="$FG_LIST_A $FG_LIST_B"
-	 BG_LIST="$BG_LIST_A $BG_LIST_B"
+  FMT_LIST="$FMT_LIST_A $FMT_LIST_B"
+   FG_LIST="$FG_LIST_A $FG_LIST_B"
+   BG_LIST="$BG_LIST_A $BG_LIST_B"
 fi
 
-if [ ! "$1" = "2" ] ; then
-	for FMT in $FMT_LIST ; do
-		for FG in $FG_LIST ; do
-			for BG in $BG_LIST ; do
-				printf "\033[$FMT;$FG;$BG""m""%s" "`gettext $VAL $FMT $FG $BG`"
-			done
-		printf "\033[0;39;49m\\n"
-		done
-	done
+if [ "$1" != "2" ] ; then
+  for FMT in $FMT_LIST ; do
+    for FG in $FG_LIST ; do
+      for BG in $BG_LIST ; do
+        printf "\033[$FMT;$FG;$BG""m""%s" "$(gettext "$VAL" "$FMT" "$FG" "$BG")"
+      done
+    printf "\033[0;39;49m\\n"
+    done
+  done
 else
-	for FMT in $FMT_LIST ; do
-		for FG in $FG_LIST ; do
-			for i in 1 0 ; do
-				for BG in $BG_LIST ; do
-					printf "\033[$FMT;$FG;$BG""m""%s" "`gettext $i $FMT $FG $BG`"
-				done
-				printf "\033[0;39;49m\\n"
-			done
-		done
-	done
+  for FMT in $FMT_LIST ; do
+    for FG in $FG_LIST ; do
+      for i in 1 0 ; do
+        for BG in $BG_LIST ; do
+          printf "\033[$FMT;$FG;$BG""m""%s" "$(gettext "$i" "$FMT" "$FG" "$BG")"
+        done
+        printf "\033[0;39;49m\\n"
+      done
+    done
+  done
 fi

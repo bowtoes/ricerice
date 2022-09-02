@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Supposedly connects pulseaudio to jack server
 
 pacmd load-module module-jack-sink channels=2
 pacmd load-module module-jack-source channels=2

@@ -38,6 +38,8 @@
 # -6xx = rw-
 # -7xx = rwx
 
+set -o vi
+
 # 0664
 umask 0002
 append ()
@@ -73,25 +75,25 @@ sh_path ()
 {
 	case "$PWD" in
 		"$HOME"*)
-			P_D=`pathdepth -r "$HOME" -d "$PWD"`
+			P_D="$(pathdepth -r "$HOME" -d "$PWD")"
 			;;
 		*)
-			P_D=`pathdepth -d "$PWD"`
+			P_D="$(pathdepth -d "$PWD")"
 			;;
 	esac
 	M_D=2
-	PTH=`echo "$PWD" | sed "s~^$HOME~\~~"`
-	if [ $P_D -le $M_D ] ; then
-		printf "$PTH"
+	PTH="$(echo "$PWD" | sed "s~^$HOME~\~~")"
+	if [ "$P_D" -le "$M_D" ] ; then
+		printf "%s" "$PTH"
 	else
-		printf ".../%s" "`echo "$PTH" | cut -d '/' -f$((P_D - M_D + 2))-`"
+		printf ".../%s" "$(echo "$PTH" | cut -d '/' -f$((P_D - M_D + 2))-)"
 	fi
 }
 sh_errorcode ()
 {
 	A=$?
 	if [ $A -ne 0 ] ; then
-		printf "[$A]"
+		printf "[%d]" "$A"
 	fi
 }
 
@@ -109,15 +111,17 @@ else
 	export CONFIGDIR="$HOME"
 fi
 export SHELL_DEFINES="$CONFIGDIR/defines"
-[ -f "$SHELL_DEFINES" ] && . "$SHELL_DEFINES"
+if [ -r "$SHELL_DEFINES" ] && [ -f "$SHELL_DEFINES" ]; then
+	source "$SHELL_DEFINES"
+fi
 
 export GPG_TTY=$(tty)
 export DOTNET_CLI_TELEMETRY_OPTOUT=1
 
 export GTK_IM_MODULE=ibus
 export XMODIFIERS=@im=ibus
-export QT4_IM_MODULE=xim
-export QT_IM_MODULE=xim
+export QT4_IM_MODULE=ibus
+export QT_IM_MODULE=ibus
 
 # dotnet's weird, this seems to be a bit of a problem on windows too.
 [ -n "`command -v dotnet`" ]  && \

@@ -7,16 +7,16 @@ base="$(basename "$file" .tex)"
 #totally not stolen from Luke Smith
 textype()
 {
-	pdfcmd="pdflatex"
-	( sed 5q "$file" | grep -i -q 'xelatex' ) && pdfcmd="xelatex"
-	$pdfcmd --interaction nonstopmode --output-directory="$dir" "$base" &&
-	grep -i addbibresource "$file" >/dev/null &&
-	biber --input-directory "$dir" "$base" &&
-	$pdfcmd --interaction nonstopmode --output-directory="$dir" "$base" &&
-	$pdfcmd --interaction nonstopmode --output-directory="$dir" "$base"
+  pdfcmd="pdflatex"
+  ( sed 5q "$file" | grep -i -q 'xelatex' ) && pdfcmd="xelatex"
+  $pdfcmd --interaction nonstopmode --output-directory="$dir" "$base" &&
+  grep -i addbibresource "$file" >/dev/null &&
+  biber --input-directory "$dir" "$base" &&
+  $pdfcmd --interaction nonstopmode --output-directory="$dir" "$base" &&
+  $pdfcmd --interaction nonstopmode --output-directory="$dir" "$base"
 }
 
 case "$file" in
-	*\.tex) textype "$file" ;;
-	*) echo "OAH" ;;
+  *\.tex) textype "$file" ;;
+  *) echo "OAH" ;;
 esac

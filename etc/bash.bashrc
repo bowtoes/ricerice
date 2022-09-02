@@ -1,4 +1,4 @@
-# /etc/bash.bashrc
+## /etc/bash.bashrc
 
 # System wide aliases and functions.
 
@@ -7,11 +7,58 @@
 # Personal aliases and functions should go into ~/.bashrc
 
 # System wide aliases
-[ -r "/etc/aliasrc" ] && . "/etc/aliasrc"
-# System wide bash functions
-[ -r "/etc/bash.funcs" ] && . "/etc/bash.funcs"
+alias ls="ls -hCXHNF --color=auto --group-directories-first"
+alias la="ls -as"
+alias ll="ls -las"
+alias l="ls -ls"
 
-# If not running interactively, don't do anything
+alias mv="mv -iv"
+alias cp="cp -ivP"
+alias rsync="rsync -vih --progress --log-file=\$LOGDIR/rsync.log"
+alias ln="ln -iv"
+alias rm="rm -Iv"
+alias mkdir="mkdir -pv"
+alias rename="rename -iv"
+alias lrzip="lrzip -vv"
+alias lrztar="lrztar -vv"
+alias badblocks="badblocks -sv"
+alias pip="pip -vvv --log=\$LOGDIR/pip.log"
+
+alias chattr="chattr -V"
+alias lsattr="lsattr -vap"
+
+alias chmod="chmod -c --preserve-root"
+alias chown="chown -hc --preserve-root"
+alias chgrp="chgrp -hc --preserve-root"
+
+alias grep="grep --color=auto -E"
+alias diff="diff --color=auto"
+
+alias bt="echo bt | coredumpctl gdb"
+# System wide bash functions
+takeme()
+{
+  if [ -n "$(command -v "$1")" ]; then
+    cd "$(dirname "$(where "$1")")"
+  else
+    return 1
+  fi
+}
+up()
+{
+  newdir="../"
+    if strictlypositive "$1" ; then
+        i=1
+        while [ "$i" -lt "$1" ] ; do
+            if [ "$PWD" = "/" ] ; then break ; fi
+      newdir="$newdir""../"
+            i="$((i+1))"
+        done
+    fi
+  cd "$newdir" || return 1
+}
+
+# If not running interactively, don't do anything else
 [[ $- != *i* ]] && return
 
 [[ $DISPLAY ]] && shopt -s checkwinsize
@@ -29,4 +76,6 @@ case ${TERM} in
     ;;
 esac
 
-[ -r "/usr/share/bash-completion/bash_completion" ] && . "/usr/share/bash-completion/bash_completion"
+if [ -r "/usr/share/bash-completion/bash-completion/bash_completion" ]; then
+	source "/usr/share/bash-completion/bash_completion"
+fi

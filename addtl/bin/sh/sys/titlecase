@@ -2,12 +2,12 @@
 
 title=""
 for f in "$@" ; do
-	wd=("$f")
-	for word in $wd ; do
-		first=$(echo $word | cut -c1 | tr '[[:lower:]]' '[[:upper:]]')
-		others=$(echo $word | cut -c2- | tr '[[:upper:]]' '[[:lower:]]')
-		word="$first$others"
-		title="$title$word"" "
-	done
+  wd=("$f")
+  for word in $wd ; do
+    first=$(echo $word | cut -c1 | tr '[[:lower:]]' '[[:upper:]]')
+    others=$(echo $word | cut -c2- | tr '[[:upper:]]' '[[:lower:]]')
+    word="$first$others"
+    title="$title$word"" "
+  done
 done
 echo "$title"

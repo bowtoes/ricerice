@@ -1,32 +1,47 @@
-"{{{PLUGINS
+"{{{ Plugins
+"Disable matchparen plugin
+"let g:loaded_matchparen = 1
+"let g:matchparen_timeout = 10
+
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
-"{{{ALE Config
-let g:ale_linters = {
-\ 'c':['clangd'],
-\ 'cs':['OmniSharp'],
-\ 'python':['flake8'],
-\ 'html':[''],
-\}
+
+"{{{ ALE Preconfig
+let g:ale_linters={
+      \ 'c':['clangd'],
+      \ 'sh':['shellcheck'],
+      \ 'html':['htmlhint'],
+      \ 'htmldjango':['htmlhint'],
+      \ 'htmljinja':['htmlhint'],
+      \ 'css':['stylelint'],
+      \ }
+"let g:ale_c_clangd_options = '--compile-commands-dir=' . expand('%:p:h:h')
+let g:ale_linter_aliases = {
+      \ 'htmldjango':['html'],
+      \ 'htmljinja':['html'],
+      \}
+
+let g:ale_css_stylelint_options = '--config ~/.config/stylelint.json'
+
+let g:python_ale_linter = 'pylsp'
+if g:python_ale_linter =~? 'flake8'
+  let g:ale_linters['python'] = ['flake8']
+  let g:ale_type_map['flake8'] = {'E': 'W', 'ES': 'WS'}
+  let g:ale_python_flake8_options='--extend-ignore=W191,E741,E231,E302,E225,E401,E305,F841,F401,E251,E402 --max-line-length=120'
+elseif g:python_ale_linter =~? 'pylsp'
+  let g:ale_linters['python'] = ['pylsp']
+endif
+
+let g:ale_sh_shellcheck_exclusions='SC2034,SC1091'
+
+let g:ale_warn_about_trailing_blank_lines=0
+let g:ale_warn_about_trailing_whitespace=0
 let g:ale_linters_explicit=1
-let g:ale_python_flake8_options = '--jobs 8 --ignore
-      \ F401,F403,
-      \ E111,E114,E115,E116,E117,E121,E122,E123,E124,E125,E126,E127,E128,E129,E131,
-      \ E132,E133,
-      \ E201,E202,E203,E211,E221,E222,E223,E224,E225,E226,E227,E228,E231,E241,E242,
-      \ E251,E261,E262,E265,E266,E271,E272,E273,E274,E275,
-      \ E301,E302,E303,E304,E305,E306,
-      \ E401,E402,
-      \ E501,
-      \ E701,E702,E703,E704,E722,E731,E741,E742,E743,
-      \ W291,W292,W293,
-      \ W391,
-      \ W503,W504,W505'
 let g:ale_lint_on_text_changed=1
-let g:ale_lint_on_instert_leave=1
+let g:ale_lint_on_insert_leave=1
 let g:ale_lint_on_enter=1
 let g:ale_lint_on_save=1
 let g:ale_lint_on_filetype_changed=1
@@ -34,77 +49,101 @@ let g:ale_lint_delay=0
 
 let g:ale_close_preview_on_insert=1
 
-let g:ale_popup_preview=1
+let g:ale_popup_menu_enabled=1
 let g:ale_hover_cursor=0
 let g:ale_hover_format='popup'
 let g:ale_detail_format=''
-let g:ale_cursor_detail=1
-let g:ale_echo_cursor=0
-let g:ale_echo_delay=0
+let g:ale_cursor_detail=0
+let g:ale_echo_cursor=1
+let g:ale_echo_delay=100
 
-let g:ale_completion_enabled=0
-" When this is 1, massive slowdown when doing it.
-let g:ale_completion_autoimport=0
-let g:ale_completion_delay=0
+let g:ale_completion_enabled=1
+let g:ale_completion_autoimport=1
+let g:ale_completion_delay=100
 let g:ale_sign_error = '!!'
 let g:ale_sign_warning = '??'
 let g:ale_sign_style_error = '!'
 let g:ale_sign_style_warning = '?'
-"}}}
+"}}} ALE Preconfig
+"{{{ Plugin list
 call plug#begin('~/.vim/plugged')
-"{{{SYNTAX
-"Plug 'dense-analysis/ale'
-"Plug '~/.vim/plugged/ale-custom'
-"Plug 'OmniSharp/omnisharp-vim'
-"Plug 'FooSoft/vim-argwrap'
+Plug 'Konfekt/FastFold'
+Plug 'tmhedberg/SimpylFold'
+let g:SimpylFold_fold_docstring=0
+" Matchup because matchparen is unacceptably slow
+Plug 'andymass/vim-matchup'
+let g:matchup_matchparen_stopline=200
+let g:matchup_matchparen_deferred=1
+let g:matchup_matchparen_timeout=100
 
-"Plug 'Shougo/deoplete.nvim'
-"Plug 'roxma/nvim-yarp'
-"Plug 'deoplete-plugins/deoplete-tag'
-"Plug 'roxma/vim-hug-neovim-rpc'
+Plug 'godlygeek/tabular'
+Plug 'bronson/vim-trailing-whitespace'
+let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
+let g:lsp_cxx_hl_use_text_props = 1 " ???
+
+Plug 'preservim/nerdtree'
+let NERDTreeIgnore = ['\.meta','\.o']
+Plug 'dsimidzija/vim-nerdtree-ignore'
+Plug 'mbbill/undotree'
+let g:undotree_WindowLayout=2
+let g:undotree_SplitWidth=40
+let g:undotree_DiffpanelHeight=10
+let g:undotree_SetFocusWhenToggle=1
+let g:undotree_RelativeTimestamp=0
+
+Plug 'itchyny/lightline.vim'
+Plug 'lifepillar/vim-mucomplete'
+let g:mucomplete#enable_auto_at_startup=1
+let g:mucomplete#no_mappings=1
+let g:mucomplete#chains = {}
+let g:mucomplete#chains.default  = ['path', 'omni', 'keyn', 'dict', 'uspl', 'ulti']
+
+"Plug 'OmniSharp/omnisharp-vim'
+Plug 'dense-analysis/ale'
+
+"Plug 'habamax/vim-godot'
+Plug '~/.vim/_plugged/vim-godot'
+Plug 'pulkomandy/c.vim'
+"Plug 'qtc-de/vve'
+Plug '~/.vim/_plugged/vve-fork'
+
+Plug 'whatyouhide/vim-tmux-syntax'
+
+" Holy fuck this plugin breaks so many things.
+if expand("%:e") =~ 'py$'
+  Plug 'sheerun/vim-polyglot'
+endif
 "Plug 'ludovicchabant/vim-gutentags'
 "Plug 'xolox/vim-misc'
 "Plug 'xolox/vim-easytags'
-Plug 'sheerun/vim-polyglot'
-"}}}SYNTAX
-"{{{MISC
-Plug 'godlygeek/tabular'
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'preservim/nerdtree'
-Plug 'dsimidzija/vim-nerdtree-ignore'
-Plug 'mbbill/undotree'
-Plug 'itchyny/lightline.vim'
-"}}}
+Plug 'mitsuhiko/vim-jinja'
+Plug 'AndrewRadev/tagalong.vim'
+Plug '~/.vim/_plugged/N'
 call plug#end()
-"}}}PLUGINS
-"{{{PLUGIN CONFIG
-"{{{OmniSharp
-  let g:OmniSharp_highlighting=3
-  let g:OmniSharp_server_stdio_quickload=1
-"}}}OmniSharp
-"{{{deoplete
-"  let g:deoplete#enable_at_startup=1
-"  call deoplete#custom#option({
-"  \ 'auto_complete': v:true,
-"  \ 'auto_complete_delay': 0,
-"  \ 'auto_complete_popup': 'auto',
-"  \ 'num_processes': 8,
-"  \ 'sources': {
-"    \ '_': [],
-"    \ 'c': ['ale','tag'],
-"    \ 'cs': ['omnisharp'],
-"    \ 'html': [],
-"    \ },
-"  \ })
-"}}}deoplete
+
+"}}} Plugin list
+"{{{ Config
 "{{{gutentags
 let g:gutentags_enabled = 1
 let g:gutentags_ctags_extra_args = [
       \ '--fields=+liaSszt',
       \'--c-kinds=+p', '--c++-kinds=+p',
       \'--exclude=docs', '--exclude=Documentation',
+      \'--exclude=*.json',
+      \'--exclude=*.txt',
+      \'--exclude=*.xml',
+      \'--exclude=*.rc',
+      \'--exclude=*.bat',
+      \'--exclude=*.properties',
+      \'--exclude=*.build',
+      \'--exclude=*.plist',
+      \'--exclude=*.in',
+      \'--exclude=*.m',
+      \'--exclude=*.md',
+      \'--exclude=*.mk',
+      \'--exclude=Makefile',
       \'--exclude=vendor/sqlite3', '--exclude=vendor/tcl', '--exclude=vendor/tk',
-      \'--exclude=build'
+      \'--exclude=build', '--exclude=_build'
       \]
 let g:gutentags_generate_on_missing = 0
 let g:gutentags_generate_on_write = 0
@@ -117,38 +156,13 @@ let g:easytags_dynamic_files = 1
 let g:easytags_always_enabled = 0
 let g:easytags_on_cursorhold = 0
 let g:easytags_auto_update = 0
-let g:easytags_auto_highlight = 1
+let g:easytags_auto_highlight = 0
 let g:easytags_autorecurse = 0
-"let g:easytags_events = []
+"let g:easytags_events = ['']
 "}}}easytags
-"{{{Undotree
-let g:undotree_WindowLayout=2
-let g:undotree_SplitWidth=40
-let g:undotree_DiffpanelHeight=10
-let g:undotree_SetFocusWhenToggle=1
-let g:undotree_RelativeTimestamp=0
 "}}}
-"{{{Argwrap
-nnoremap sj :ArgWrap<CR>
-"let g:argwrap_tail_comma=1
-let g:argwrap_tail_comma_braces='{['
-"}}}
-"{{{Misc
-" NERDTree
-let NERDTreeIgnore = ['\.meta','\.o']
-" Vimtex
-let g:tex_flavor = 'latex'
-let g:vimtex_compiler_enabled = 0
-
-" Vim-Checklist
-noremap <space>V :ChecklistToggleCheckbox<cr>
-
-" FixWhitespace
-let g:extra_whitespace_ignored_filetypes = ['diff', 'patch']
-let g:lsp_cxx_hl_use_text_props = 1 " the fuck is this?
-"}}}
-"}}}PLUGIN CONFIG
-"{{{FUNCTIONS
+"}}} Plugins
+"{{{ Functions
 function! GetCursorChar()
   return char2nr(matchstr(getline('.'), '\%' . col('.') . 'c.'))
 endfunction
@@ -175,20 +189,28 @@ endfunction
 function! OnOff(status)
   return a:status ? 'on' : 'off'
 endfunction
-
-function! CustomFolder()
-  let l:base=foldtext()
-  let l:sub=substitute(l:base, '{.*', '{...}', 'g')
-  return l:sub
+function! ToggleMatchup()
+  let g:matchup_enabled = !get(g:, 'matchup_enabled', 1)
+  if get(g:, 'matchup_enabled', 1)
+    execute 'DoMatchParen'
+  else
+    execute 'NoMatchParen'
+  endif
+  echo 'Matchup ' . OnOff(get(g:, 'matchup_enabled', 1))
 endfunction
-"}}}FUNCTIONS
-"{{{VIM CONFIG
+"}}} Functions
+"{{{ Vim Config
+"{{{ Sensible Defaults
 syntax enable
 filetype plugin indent on
-let mapleader=' '
-set pastetoggle=<F2>
 set nocompatible
+set nojoinspaces
 set encoding=UTF-8
+set pastetoggle=<F2>
+let mapleader=' '
+set splitbelow
+set splitright
+"}}} Sensible Defaults
 set exrc
 set secure
 set number
@@ -201,31 +223,51 @@ set sessionoptions=buffers,curdir,folds,tabpages
 "commandmode autocomplete
 set wildmode=longest,list,full
 set wildmenu
+
+"{{{ Backup/Undo/Swap
 "create a backup file
 set writebackup
 "do not delete backup file
 set backup
-set undofile
-set undolevels=1000
-set undoreload=0
-set swapfile
+set backupdir=~/.cache/vim/backup
 
+set undofile
+set undolevels=2000
+set undoreload=0
+
+set swapfile
 set updatetime=300
+"}}} Backup/Undo/Swap
+
 set signcolumn=number
-set colorcolumn=80
-set nowrap
-set linebreak
-set breakindent
+
+"{{{ Line wrapping
 set textwidth=0
-""" indenting and tabs
+set colorcolumn=110
+set textwidth=109
+set nowrap
+"set linebreak
+set breakindent
+"}}} Line wrapping
+"{{{ Indenting
 set tabstop=4
-"defaults to tabstop when 0
 set shiftwidth=0
 set softtabstop=0
 set shiftround
 set noexpandtab
 set autoindent
+"set verbose=4
 set smartindent
+"}}} Indenting
+
+function! FTEXT()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '^\s*\|/\*\|\*/\|[{}]\{3}\d\=\|"\+\s*[{}]\{3}', '', 'g')
+  let k = repeat(' ',&tabstop * (v:foldlevel - 1))
+  return k . sub
+endfunction
+
+set foldtext=FTEXT()
 
 set listchars=tab:→\ \ ,space:·,eol:~,extends:>,precedes:⏗,trail:¬
 set fillchars=vert:\ ,fold:\ ,stl:\ ,stlnc:\ ,eob:\ 
@@ -233,225 +275,152 @@ set scrolloff=3
 "modified default
 set shortmess=inxtoO
 set shortmess+=cwmsI
-set completeopt-=preview
-set completeopt+=popup,noinsert
+" turn-the-fuck-off the bell
+set belloff=all
+set completeopt-=preview,menu
+if !has('nvim')
+  set completeopt+=popup
+endif
+" I gotta reorganize this shit, do conditionals, test vim versions, check
+" which plugins are installed and configure accordingly, etc. etc.
+set completeopt+=menu,noinsert
 "don't do folds when opening a file (doesn't disable fold feature)
 set nofoldenable
-set foldnestmax=1
+set foldnestmax=2
 set foldmethod=marker
 set hlsearch
 set incsearch
 set ignorecase
 set smartcase
-set showmatch
+set noshowmatch
 
 " C indenting
-set cino+=Ls,l1,E-s,(s
-"}}}GENERAL CONFIG
-"{{{AUTOCMDS
-"{{{Plugins
+set cino+=Ls,l1,(s
+"}}} Vim Config
+"{{{ NVim config
+if has('nvim')
+  unmap <C-L>
+endif
+"}}} NVim config
+"{{{ Events
+"{{{ Plugins
 augroup Plugins
   autocmd!
-"{{{ALE
-  autocmd User ALECompletePost ALEHover
-  autocmd BufReadPost config.h ALEDisableBuffer
-"}}}
-"{{{NERDTree
-  "open NERDTree automatically when vim starts up on opening a directory
+"{{{ NERDTree
+  " open NERDTree automatically when vim starts up on opening a directory
   autocmd StdinReadPre * let s:std_in=1
   autocmd VimEnter *
         \| if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in")
-        \| exe 'NERDTree' argv()[0]
+        \|   exe 'NERDTree' argv()[0]
         \| wincmd p
-        \| ene
+        \|   enew
         \| endif
-"}}}NERDTree
+"}}} NERDTree
+
+  autocmd VimEnter * :NoMatchParen
   autocmd User GutentagsUpdated :HighlightTags
 augroup END
-"}}}Plugins
-"{{{FT choosing
-augroup FT_choose
-  autocmd!
-  autocmd BufRead,BufNewFile Make.*,make.* set ft=make
-  autocmd BufRead,BufNewFile *.Xcolor,*.xcolor set ft=xdefaults
-
-  autocmd BufRead,BufNewFile *.conf,*.cfg set ft=conf
-  autocmd BufRead,BufNewFile *.inc set ft=include | set syntax=sourcepawn
-
-  autocmd BufRead,BufNewFile *.c,*.h,*.ck set ft=c
-  autocmd BufRead,BufNewFile *.cpp,*.hpp,*.cxx,*.hxx,*.c++,*.h++ set ft=cpp
-
-  " OpenGL shader files
-  autocmd BufRead,BufNewFile *.vt,*.ft set ft=glsl
-  autocmd BufRead,BufNewFile *.vth,*.fth,*.compute set ft=fx
-  autocmd BufRead,BufNewFile *.fx set ft=fx
-
-  autocmd BufRead,BufNewFile *.todo,*.TODO,TODO,todo set ft=markdown
-  autocmd BufRead,BufNewFile *.vim set ft=vim
-
-  " witcher script is an extension on typescript
-  autocmd BufRead,BufNewFile *.ws set ft=typescript
-
-  autocmd BufRead,BufNewFile *.INI,inI,Ini,iNi,iNI,INi,InI set ft=dosini
-  autocmd BufRead,BufNewFile *.nemo_action set ft=dosini
-
-  autocmd BufRead,BufNewFile grub,aliasrc,alias*,defines*,.bash* set ft=sh
-  autocmd BufRead fonts.conf set ft=html
-
-  autocmd BufRead,BufNewFile *.qss set ft=css
-augroup END
-"}}} FT detection
-"{{{Display
+"}}} Plugins
+"{{{ Display
 augroup Display
   autocmd!
+  " Fix trailing whitespace, if the fix is enabled
   autocmd BufWritePre * if get(g:, 'whitespacefix', 1) | :FixWhitespace
-  autocmd BufEnter,WinEnter,WinNew,VimResized *,*.*
-        \ let &scrolloff=winheight(win_getid())/2
-  "continue where you left off
+  " Center the scroll offset
+  autocmd BufEnter,WinNew,VimResized *,*.* let &scrolloff=winheight(win_getid())/2
+
+  " continue where you left off
   autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$")
         \| exe "normal! g'\""
         \| endif
+augroup END
+"}}} Display
 
-"{{{TEX stuff
+"{{{ Filetype Settings
+augroup FiletypeSettings
+  autocmd!
+"{{{ txt
+    autocmd FileType text set expandtab | set tabstop=2
+"}}}
+"{{{ TEX ???
   autocmd FileType tex let g:tex_no_error=1
-  " 'texclear', when given *.tex, should remove all files generated as a
-  "  result of calling CompTexRefMU
-  " TODO comment the rest of this
+  " 'texclear', when given *.tex, should remove all files generated as a result of calling CompTexRefMU
   autocmd VimLeave *.tex !texclear %
   autocmd BufWritePre *.tex let g:tex_modified = &modified
   autocmd BufWritePost *.tex if get(g:, 'tex_modified', 0) | call CompTexRefMU()
-"}}}TEX stuff
+"}}} TEX
 augroup END
-"}}}Display
-"{{{Filetype Settings
-augroup FiletypeSettings
-  autocmd!
-"{{{C
-  autocmd FileType c syn match comment "\v(^\s*//.*\n)+" fold
-  autocmd FileType c setlocal foldmethod=syntax | setlocal nospell | setlocal nowrap
-  autocmd FileType c syntax match StorageClass /restrict/
-  "autocmd FileType c setlocal omnifunc=ale#completion#OmniFunc
-"}}}C
-"{{{c but it sucks
-  autocmd FileType cpp syn match comment "\v(^\s*//.*\n)+" fold
-  autocmd FileType cpp setlocal foldmethod=syntax | setlocal nospell | setlocal nowrap
-"}}}c but it sucks
-"{{{CS
-  let s:is_cs=0
-  autocmd FileType cs syn match comment "\v(^\s*//.*\n)+" fold
-  autocmd FileType cs setlocal foldmethod=syntax | setlocal foldnestmax=3
-  autocmd FileType cs setlocal foldtext=CustomFolder()
-  " useful for folding, but what else is affected?
-  autocmd FileType cs setlocal syntax=cpp
-  autocmd FileType cs setlocal nowrap | setlocal nospell
-  autocmd FileType cs let s:is_cs=1
-"}}}CS
-"{{{PYTHON
-  autocmd FileType python setlocal noexpandtab | setlocal shiftwidth=0
-  autocmd FileType python setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
-  autocmd FileType python let g:pyindent_disable_parentheses_indenting=0
-"}}}PYTHON
-"{{{SH
-  autocmd FileType sh setlocal list | setlocal nowrap | setlocal nospell | setlocal tabstop=2
-  autocmd FileType sh setlocal foldmethod=indent " vim shell folding is a fucking menace
-"}}}SH
-"{{{MAKE
-  autocmd FileType make setlocal foldmethod=marker | setlocal foldmarker={,}
-"}}}MAKE
-"{{{VIM
-  autocmd FileType vim setlocal foldmethod=marker | setlocal expandtab
-  autocmd FileType vim setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0 | setlocal nospell | setlocal nowrap
-"}}}VIM
-"{{{DIFF
-  autocmd FileType diff setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0 | setlocal nowrap | setlocal nospell
-  autocmd FileType diff setlocal foldmethod=syntax
-  autocmd FileType diff let g:whitespacefix=0
-"}}}DIFF
-"{{{GITCOMMIT
-  autocmd FileType gitcommit setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0
-  autocmd FileType gitcommit setlocal spell
-"}}}GITCOMMIT
-"{{{PATCH
-  autocmd FileType patch setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0
-  autocmd FileType patch setlocal spell
-  autocmd FileType patch let g:whitespacefix=0
-"}}}PATCH
-"{{{MARKDOWN
-  autocmd FileType markdown setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0 | setlocal spell
-  autocmd FileType markdown setlocal textwidth=79
-  autocmd FileType markdown setlocal complete+=kspell
-  autocmd FileType markdown let g:whitespacefix=0
-"}}}MARKDOWN
-"{{{HTML
-  autocmd FileType html setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0
-  autocmd FileType html ALEDisableBuffer | call deoplete#disable()
-  autocmd FileType html setlocal complete+=kspell
-  autocmd FileType html setlocal indentkeys=
-"}}}HTML
-"{{{XML
-  autocmd FileType xml setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0
-  autocmd FileType xml setlocal complete+=kspell
-"}}}XML
-"{{{G/HLSL
-  autocmd FileType glsl,hlsl setlocal nowrap | setlocal iskeyword=@,48-57,_,192-255 " ???
-"}}}G/HLSL
-"{{{TEXT
-  autocmd FileType text setlocal ft=pdugc
-"}}}TEXT
-"{{{TEX
-  autocmd FileType tex setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
-"}}}TEX
-"{{{MISC
-  autocmd FileType cfg setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
-  autocmd FileType sp setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
-  autocmd FileType inc setlocal nowrap | setlocal nospell | setlocal foldmethod=syntax
-  autocmd FileType msbuild setlocal nowrap | setlocal nospell | setlocal expandtab | setlocal tabstop=2 | setlocal softtabstop=2 | setlocal shiftwidth=0
-"}}}MISC
-augroup END
-"}}}Filetype Settings
-"{{{Snippets
+"}}} Filetype Settings
+"{{{ Snippets
 augroup Snippets
   autocmd!
-"{{{C-like
-  "header guard                  goto SOF   insert filename
+  "{{{ C-like
+  "header guard
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;hg <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_I#ifndef <esc>lv$h""yo#define <esc>""po<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3ji
   "header guard but case is that of filename
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VUI#ifndef <esc>lv$h""yA<esc>o#define <esc>""pA<esc>o<esc>Go<cr><esc>I#endif /* <esc>""pA */<esc>gg3ji
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;;HG <esc>ggO<c-r>=expand("%:t")<cr><esc>hr_VI#ifndef __<esc>lv$h""yA__<esc>o#define __<esc>""pA__<esc>o<esc>Go<cr><esc>I#endif /* __<esc>""pA__ */<esc>gg3ji
+  autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;HR <esc>:%s/#\(ifndef\\|define\\|endif \/[\/\*]\) \zs[A-Z_]\+_H/\=substitute(substitute(toupper(expand("%:p")),"\\.","_","g"), ".\\{-}\/\\(\\w\\+\\)\/\\(\\w\\+\\)_H$", "\\1_\\2_H", "")/<cr>
   "header include from current filename
   autocmd FileType c,cpp,glsl,hlsl,cs inoremap ;hi <esc>ggO<del><c-r>=expand("%:t")<cr><esc>I#include "<esc>$rhA"<cr><esc>o
   " automatically insert '/*  */' when '/**' is done
   autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap /** **/<esc>hhi/<esc>lli<space><space><esc>i
   " when '{<cr>', create a block. Any text after cursor when done will be
   " placed in block
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap {<cr> }<esc>i{<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap [<cr> ]<esc>i[<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap (<cr> )<esc>i(<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap /*<cr> <space><esc>DA/*<cr>*/<esc>O<space><esc>PA<bs><bs>
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json,gsl,gdscript inoremap {<cr> }<esc>i{<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json,gsl,gdscript inoremap [<cr> ]<esc>i[<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json,gsl,gdscript inoremap (<cr> )<esc>i(<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json,gsl,gdscript inoremap /*<cr> <space><esc>DA/*<cr>*/<esc>O<space><esc>PA<bs><bs>
 
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap {;<cr> };<esc>hi{<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap [;<cr> ];<esc>hi[<cr><esc>O
-  autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap (;<cr> );<esc>hi(<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap {;<cr> };<esc>hi{<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap [;<cr> ];<esc>hi[<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap (;<cr> );<esc>hi(<cr><esc>O
+  autocmd FileType json inoremap {,<cr> },<esc>hi{<cr><esc>O
+  autocmd FileType json inoremap [,<cr> ],<esc>hi[<cr><esc>O
+  autocmd FileType json inoremap (,<cr> ),<esc>hi(<cr><esc>O
 
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json inoremap {<space><cr> }<esc>i<cr>{<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json inoremap [<space><cr> ]<esc>i<cr>[<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css,json inoremap (<space><cr> )<esc>i<cr>(<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap {<space>;<cr> };<esc>hi<cr>{<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap [<space>;<cr> ];<esc>hi<cr>[<cr><esc>O
+  autocmd FileType c,cpp,d,glsl,hlsl,cs,awk,css inoremap (<space>;<cr> );<esc>hi<cr>(<cr><esc>O
+  autocmd FileType json inoremap {<space>,<cr> },<esc>hi<cr>{<cr><esc>O
+  autocmd FileType json inoremap [<space>,<cr> ],<esc>hi<cr>[<cr><esc>O
+  autocmd FileType json inoremap (<space>,<cr> ),<esc>hi<cr>(<cr><esc>O
+
+  "???
   autocmd FileType c,cpp,glsl,hlsl,cs,awk inoremap <C-{> <esc>V:s/^\t\\|^ \{4\}//<cr>i
-"}}}
-"{{{C#
+  "}}} C-like
+  "{{{ C#
   autocmd FileType cs nnoremap <silent> <space>R :echo "Restarting OmniSharp Server" <bar> OmniSharpRestartServer <bar> echo "Server restarted"<cr>
   autocmd FileType cs nnoremap <silent> <space>P :OmniSharpHighlightEcho<cr>
-"}}}
-"{{{XML
+  "}}}
+  "{{{ XML
   autocmd FileType xml inoremap <?xml> <?xml version="1.0" encoding="utf-8"?>
-"}}}XML
+  "}}} XML
 augroup END
-"}}}Snippets
-"}}}AUTOCMDS
-"{{{MAPPINGS
-"{{{Plugins
-nnoremap <silent> <space>t :NERDTreeToggle<cr>
-nnoremap <silent> <space>T :UndotreeToggle<cr>
+"{{{ Shebangs
+  inoremap ;!s #!/usr/bin/env sh<cr><cr>
+  inoremap ;!p #!/usr/bin/env python<cr><cr>
+"}}}
+"}}} Snippets
+"}}} Events
+"{{{ Mappings
+"{{{ Plugins
+"{{{ matchup
+nnoremap <silent> <space>o <cmd>call ToggleMatchup()<cr>
+"}}}
+"{{{ ALE
+nnoremap <silent> <space>v <cmd>ALENextWrap<cr>
+nnoremap <silent> <space>V <cmd>ALEPreviousWrap<cr>
+nnoremap <silent> <space>R <cmd>ALERename<cr>
+"}}}
+"{{{ Misc
+nnoremap <silent> <space>t <cmd>NERDTreeToggle<cr>
+nnoremap <silent> <space>T <cmd>UndotreeToggle<cr>
 
-nnoremap <silent> <space>O :GutentagsUpdate<cr>
-
+" Unused for now
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
@@ -463,97 +432,72 @@ function! s:show_documentation()
     execute '!' . &keywordprg . ' ' . expand('<cword>')
   endif
 endfunction
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+if !has('nvim')
+  nnoremap <silent> K <cmd>call <SID>show_documentation()<cr>
+endif
+nnoremap <silent> <space>m <cmd>ALEDetail<cr>
 
-" use <tab> to navigate complete items
-inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
-inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
-inoremap <silent><expr> <cr> pumvisible() ? deoplete#close_popup() : "\<cr>"
-
-nnoremap <silent> <space>m :ALEDetail<cr>
-
-"{{{ALE Motions
-nnoremap <silent> [g :ALEPrevious -nostyle
-nnoremap <silent> [e :ALEPrevious -nostyle -error
-nnoremap <silent> [w :ALEPrevious -nostyle -warning
-nnoremap <silent> [i :ALEPrevious -nostyle -info
-nnoremap <silent> [b :ALEPrevious -style
-nnoremap <silent> [d :ALEPrevious -style -error
-nnoremap <silent> [s :ALEPrevious -style -warning
-nnoremap <silent> [k :ALEPrevious -style -info
-nnoremap <silent> ]g :ALENext -nostyle
-nnoremap <silent> ]e :ALENext -nostyle -error
-nnoremap <silent> ]w :ALENext -nostyle -warning
-nnoremap <silent> ]i :ALENext -nostyle -info
-nnoremap <silent> ]b :ALENext -style
-nnoremap <silent> ]d :ALENext -style -error
-nnoremap <silent> ]s :ALENext -style -warning
-nnoremap <silent> ]k :ALENext -style -info
-nnoremap <silent> [G :ALEPrevious -wrap -nostyle
-nnoremap <silent> [E :ALEPrevious -wrap -nostyle -error
-nnoremap <silent> [W :ALEPrevious -wrap -nostyle -warning
-nnoremap <silent> [I :ALEPrevious -wrap -nostyle -info
-nnoremap <silent> [B :ALEPrevious -wrap -style
-nnoremap <silent> [D :ALEPrevious -wrap -style -error
-nnoremap <silent> [S :ALEPrevious -wrap -style -warning
-nnoremap <silent> [K :ALEPrevious -wrap -style -info
-nnoremap <silent> ]G :ALENext -wrap -nostyle
-nnoremap <silent> ]E :ALENext -wrap -nostyle -error
-nnoremap <silent> ]W :ALENext -wrap -nostyle -warning
-nnoremap <silent> ]I :ALENext -wrap -nostyle -info
-nnoremap <silent> ]B :ALENext -wrap -style
-nnoremap <silent> ]D :ALENext -wrap -style -error
-nnoremap <silent> ]S :ALENext -wrap -style -warning
-nnoremap <silent> ]K :ALENext -wrap -style -info
-"}}}ALE Motions
-
-" GoTo code navigation.
-nnoremap <silent> gd :ALEGoToDefinition<cr>
-nnoremap <silent> gy :ALEGoToTypeDefinition<cr>
-"}}}Plugins
-"{{{Files
+" use tab and shift-tab to navigate complete items, if completion is visible
+"inoremap <silent><expr> <tab> pumvisible() ? "\<c-n>" : "\<tab>"
+"inoremap <silent><expr> <s-tab> pumvisible() ? "\<c-p>" : "\<s-tab>"
+"}}} Misc
+"}}} Plugins
+"{{{ Files
 " Close all but current buffer
-nnoremap <silent> mbo  :%bd <bar> e# <bar> bd#<cr>
+nnoremap <silent> mbo <cmd>%bd <bar> e# <bar> bd#<cr>
 
-nnoremap <space>w :w<cr>
-nnoremap <space>W :w!<cr>
-nnoremap <space>q :q<cr>
-nnoremap <space>Q :q!<cr>
-nnoremap Q :echo "It's '\<space\>Q' milord!"<cr>
-nnoremap <space>e :e<cr>
-nnoremap <space>E :e!<cr>
+nnoremap <space>w <cmd>w<cr>
+nnoremap <space>W <cmd>w!<cr>
+nnoremap <space>q <cmd>q<cr>
+nnoremap <space>Q <cmd>q!<cr>
+nnoremap Q <cmd>echo "It's '\<space\>Q' milord!"<cr>
+nnoremap <space>e <cmd>e<cr>
+nnoremap <space>E <cmd>e!<cr>
+" ???
 nnoremap <space><C-e> :E<cr>
 
-nnoremap <silent> <space><space>c :lcd %:p:h<bar>:pwd<cr>
-nnoremap <silent> <space><space>u :lcd %:p:h:h<bar>:pwd<cr>
+" Change vim's working directory to the current file's
+nnoremap <silent> <space><space>c <cmd>lcd %:p:h<bar>pwd<cr>
+" Change vim's working directory to the current file's parent
+nnoremap <silent> <space><space>u <cmd>lcd ..<bar>pwd<cr>
 
 "nnoremap <space>O :UpdateTypesFile<cr>
-"}}}Files
-"{{{Folds
+"}}} Files
+"{{{ Folds
+" Toggle current fold
 nnoremap <silent> ga za
+" Recursively toggle current fold
 nnoremap <silent> gA zA
-nnoremap <silent> gz @=(&foldlevel?'zm':'zR')<CR>
-nnoremap <silent> gZ @=(&foldlevel?'zM':'zR')<CR>
-"}}}Folds
-"{{{Toggles
-noremap <silent> <space>p :setlocal spell! <bar> echo "Spellcheck " . OnOff(&spell)<CR>
-noremap <silent> <space>g :set wrap! <bar> echo "Linewrap " . OnOff(&wrap)<CR>
-noremap <silent> <space><tab> :setlocal expandtab! <bar> echo "Expandtab " . OnOff(&expandtab)<CR>
-noremap <silent> <space>c :set cursorline! <bar> echo "Cursorline "  . OnOff(&cursorline)<CR>
-noremap <silent> <space>C :set cursorcolumn! <bar> echo "Cursorcolumn "  . OnOff(&cursorcolumn)<CR>
-noremap <silent> <space>i :set list! <bar> echo "Whitespace " . OnOff(&list)<CR>
-noremap <silent> <F1> :let g:whitespacefix = !get(g:, 'whitespacefix', 1)
-      \ <bar> echo "Whitespace fix " . OnOff(get(g:, 'whitespacefix', 1))<CR>
-"}}}Toggles
-"{{{Lines
+" Fold the lowest level of folds (or unfold all)
+nnoremap <silent> gz @=(&foldlevel?'zm':'zR')<cr>
+" Toggle all folds on or off
+nnoremap <silent> gZ @=(&foldlevel?'zM':'zR')<cr>
+"}}} Folds
+"{{{ Toggles
+noremap <silent> <space><tab> <cmd>setlocal expandtab! <bar> echo "Expandtab " . OnOff(&expandtab)<cr>
+noremap <silent> <space>p <cmd>setlocal spell! <bar> echo "Spellcheck " . OnOff(&spell)<cr>
+noremap <silent> <space>g <cmd>set wrap! <bar> echo "Linewrap " . OnOff(&wrap)<cr>
+noremap <silent> <space>c <cmd>set cursorline! <bar> echo "Cursorline "  . OnOff(&cursorline)<cr>
+noremap <silent> <space>C <cmd>set cursorcolumn! <bar> echo "Cursorcolumn "  . OnOff(&cursorcolumn)<cr>
+noremap <silent> <space>i <cmd>set list! <bar> echo "Whitespace " . OnOff(&list)<cr>
+noremap <silent> <F1> <cmd>let g:whitespacefix = !get(g:, 'whitespacefix', 1)
+      \ <bar> echo "Whitespace fix " . OnOff(get(g:, 'whitespacefix', 1))<cr>
+"}}} Toggles
+"{{{ Lines
+" move the current line down (and keep cursor offset)
 nnoremap <c-j> mZddp`Zj
+" move the current line up (and keep cursor offset)
 nnoremap <c-k> mZddkP`Z2k
+" duplicate the current line below
 nnoremap <c-c> mZyyp`Zj
 inoremap <c-c> <esc>mZyyp`Zjli
 
-vnoremap ;rv c<C-O>:set revins<CR><C-R>"<Esc>:set norevins<CR>
-"}}}Lines
-"{{{Windows
+" reverse text in visual selection
+vnoremap ;rv <cmd>set revins<cr>c<c-r>"<esc>:set norevins<cr>
+nnoremap ;rv ^v$h<cmd>set revins<cr>c<c-r>"<esc>:set norevins<cr>
+
+"}}} Lines
+"{{{ Windows
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
@@ -562,13 +506,13 @@ nnoremap <space>H <c-w><
 nnoremap <space>J <c-w>+
 nnoremap <space>K <c-w>-
 nnoremap <space>L <c-w>>
-"}}}Windows
-"{{{Tabs
-nnoremap <space><space>t :tabe<space>
-noremap <silent> <space>] :tabnext<cr>
-noremap <silent> <space>[ :tabNext<cr>
-noremap <silent> <space>} :tabm +1<cr>
-noremap <silent> <space>{ :tabm -1<cr>
+"}}} Windows
+"{{{ Tabs
+nnoremap <space><space>t  <cmd>tabe<space>
+noremap <silent> <space>] <cmd>tabnext<cr>
+noremap <silent> <space>[ <cmd>tabNext<cr>
+noremap <silent> <space>} <cmd>tabm +1<cr>
+noremap <silent> <space>{ <cmd>tabm -1<cr>
 noremap <space>1 1gt<cr>
 noremap <space>2 2gt<cr>
 noremap <space>3 3gt<cr>
@@ -579,43 +523,50 @@ noremap <space>7 7gt<cr>
 noremap <space>8 8gt<cr>
 noremap <space>9 9gt<cr>
 noremap <space>0 10gt<cr>
-"}}}Tabs
-"{{{Misc
-"clear search string
-nnoremap <silent> <space>/ :let @/=""<CR>
-nnoremap <F2> :set invpaste paste?<CR>
-"view next/previous file
-nnoremap <silent> <space>n :next<cr>
-nnoremap <silent> <space>N :previous<cr>
+"}}} Tabs
+"{{{ Misc
+" clear search string
+nnoremap <silent> <space>/ <cmd>nohlsearch<bar>diffupdate<cr>
+" I don't know (mostly) what paste mode is
+nnoremap <F2> <cmd>set invpaste paste?<cr>
+" view next/previous file
+nnoremap <silent> <space>n <cmd>next<cr>
+nnoremap <silent> <space>N <cmd>previous<cr>
 
-noremap <F3> :call EchoSyntaxInfo(line("."), col("."))<CR>
-noremap <F4> :call EchoStyleInfo(line("."), col("."))<CR>
+noremap <F3> <cmd>call EchoSyntaxInfo(line("."), col("."))<cr>
+noremap <F4> <cmd>call EchoStyleInfo(line("."), col("."))<cr>
 
-"I hate it when I try to push shift+<something else> after moving.
+nnoremap <space>r <cmd>source $MYVIMRC<cr>
+
+" Don't do weird stuff if I'm just trying to move around
 nnoremap L l
 nnoremap H h
-"}}}Misc
-"}}}MAPPINGS
-"{{{COLORS
+
+vnoremap <space>s <cmd>'<,'>sort<cr>
+
+vnoremap <space>x :!tidy -q -i --doctype omit --drop-proprietary-attributes yes --show-errors 0 -utf8<cr>
+"}}} Misc
+"}}} Mappings
+"{{{ Colors
 " On default colorscheme:
 "   8, 16, 256 the color order is NR-8, otherwise it's NR-16 (:help cterm-colors)
 set t_Co=256
 set t_ut=
 set background=light
-"{{{Defaults
+"{{{ Defaults
 highlight Comment                     ctermfg=darkmagenta cterm=none
 highlight String                      ctermfg=darkyellow  cterm=none
 highlight Type                        ctermfg=darkgreen
 highlight StorageClass                ctermfg=yellow      cterm=italic
 highlight link Structure StorageClass
 highlight Special                     cterm=bold
-highlight Identifier                  ctermfg=lightmagenta
+highlight Identifier                  ctermfg=lightred    cterm=italic
 highlight Function                    ctermfg=blue        cterm=none
 highlight Statement                   ctermfg=darkcyan
 highlight Conditional                 ctermfg=darkcyan
 highlight Repeat                      ctermfg=darkcyan
-highlight Operator                    ctermfg=darkcyan
 highlight Keyword                     ctermfg=darkcyan
+highlight Operator                    ctermfg=cyan
 highlight Label                       ctermfg=blue
 highlight Todo                        ctermfg=green       ctermbg=none cterm=bold,underline
 highlight Include                     ctermfg=magenta
@@ -624,8 +575,13 @@ highlight Macro                       ctermfg=red
 highlight PreProc                     ctermfg=red         cterm=italic
 highlight PreCond                     ctermfg=darkred     cterm=bold
 highlight Character                   ctermfg=yellow
-"}}}Defaults
-"{{{C
+highlight link shQuote Character
+"}}} Defaults
+"{{{ Markdown
+highlight markdownCode ctermfg=cyan
+highlight markdownLinkText ctermfg=blue cterm=italic
+"}}} Markdown
+"{{{ C
 highlight cFixme ctermfg=darkyellow cterm=underline
 highlight cTypedef ctermfg=darkmagenta cterm=italic
 highlight link cDefine Define
@@ -650,8 +606,8 @@ highlight link CTagsStructure Type
 highlight link CTagsMember CTagsGlobalVariable
 highlight link CTagsFunction Function
 highlight link CTagsLocalVariable CTagsGlobalVariable
-"}}}C
-"{{{Vim
+"}}} C
+"{{{ Vim
 highlight Search ctermfg=black ctermbg=darkyellow
 highlight IncSearch cterm=reverse
 highlight VertSplit ctermfg=black ctermbg=white cterm=none
@@ -674,7 +630,7 @@ highlight TabLineFill ctermfg=black ctermbg=black cterm=none
 highlight TabLineSel ctermfg=black ctermbg=white cterm=none
 highlight TabLine ctermfg=black ctermbg=darkgrey cterm=italic
 
-highlight SpellBad ctermfg=darkred ctermbg=black cterm=italic
+highlight SpellBad ctermfg=darkred ctermbg=none cterm=italic
 highlight SpellCap ctermfg=blue ctermbg=none cterm=italic
 highlight SpellRare ctermfg=cyan ctermbg=none cterm=underline
 highlight SpellLocal ctermfg=blue ctermbg=none cterm=underline
@@ -696,39 +652,28 @@ highlight link vimNotation vimHiAttrib
 highlight link vimHiCtermColor vimHiAttrib
 highlight link vimFgBgAttrib vimHiAttrib
 
-highlight DiffAdd ctermfg=black ctermbg=blue
-highlight DiffChange ctermfg=black ctermbg=magenta
-highlight DiffDelete ctermfg=black ctermbg=red
-highlight DiffText ctermfg=black ctermbg=white
-"}}}Vim
-"{{{Git Gutter
-highlight GitGutterAdd ctermfg=blue
-highlight GitGutterChange ctermfg=magenta
-highlight GitGutterDelete ctermfg=red
-highlight GitGutterText ctermfg=white
-
-highlight link GitGutterAddLineNr GitGutterAdd
-highlight link GitGutterChangeLineNr GitGutterChange
-highlight link GitGutterDeleteLineNr GitGutterDelete
-highlight link GitGutterChangeDeleteLineNr GitGutterChangeDelete
-"}}}Git Gutter
-"{{{Syntastic
+highlight DiffAdd    ctermfg=black ctermbg=darkgreen
+highlight DiffChange ctermfg=black ctermbg=darkcyan
+highlight DiffDelete ctermfg=black ctermbg=darkred
+highlight DiffText   ctermfg=black ctermbg=darkgrey
+"}}} Vim
+"{{{ Syntastic
 highlight SyntasticError ctermfg=red ctermbg=black cterm=bold
 highlight SyntasticWarning ctermbg=none cterm=none
-highlight SyntasticStyleError ctermbg=none cterm=none
-highlight SyntasticStyleWarning ctermbg=none cterm=none
+highlight SyntasticStyleError ctermfg=none ctermbg=none cterm=none
+highlight SyntasticStyleWarning ctermfg=none ctermbg=none cterm=none
 
 highlight SyntasticErrorSign ctermbg=darkred
 highlight SyntasticWarningSign ctermfg=darkyellow
-highlight SyntasticStyleErrorSign ctermfg=darkcyan
-highlight SyntasticStyleWarningSign cterm=none
+highlight SyntasticStyleErrorSign ctermfg=none ctermbg=none cterm=none
+highlight SyntasticStyleWarningSign ctermfg=none ctermbg=none cterm=none
 
 highlight SyntasticErrorLine ctermfg=darkred cterm=none
 highlight SyntasticWarningLine ctermfg=none ctermbg=none
-highlight SyntasticStyleErrorLine ctermfg=darkcyan
-highlight SyntasticStyleWarningLine ctermfg=darkblue
-"}}}Syntastic
-"{{{ALE
+highlight SyntasticStyleErrorLine ctermfg=none ctermbg=none cterm=none
+highlight SyntasticStyleWarningLine ctermfg=none ctermbg=none cterm=none
+"}}} Syntastic
+"{{{ ALE
 highlight link ALEError SyntasticError
 highlight link ALEWarning SyntasticWarning
 highlight link ALEStyleError SyntasticStyleError
@@ -743,81 +688,5 @@ highlight link ALEErrorLine SyntasticErrorLine
 highlight link ALEWarningLine SyntasticWarningLine
 highlight link ALEStyleErrorLine SyntasticStyleErrorLine
 highlight link ALEStyleWarningLine SyntasticStyleWarningLine
-"}}}ALE
-"{{{OmniSharp
-"highlight link csNamespace Macro
-"highlight link csClassType CTagsStructure
-"highlight link csClass StorageClass
-"highlight link csStruct CTagsStructure
-"highlight link csField CTagsMember
-"highlight link csProp CTagsMember
-"highlight link csMethod Function
-"highlight link csLocal NONE
-"highlight csIdent NONE
-"highlight link csOperator Operator
-"highlight csOverload ctermfg=darkyellow cterm=bold
-"highlight csPunctuation ctermfg=darkyellow
-"highlight link csKeyword Keyword
-"highlight link csControl Conditional
-"highlight link csNumber cNumber
-"highlight link csString String
-"old
-highlight csPunctuation ctermfg=brown cterm=bold
-"Roslyn thinks things that aren't keywords are keywords and it's annoying.
-"Things like 'int', 'string', 'false', 'true'. Keywords? Huh?
-highlight csKeyword ctermfg=magenta
-highlight link csControl Keyword
-
-highlight link csNumber Number
-highlight link csString String
-highlight link csConstant CTagsConstant
-
-highlight csNamespace ctermfg=darkblue
-highlight link csIdent CTagsGlobalVariable
-highlight csClass ctermfg=darkgreen
-highlight link csStruct CTagsStructure
-highlight csInterface ctermfg=lightgreen
-highlight csEnum ctermfg=lightblue
-highlight link csEnumMember CTagsEnumerationValue
-
-highlight csField ctermfg=lightcyan
-highlight csProp ctermfg=cyan
-
-highlight csMethod ctermfg=lightmagenta
-highlight link csExtendMethod csMethod
-highlight csParam ctermfg=white
-highlight csLocal ctermfg=white
-
-highlight csDelegate ctermfg=red
-
-highlight link csOperator Operator
-highlight csOverloadOp ctermfg=magenta cterm=bold
-
-
-let g:OmniSharp_highlight_groups =
-   \{
-   \  'Punctuation':        'csPunctuation',
-   \  'Keyword':            'csKeyword',
-   \  'ControlKeyword':     'csControl',
-   \  'NumericLiteral':     'csNumber',
-   \  'StringLiteral':      'csString',
-   \  'ConstantName':       'csConstant',
-   \  'NamespaceName':      'csNamespace',
-   \  'Identifier':         'csIdent',
-   \  'ClassName':          'csClass',
-   \  'StructName':         'csStruct',
-   \  'InterfaceName':      'csInterface',
-   \  'EnumName':           'csEnum',
-   \  'EnumMemberName':     'csEnumMember',
-   \  'FieldName':          'csField',
-   \  'PropertyName':       'csProp',
-   \  'MethodName':         'csMethod',
-   \  'ExtensionMethodName':'csExtendMethod',
-   \  'ParameterName':      'csParam',
-   \  'LocalName':          'csLocal',
-   \  'DelegateName':       'csDelegate',
-   \  'Operator':           'csOperator',
-   \  'OperatorOverloaded': 'csOverloadOp',
-   \}
-"}}}OmniSharp
-"}}}COLORS
+"}}} ALE
+"}}} Colors

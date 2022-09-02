@@ -1,0 +1,48 @@
+#!/usr/bin/env sh
+echo "Please don't use this, use xz instead"
+exit 1
+
+xzopt='--verbose --threads=0 -9'
+extreme=0
+base=''
+
+should_break=0
+consuming=0
+consumer='base'
+files=""
+n_files=0
+for i in "$@"; do
+  if [ "$should_break" -ne "0" ]; then
+    break
+  elif [ "$consuming" -gt "0" ]; then
+    while [ "$consuming" -gt "0" ]; do
+      consuming=$((consuming - 1))
+      $consumer="${$consumer}$i"
+      continue
+    done
+  fi
+  case "$i" in
+    --) should_break=1;;
+    -e|-extreme|--extreme) extreme=$((1 - extreme));;
+    -n|-name|--name) consuming=1; consumer='base'; base='';;
+    *) files="${files} $i"; n_files=$((n_files + 1));;
+  esac
+done
+
+if [ "$extreme" -ne "0" ]; then
+  xzopt="${xzopt}e"
+fi
+
+if [ -z "$base" ]; then
+  # get 'base' as the last argument passed
+  for base in "$@"; do :; done
+  base="$(basename "$base")"
+fi
+
+name="$base.tar.xz"
+#printf "xzopt: %s\nname: %s\nfiles: %s\n" "$xzopt" "$name" "$files"
+if [ "$n_files" -eq "0" ]; then
+  exit 0
+fi
+
+XZ_OPT="$xzopt $XZ_OPT" tar -c -J -f "$name" $files || rm "$name" || :

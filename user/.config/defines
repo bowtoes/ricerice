@@ -25,28 +25,31 @@ export LESSHISTFILE="$LOGDIR/lesshst"
 export HISTFILE="$LOGDIR/bash_history"
 export FIT_LOG="$LOGDIR/fit_log"
 
-export TERMINAL="st"
-export EDITOR="vim"
-export BROWSER="brave"
-export BROWSER2="surf"
+# Default programs (rarely used, honestly)
 export AUDIO="vlc"
+
+export TERMINAL="st"
+export TERMINALARGS="-e bash -l"
+export TERMINALCMD="$TERMINAL $TERMINALARGS"
+
+#export EDITOR="vim"
+#export EDITORCMD="-e $EDITOR"
+# A server must have been started, likely through systemd
+export EDITOR="vim"
+export EDITORARGS=""
+export EDITORCMD="$EDITOR $EDITORARGS"
+
+export BROWSER="brave"
+export BROWSERARGS=""
+export BROWSERCMD="$BROWSER $BROWSERARGS"
+export BROWSER2="surf"
+
 export EXPLORER="nemo"
-export EXPLORER2="nnn"
-
-export TERMINALCMD="-e bash -l"
-export TABCMD="tabbed -r 2 $TERMINAL -w ''"
-
-export EDITORCMD="-e $EDITOR"
-export TABEDITOR="$TABCMD $EDITORCMD"
-export BROWSERCMD="$BROWSER"
-export TABBROWSER2="tabbed $BROWSER2 -e"
-
-export EXPLORERCMD="$EXPLORER"
-
-export EXPLORER2CMD="-e $EXPLORER2 -dxrog"
-export TABEXPLORER2="$TABCMD $EXPLORER2CMD"
+export EXPLORERARGS=""
+export EXPLORERCMD="$EXPLORER $EXPLORERARGS"
 
 export CFLAGS=
 
+# Extra defines for custom anything, such as system-specific conf
 export SHELL_DEFINES2="$SHELL_DEFINES""2"
 [ -r "$SHELL_DEFINES2" ] && . "$SHELL_DEFINES2"

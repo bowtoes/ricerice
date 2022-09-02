@@ -1,4 +1,7 @@
 #!/usr/bin/env sh
+# Converts pngs to jpgs using imagemagick
+echo "Please just do this manually"
+exit 1
 
 lst=" "
 cnt=0
@@ -7,42 +10,42 @@ interactive=0
 
 [ "$#" -eq 0 ] && echo "Please input a png file to convert" && exit
 while [ "$#" -gt 0 ] ; do
-	case "$1" in
-	*.png)
-		if [ ! -e "$1" ] ; then
-			[ "$quiet" -eq 0 ] && printf "Input '%s' does not exist\\n" "$1"
-		elif [ ! -f "$1" ] ; then
-			[ "$quiet" -eq 0 ] && printf "Input '%s' is not a file\\n" "$1"
-		else
-			lst="$lst $1"
-			cnt=$((cnt+1))
-		fi
-		;;
-	-[Ii]) interactive=$((1-interactive)) ;;
-	-[Qq]) quiet=$((1-quiet)) ;;
-	*) ;;
-	esac
-	shift
+  case "$1" in
+  *.png)
+    if [ ! -e "$1" ] ; then
+      [ "$quiet" -eq 0 ] && printf "Input '%s' does not exist\\n" "$1"
+    elif [ ! -f "$1" ] ; then
+      [ "$quiet" -eq 0 ] && printf "Input '%s' is not a file\\n" "$1"
+    else
+      lst="$lst $1"
+      cnt=$((cnt+1))
+    fi
+    ;;
+  -[Ii]) interactive=$((1-interactive)) ;;
+  -[Qq]) quiet=$((1-quiet)) ;;
+  *) ;;
+  esac
+  shift
 done
 
 for i in $lst ; do
-	FROM="$i"
-	TO="$(printf "%s" "$i" | cut -f 1 -d '.')"".jpg"
-	if [ -f "$TO" ] ; then
-		if [ "$interactive" -ne 0 ] ; then
-			prompt "Overwrite existing file '%s' (y/N)? " "$TO"
-			[ "$?" -ne 0 ] && continue
-		else
-			[ "$quiet" -eq 0 ] && printf "Output file '%s' already exists\\n" "$TO"
-			continue
-		fi
-	fi
-	if [ "$quiet" -eq 0 ] ; then
-		printf "'%s' -> '%s'\\n" "$FROM" "$TO"
-		magick "$FROM" "$TO"
-	else
-		magick "$FROM" "$TO" > /dev/null
-	fi
-	cod=$?
-	[ "$cod" -ne 0 ] && exit $cod
+  FROM="$i"
+  TO="$(printf "%s" "$i" | cut -f 1 -d '.')"".jpg"
+  if [ -f "$TO" ] ; then
+    if [ "$interactive" -ne 0 ] ; then
+      prompt "Overwrite existing file '%s' (y/N)? " "$TO"
+      [ "$?" -ne 0 ] && continue
+    else
+      [ "$quiet" -eq 0 ] && printf "Output file '%s' already exists\\n" "$TO"
+      continue
+    fi
+  fi
+  if [ "$quiet" -eq 0 ] ; then
+    printf "'%s' -> '%s'\\n" "$FROM" "$TO"
+    magick "$FROM" "$TO"
+  else
+    magick "$FROM" "$TO" > /dev/null
+  fi
+  cod=$?
+  [ "$cod" -ne 0 ] && exit $cod
 done

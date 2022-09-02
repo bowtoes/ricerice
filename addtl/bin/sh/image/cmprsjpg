@@ -1,40 +1,41 @@
 #!/usr/bin/env sh
+# Supposedly compresses jpg (and maybe png) images really well
 
 cmd="convert -strip -interlace Plane -quality 85% -sampling-factor 4:2:0 \
-	-define jpeg:dct-method=float"
+  -define jpeg:dct-method=float"
 lst=" "
 inplace=0
 quiet=0
 
 while [ "$#" -gt 0 ] ; do
-	case "$1" in
-	-[Ii]) inplace=$((1-inplace)) ;;
-	-[Qq]) quiet=$((1-quiet)) ;;
-	*)
-		if [ ! -e "$1" ] ; then
-			[ "$quiet" -eq 0 ] && printf "Input '%s' does not exist\\n" "$1"
-		elif [ ! -f "$1" ] ; then
-			[ "$quiet" -eq 0 ] && printf "Input '%s' is not a file\\n" "$1"
-		else
-			lst="$lst ""$1"
-		fi
-	esac
-	shift
+  case "$1" in
+  -[Ii]) inplace=$((1-inplace)) ;;
+  -[Qq]) quiet=$((1-quiet)) ;;
+  *)
+    if [ ! -e "$1" ] ; then
+      [ "$quiet" -eq 0 ] && printf "Input '%s' does not exist\\n" "$1"
+    elif [ ! -f "$1" ] ; then
+      [ "$quiet" -eq 0 ] && printf "Input '%s' is not a file\\n" "$1"
+    else
+      lst="$lst ""$1"
+    fi
+  esac
+  shift
 done
 
 for i in "$lst"; do
-	[ "$quiet" -eq 0 ] && printf "Compressing '%s'...\\n" "$i"
-	if [ "$inplace" -ne 0 ] ; then
-		"$cmd" "$i" "$i"
-	else
-		cmpr="$i"".cmpr.jpg"
-		if [ -e "$cmpr" ] ; then
-			[ "$quiet" -eq 0 ] && printf "Output '%s' already exists\\n" "$cmpr"
-			continue
-		else
-			"$cmd" "$i" "$cmpr"
-		fi
-	fi
-	cod="$?"
-	[ "$cod" -ne 0 ] && exit "$cod"
+  [ "$quiet" -eq 0 ] && printf "Compressing '%s'...\\n" "$i"
+  if [ "$inplace" -ne 0 ] ; then
+    "$cmd" "$i" "$i"
+  else
+    cmpr="$i"".cmpr.jpg"
+    if [ -e "$cmpr" ] ; then
+      [ "$quiet" -eq 0 ] && printf "Output '%s' already exists\\n" "$cmpr"
+      continue
+    else
+      "$cmd" "$i" "$cmpr"
+    fi
+  fi
+  cod="$?"
+  [ "$cod" -ne 0 ] && exit "$cod"
 done

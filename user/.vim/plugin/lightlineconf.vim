@@ -82,11 +82,11 @@ let g:lightline.mode_map = {
 	\      'R': 'R ',
 	\      'v': 'V ',
 	\      'V': 'v ',
-	\ "\<C-v>": 'VB',
-	\     'c' : 'c',
-	\     's' : 's',
-	\     'S' : 'S',
-	\ "\<C-s>": 'SB',
-	\      't': 't',
+	\ "\<C-v>": 'V~',
+	\     'c' : 'c ',
+	\     's' : 's ',
+	\     'S' : 'S ',
+	\ "\<C-s>": 'S~',
+	\      't': 't ',
 	\ }
 let g:lightline.colorscheme = 'terminal'

@@ -9,27 +9,27 @@ errfile="errors"
 
 # First arg
 if [ -n "$1" ] ; then
-	if [ -e "$1" ] ; then
-		input="$(realpath $1)"
-	else
-		printf "%s: No such file or directory\\n" "$1"
-		exit 1
-	fi
+  if [ -e "$1" ] ; then
+    input="$(realpath $1)"
+  else
+    printf "%s: No such file or directory\\n" "$1"
+    exit 1
+  fi
 else
-	printf "No file or directory passed\\n"
-	exit 2
+  printf "No file or directory passed\\n"
+  exit 2
 fi
 
 # Output directory verification
 if [ ! -e $outdir ] ; then
-	if mkdir -p $outdir ; then
-		printf "Created output directory: '%s'\\n" "$outdir"
-	else
-		printf "Could not create output directory '%s'\\n" "$outdir"
-		exit 3
-	fi
+  if mkdir -p $outdir ; then
+    printf "Created output directory: '%s'\\n" "$outdir"
+  else
+    printf "Could not create output directory '%s'\\n" "$outdir"
+    exit 3
+  fi
 else
-	printf "Using output directory '%s'\\n" "$outdir"
+  printf "Using output directory '%s'\\n" "$outdir"
 fi
 # Compilation
 # TODO: Turn the compilation step into a function
@@ -38,21 +38,21 @@ fi
 
 compile()
 {
-	# $1=sourcefile
-	# $2=outdir
-	smxfile=
+  # $1=sourcefile
+  # $2=outdir
+  smxfile=
 }
 
 if [ -d $input ] ; then
-	for sourcefile in $input/*.sp ; do
-		smxfile="$(printf "%s" "$(basename $sourcefile).smx" | sed 's/\(.*\)\.sp/\1/')"
-		outfile="${outdir}/${smxfile}"
-		printf "%s\\n" "Compilling $(basename $sourcefile) to $(basename $outfile)"
-		spcomp $sourcefile -o$outfile
-	done
+  for sourcefile in $input/*.sp ; do
+    smxfile="$(printf "%s" "$(basename $sourcefile).smx" | sed 's/\(.*\)\.sp/\1/')"
+    outfile="${outdir}/${smxfile}"
+    printf "%s\\n" "Compilling $(basename $sourcefile) to $(basename $outfile)"
+    spcomp $sourcefile -o$outfile
+  done
 else
-	smxfile="$(printf "%s" "$(basename $input).smx" | sed 's/\(.*\)\.sp/\1/')"
-	outfile="${outdir}/${smxfile}"
-	printf "%s\\n" "Compilling $(basename $input) to $(basename $outfile)"
-	spcomp $input -o$outfile
+  smxfile="$(printf "%s" "$(basename $input).smx" | sed 's/\(.*\)\.sp/\1/')"
+  outfile="${outdir}/${smxfile}"
+  printf "%s\\n" "Compilling $(basename $input) to $(basename $outfile)"
+  spcomp $input -o$outfile
 fi

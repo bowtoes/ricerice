@@ -1,7 +1,7 @@
 ! Flat Remix
 
 ! special
-*.foreground:   #ffffff
+*.foreground:   #dddddd
 *.background:   #000000
 *.cursorColor:  #ffffff
 
@@ -10,29 +10,29 @@
 *.color8:       #8c42ab
 
 ! red
-*.color1:       #d41919
-*.color9:       #ec0101
+*.color1:       #d42929
+*.color9:       #fc4141
 
 ! green
 *.color2:       #5ebdab
 *.color10:      #47d4b9
 
 ! yellow
-*.color3:       #fea44c
-*.color11:      #ff8a18
+*.color3:       #ff8a18
+*.color11:      #fea44c
 
 ! blue
-*.color4:       #367bf0
-*.color12:      #277fff
+*.color4:       #a66bf0
+*.color12:      #9f6eff
 
 ! magenta
-*.color5:       #bf3e5d
-*.color13:      #e73655
+*.color5:       #ff4e8d
+*.color13:      #d74685
 
 ! cyan
 *.color6:       #49aee6
 *.color14:      #05a1f7
 
 ! white
-*.color7:       #e6e6e6
+*.color7:       #dddddd
 *.color15:      #ffffff

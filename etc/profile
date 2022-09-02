@@ -43,7 +43,9 @@ export PATH
 # Load profiles from /etc/profile.d
 if [ -d "/etc/profile.d/" ] ; then
     for profile in /etc/profile.d/*.sh ; do
-        [ -r "$profile" ] && . "$profile"
+        if [ -r "$profile" ]; then
+					source "$profile"
+				fi
     done
     unset profile
 fi
@@ -55,7 +57,9 @@ unset -f appendrecurse
 
 
 # Source global bash config
-[ "$BASH" ] && [ -z ${POSIXLY_CORRECT+x} ] && [ -r "/etc/bash.bashrc" ] && . "/etc/bash.bashrc"
+if [ "$BASH" ] && [ -z "${POSIXLY_CORRECT+x}" ] && [ -r "/etc/bash.bashrc" ] ; then
+	source "/etc/bash.bashrc"
+fi
 
 # Termcap is outdated, old, and crusty, kill it.
 unset TERMCAP

@@ -6,6 +6,6 @@
 
 val="$(printf "No\nYes" | dmenu -p "$1")"
 case $val in
-	[Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) $2 ;;
-	* ) ;;
+  [Yy]|[Yy][Ee]|[Yy][Ee][Ss] ) $2 ;;
+  * ) ;;
 esac

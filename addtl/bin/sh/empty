@@ -1,0 +1,6 @@
+#!/usr/bin/env sh
+# Clears the files passed to it
+
+for i in "$@" ; do
+  cat '/dev/null' > "$i"
+done

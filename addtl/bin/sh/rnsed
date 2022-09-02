@@ -1,20 +1,19 @@
 #!/usr/bin/env sh
-
 echo "I do not know what this does, don't use"
 exit 1
 
 dry=0
 if [ "$1" = "-n" ] ; then
-	dry=1
-	shift
+  dry=1
+  shift
 fi
 
 pat="$1"
 shift
 for i in "$@"; do
-	nw="$(printf '%s' "$i" | sed -e "$pat")"
-	printf 'Rename %s -> %s\\n' $maxlen "$i" "$nw"
-	if [ $dry -eq 0 ]; then
-		mv --no-clobber "$i" "$nw"
-	fi
+  nw="$(printf '%s' "$i" | sed -e "$pat")"
+  printf 'Rename %s -> %s\\n' $maxlen "$i" "$nw"
+  if [ $dry -eq 0 ]; then
+    mv --no-clobber "$i" "$nw"
+  fi
 done

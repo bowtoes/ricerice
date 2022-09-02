@@ -7,7 +7,7 @@ checkrun ()
 	#$3==Command
 	#$4==CommandString
 
-	if [ -r "$1" -a -f "$1" ] ; then
+	if [ -r "$1" ] && [ -f "$1" ] ; then
 		printf "%s %s '%s'...\\n" "$4" "$2" "$1"
 		$3 "$1" >> "$LOGDIR"/xinit 2>&1
 	else

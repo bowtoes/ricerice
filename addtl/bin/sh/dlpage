@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-
 # Download a web page with wget.
 
 cmd="wget -v --show-progress --timestamping --no-cookies --compression=auto \
@@ -10,47 +9,47 @@ genlinks=0
 
 dlpages()
 {
-	i=1
-	cnt="$#"
-	while [ "$#" -gt 0 ] ; do
-		#  https://stackoverflow.com/a/17287984/13528679
-		# extract the protocol
-		proto="$(printf "%s" "$1" | grep '://' | sed -e's,^\(.*://\).*,\1,g')"
-		# remove the protocol
-		url="$(printf "%s" "$1" | sed -e's,$proto,,g')"
+  i=1
+  cnt="$#"
+  while [ "$#" -gt 0 ] ; do
+    #  https://stackoverflow.com/a/17287984/13528679
+    # extract the protocol
+    proto="$(printf "%s" "$1" | grep '://' | sed -e's,^\(.*://\).*,\1,g')"
+    # remove the protocol
+    url="$(printf "%s" "$1" | sed -e's,$proto,,g')"
 
-		# extract the user and password (if any)
-		userpass="$(printf "%s" "$url" | grep @ | cut -d@ -f1)"
-		pass="$(printf "%s" "$userpass" | grep : | cut -d: -f2)"
-		if [ -n "$pass" ]; then
-			user="$(printf "%s" "$userpass" | grep : | cut -d: -f1)"
-		else
-			user=$userpass
-		fi
+    # extract the user and password (if any)
+    userpass="$(printf "%s" "$url" | grep @ | cut -d@ -f1)"
+    pass="$(printf "%s" "$userpass" | grep : | cut -d: -f2)"
+    if [ -n "$pass" ]; then
+      user="$(printf "%s" "$userpass" | grep : | cut -d: -f1)"
+    else
+      user=$userpass
+    fi
 
-		# extract the host -- updated
-		hostport="$(printf "%s" "$url" | sed -e's,$userpass@,,g' | cut -d/ -f1)"
-		port="$(printf "%s" "$hostport" | grep : | cut -d: -f2)"
-		if [ -n "$port" ]; then
-			host="$(printf "%s" "$hostport" | grep : | cut -d: -f1)"
-		else
-			host=$hostport
-		fi
+    # extract the host -- updated
+    hostport="$(printf "%s" "$url" | sed -e's,$userpass@,,g' | cut -d/ -f1)"
+    port="$(printf "%s" "$hostport" | grep : | cut -d: -f2)"
+    if [ -n "$port" ]; then
+      host="$(printf "%s" "$hostport" | grep : | cut -d: -f1)"
+    else
+      host=$hostport
+    fi
 
-		# extract the path (if any)
-		path="$(printf "%s" "$url" | cut -d/ -f3)"
+    # extract the path (if any)
+    path="$(printf "%s" "$url" | cut -d/ -f3)"
 
-		printf "Downloading %i/%i : %s\\n" "$i" "$cnt" "$1"
-		cc="$cmd '$1'"
-		eval $cc
-		if [ "$genlinks" -ne 0 ] ; then
-			printf "%s\\n" "$1" >> "$path/link"
-			cod=$?
-			[ "$cod" -ne 0 ] && exit $cod
-		fi
-		i=$((i+1))
-		shift
-	done
+    printf "Downloading %i/%i : %s\\n" "$i" "$cnt" "$1"
+    cc="$cmd '$1'"
+    eval $cc
+    if [ "$genlinks" -ne 0 ] ; then
+      printf "%s\\n" "$1" >> "$path/link"
+      cod=$?
+      [ "$cod" -ne 0 ] && exit $cod
+    fi
+    i=$((i+1))
+    shift
+  done
 }
 
 dllst=" "
@@ -58,42 +57,37 @@ app=""
 hst=""
 cnt=0
 while [ "$#" -gt 0 ] ; do
-	if [ "$1" = "-L" ] ; then
-		# Toggle link generation
-		genlinks=$((1-genlinks))
-	elif [ "$1" = "-r" ] ; then
-		# Recurse for a little while
-		cmd="$cmd --recursive --execute robots=off"
-	elif [ "$1" = "-R" ] ; then
-		# Recurse downwards forever
-		cmd="$cmd --level=inf --no-parent"
-	elif [ "$1" = "-l" ] ; then
-		# Set custom log file
-		app="--append-output="$2""
-		shift
-	elif [ "$1" = "-h" ] ; then
-		# Set custom history file
-		hst="--hsts-file="$2""
-		shift
-	else
-		if [ "$1" = "" ] ; then
-			# Empty url
-			shift
-			continue
-		elif [ -z "${dllst##*$1}" ] ; then
-			# Already set for download
-			shift
-			continue
-		else
-			dllst="$dllst $1"
-			cnt=$((cnt+1))
-		fi
-	fi
-	shift
+  case "$1" in
+    -L) # Toggle link generation
+      genlinks=$((1-genlinks));;
+    -r) # Recurse for a little while
+      cmd="$cmd --recursive --execute robots=off";;
+    -R) # Recurse downwards forever
+      cmd="$cmd --level=inf --no-parent";;
+    -l) # Set custom log file
+      app="--append-output=\"$2\""
+      shift;;
+    -h) # Set custom history file
+      hst="--hsts-file=\"$2\""
+      shift;;
+    *)
+      if [ "$1" = "" ] ; then
+        # Empty url
+        shift; continue;
+      elif [ -z "${dllst##*"$1"}" ] ; then
+        # Already set for download
+        shift; continue
+      else
+        dllst="$dllst $1"
+        cnt=$((cnt+1))
+      fi
+      ;;
+  esac
+  shift
 done
 if [ "$cnt" -eq 0 ] ; then
-	echo "No urls passed"
-	exit
+  echo "No urls passed"
+  exit
 fi
 cmd="$cmd $app $hst"
 dlpages $dllst

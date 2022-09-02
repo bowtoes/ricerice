@@ -1,31 +1,3 @@
-alias ls="ls -hCXHNF --color=auto --group-directories-first"
-alias la="ls -as"
-alias ll="ls -las"
-alias l="ls -ls"
-
-alias mv="mv -iv"
-alias cp="cp -ivP"
-alias rsync="rsync -vih --progress --log-file=$LOGDIR/rsync.log"
-alias ln="ln -iv"
-alias rm="rm -Iv"
-alias mkdir="mkdir -pv"
-alias rename="rename -iv"
-alias lrzip="lrzip -vv"
-alias lrztar="lrztar -vv"
-alias badblocks="badblocks -sv"
-alias pip="pip -vvv --log=$LOGDIR/pip.log"
-
-alias chattr="chattr -V"
-alias lsattr="lsattr -vap"
-
-alias chmod="chmod -c --preserve-root"
-alias chown="chown -hc --preserve-root"
-alias chgrp="chgrp -hc --preserve-root"
-
-alias grep="grep --color=auto -E"
-alias diff="diff --color=auto"
-
-alias bt="echo bt | coredumpctl gdb"
 
 # Show me the size (sorted) of only the folders in this directory
 #alias folders="find . -maxdepth 1 -type d -print | xargs du -sk | sort -rn"

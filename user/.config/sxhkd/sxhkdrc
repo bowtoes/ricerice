@@ -1,8 +1,8 @@
 # Basic binds
 super + Return
-	$TERMINAL $TERMINALCMD
+	$TERMINALCMD
 super + shift + Return
-	$TABCMD $TERMINALCMD
+	$TABCMD $TERMINALARGS
 super + d
 	dmenu_run
 super + r
@@ -22,6 +22,9 @@ super + a
 super + z
 	$EXPLORERCMD "$MUSICDIR" & \
 	$AUDIO
+
+super + c
+	xcolor -s
 
 super + b
 	setbg
@@ -53,16 +56,54 @@ super + ctrl + F4
 	dmenuprompt 'Hibernate computer?' 'date ; systemctl hibernate'
 
 # Audio keys, when using alsa
+#XF86AudioLowerVolume
+#	amixer -q sset PCM 1dB-
+#XF86AudioRaiseVolume
+#	amixer -q sset PCM 1dB+
+#super + XF86AudioLowerVolume
+#	amixer -q sset PCM 5dB-
+#super + XF86AudioRaiseVolume
+#	amixer -q sset PCM 5dB+
+
+#XF86AudioLowerVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ -1dB
+#XF86AudioRaiseVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ +1dB
+#super + XF86AudioLowerVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ -5dB
+#super + XF86AudioRaiseVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ +5dB
+
 XF86AudioLowerVolume
-	amixer -q sset PCM 1dB-
+	pamixer -d 1
 XF86AudioRaiseVolume
-	amixer -q sset PCM 1dB+
+	pamixer -i 1
 super + XF86AudioLowerVolume
-	amixer -q sset PCM 5dB-
+	pamixer -d 5
 super + XF86AudioRaiseVolume
-	amixer -q sset PCM 5dB+
-XF86AudioMute
-	amixer -q sset PCM toggle
+	pamixer -i 5
+
+# Reset volume to 100%
+#super + ctrl + XF86AudioRaiseVolume
+#	amixer -q sset PCM 100%
+#super + ctrl + XF86AudioLowerVolume
+#	amixer -q sset PCM 100%
+
+#super + ctrl + XF86AudioRaiseVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ 100%
+#super + ctrl + XF86AudioLowerVolume
+#	pactl set-sink-volume @DEFAULT_SINK@ 100%
+
+super + ctrl + XF86AudioRaiseVolume
+	pamixer --set-volume 100
+super + ctrl + XF86AudioLowerVolume
+	pamixer --set-volume 100
+
+super + i
+	pamixer -i 1
+super + u
+	pamixer -d 1
+
 XF86AudioPlay
 	playerctl -a play-pause
 XF86AudioPause

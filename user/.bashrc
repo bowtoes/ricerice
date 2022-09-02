@@ -8,13 +8,21 @@
 
 stty -ixon # Disable ctrl-s, ctrl-q
 
-[ -f "/etc/bash.bashrc" ] && source "/etc/bash.bashrc"
-[ -f "$ALIASRC" ] && source "$ALIASRC"
-[ -f "$HOME/.config/alias2" ] && source "$HOME/.config/alias2"
-[ -f "/usr/share/bash-completion/bash_completion" ] && source "/usr/share/bash-completion/bash_completion"
+if [ -r "/etc/bash.bashrc" -a -f "/etc/bash.bashrc" ]; then
+  source "/etc/bash.bashrc"
+fi
+if [ -r "$ALIASRC" -a -f "$ALIASRC" ]; then
+  source "$ALIASRC"
+fi
+if [ -r "$HOME/.config/alias2" -a -f "$HOME/.config/alias2" ]; then
+  source "$HOME/.config/alias2"
+fi
+if [ -r "/usr/share/bash-completion/bash_completion" -a -f "/usr/share/bash-completion/bash_completion" ]; then
+  source "/usr/share/bash-completion/bash_completion"
+fi
 
 # Removing this causes an error on login?
 n()
 {
-	echo "A" > /dev/null
+	echo > /dev/null
 }

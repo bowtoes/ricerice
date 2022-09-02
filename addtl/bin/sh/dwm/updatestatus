@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# Update DWM status bar text once
 
 time="$(date +"%a %02m/%02d/%02y %02I:%02M%p")"
 #uptime="$(getuptime)"

@@ -5,23 +5,23 @@ dir="${WALLDIR:-$HOME/wallpapers}"
 # $1 = directory
 selectRandomFile()
 {
-	[ "$#" -eq 0 ] && exit
-	if [ -r "$1" ]; then
-		printf "%s" "$(find -L "$(realpath "$1")" -type f | shuf -n 1)"
-	else
-		printf "invalid path '%s'" "$1"
-		return 1
-	fi
-	return 0
+  [ "$#" -eq 0 ] && exit
+  if [ -r "$1" ]; then
+    printf "%s" "$(find -L "$(realpath "$1")" -type f | shuf -n 1)"
+  else
+    printf "invalid path '%s'" "$1"
+    return 1
+  fi
+  return 0
 }
 
 [ -n "$1" ] && dir="$1"
 file="$(selectRandomFile "$dir")"
 code=$?
 if [ -d "$LOGDIR" ] ; then
-	printf "%s\\n" "$file" >> "$LOGDIR"/wallpaper
+  printf "%s\\n" "$file" >> "$LOGDIR"/wallpaper
 else
-	printf "%s\\n" "$file"
+  printf "%s\\n" "$file"
 fi
 [ ! "$code" = "0" ] && exit $code
 xwallpaper --zoom "$file"

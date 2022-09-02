@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+# Move $1 to dirname of $2 and $2 to dirname of $1
+
+if [ "$#" -lt "2" ]; then
+  echo "Please input 2 files to be swapped"
+  exit
+elif [ "$1" = "$2" ]; then
+  echo "Cannot swap the same file"
+  exit
+fi
+
+in1=`realpath "$1"`
+in2=`realpath "$2"`
+if [ `basename "$in1"` = `basename "$in2"` ]; then
+  echo "Files have the same basename"
+  exit
+else
+  dir1=`dirname "$in1"`
+  dir2=`dirname "$in2"`
+  if [ "$dir1" = "$dir2" ]; then
+    exit
+  fi
+
+  mv "$in1" "$dir2"/
+  mv "$in2" "$dir1"/
+fi

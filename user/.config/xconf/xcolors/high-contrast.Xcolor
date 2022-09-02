@@ -1,0 +1,38 @@
+! Flat Remix
+
+! special
+*.foreground:   #ccc
+*.background:   #000
+*.cursorColor:  #fff
+
+! black
+*.color0:       #000
+*.color8:       #444
+
+! red
+*.color1:       #800
+*.color9:       #f00
+
+! green
+*.color2:       #080
+*.color10:      #0f0
+
+! yellow
+*.color3:       #880
+*.color11:      #ff0
+
+! blue
+*.color4:       #008
+*.color12:      #00f
+
+! magenta
+*.color5:       #808
+*.color13:      #f0f
+
+! cyan
+*.color6:       #088
+*.color14:      #0ff
+
+! white
+*.color7:       #888
+*.color15:      #fff

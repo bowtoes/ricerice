@@ -4,75 +4,104 @@
 # Default behavior: Extract archive into new directory
 # Behavior with `-c` option: Extract contents into current directory
 
+do_help ()
+{
+  printf "Options:\\n"
+  printf "   -c: Extract archive into current directory rather than a subdirectory.\\n"
+  printf "   -o DIR: Place output in DIR\\n"
+  exit 0
+}
+
 _name="$(basename "$0")"
 
-_extract_here=0
-while getopts "hc" o; do case "${o}" in
-	c) _extract_here=1 && shift 1;;
-	*) printf "Options:\\n   -c: Extract archive into current directory rather than a new one.\\n" && exit ;;
-esac done
+_use_subdir=1
+_outdir="."
+while [ "$#" -gt 0 ]; do
+  _should_break=0
+  case "$1" in
+    -c)
+      _use_subdir=$((1 - _use_subdir))
+      shift 1;;
+    -o)
+      if [ "$#" -gt 1 ]; then
+        _outdir="$2"
+        shift 2
+      else
+        printf "Must specify DIR for '-o'\\n"
+        do_help
+      fi
+      ;;
+    *) _should_break=1;;
+  esac
+  if [ "$_should_break" -ne "0" ]; then
+    break
+  fi
+done
 
 N=0
 for i in "$@" ; do
-	# Absolute filepath
-	_archive="$(realpath -m "$i")"
-	_name="$(basename "$_archive")"
-	_directory="$(dirname "$_archive")"
-	_subdirectory="$_directory/"$_name"_out"
-	if [ ! -e "$_archive" ] ; then
-		printf "%s: Could not extract '%s': Could not find '%s'\\n" "$_name" "$i" "$_archive"
-		continue
-	elif [ ! -f "$_archive" ] ; then
-		printf "%s: Can't extract '%s': Not a regular file '%s'\\n" "$_name" "$i" "$_archive"
-		continue
-	fi
+  # Absolute filepath
+  _archive="$(realpath -m "$i")"
+  _name="$(basename "$_archive")"
+  _directory="$(dirname "$_archive")"
+  if [ "$_use_subdir" -ne 0 ]; then
+    _subdirectory="$directory/${_name}_out"
+  else
+    _subdirectory="$directory"
+  fi
+  _output="$(realpath -m --relative-to "$PWD" "$_outdir/$_subdirectory")"
+  if [ ! -e "$_archive" ] ; then
+    printf "%s: Could not extract '%s': Could not find '%s'\\n" "$_name" "$i" "$_archive"
+    continue
+  elif [ ! -f "$_archive" ] ; then
+    printf "%s: Can't extract '%s': Not a regular file '%s'\\n" "$_name" "$i" "$_archive"
+    continue
+  fi
 
-	N=$((N+1))
-	printf "Extracting %d/%d: %s\\n" "$N" "$#" "$i"
-	if [ -f "$_archive" ] ; then
-		case "$_archive" in
-			*.tar.bz2|*.tar.xz|*.tbz2)
-				cmd="tar xvjf" ;;
-			*.tar.gz|*.tgz)
-				cmd="tar xvzf" ;;
-			*.lzma)
-				cmd="unlzma" ;;
-			*.bz2)
-				cmd="bunzip2" ;;
-			*.rar)
-				cmd="unrar x" ;;
-			*.gz)
-				cmd="gunzip" ;;
-			*.tar)
-				cmd="tar xvf" ;;
-			*.zip)
-				cmd="unzip" ;;
-			*.Z)
-				cmd="uncompress" ;;
-			*.7z|*.iso)
-				cmd="7z x" ;;
-			*.xz)
-				cmd="unxz" ;;
-			*.exe)
-				cmd="cabextract" ;;
-			*)
-				printf "%s: '%s' - unknown archive method\\n" "$_name" "$_archive"
-				continue ;;
-		esac
+  N=$((N+1))
+  printf "Extracting %d/%d: %s\\n" "$N" "$#" "$i"
+  if [ -f "$_archive" ] ; then
+    case "$_archive" in
+      *.tar.bz2|*.tar.xz|*.tbz2)
+        cmd="tar xvjf" ;;
+      *.tar.gz|*.tgz)
+        cmd="tar xvzf" ;;
+      *.lzma)
+        cmd="unlzma" ;;
+      *.bz2)
+        cmd="bunzip2" ;;
+      *.rar)
+        cmd="unrar x" ;;
+      *.gz)
+        cmd="gunzip" ;;
+      *.tar)
+        cmd="tar xvf" ;;
+      *.zip)
+        cmd="unzip" ;;
+      *.Z)
+        cmd="uncompress" ;;
+      *.7z|*.iso)
+        cmd="7z x" ;;
+      *.xz)
+        cmd="unxz" ;;
+      *.exe)
+        cmd="cabextract" ;;
+      *)
+        printf "%s: '%s' - unknown archive method\\n" "$_name" "$_archive"
+        continue ;;
+    esac
 
-		if [ "$_extract_here" -eq 0 ] ; then
-			if [ -e "$_subdirectory" ] ; then
-				printf "%s: '%s' already exists.\\n" "$_name" "$_subdirectory"
-				continue
-			fi
-			mkdir -p "$_subdirectory" || exit
-			cd "$_subdirectory"
-		fi
-		$cmd "$_archive"
-		if [ "$_extract_here" -ne 0 ] ; then
-			cd -
-		fi
-	else
-		printf "%s: File '%s' not found.\\n" "$_name" "$_archive"
-	fi
+    if [ "$_use_subdir" -ne 0 ]; then
+      if [ -e "$_output" ]; then
+        printf "%s: '%s' already exists.\\n" "$_name" "$_output"
+        continue
+      fi
+    fi
+    mkdir -p "$_output" || exit
+    cd "$_output"
+    $cmd "$_archive"
+    cd -
+  else
+    printf "%s: File '%s' not found.\\n" "$_name" "$_archive"
+  fi
 done

@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+n=4
+m=$((13+10+3*n+1+n))
+m=$((2*m))
+cmd="xxd -g 1 -c $n"
+cdiff="colordiff --side-by-side --width=$m --suppress-common-lines"
+
+$cdiff <($cmd "$1") <($cmd "$2")

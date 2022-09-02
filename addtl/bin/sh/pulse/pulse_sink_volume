@@ -1,0 +1,23 @@
+#!/usr/bin/env sh
+
+awkcmd='{
+  gsub("\\s+","")
+
+  leftPr=$4
+  leftDb=$5
+  rightPr=$2
+  rightDb=$3
+
+  split(leftDb, l, ",")
+  leftDb = l[1]
+  split(rightDb, r, ",")
+  rightDb = r[1]
+
+  printf "%s|%s<>%s|%s\n", leftDb, leftPr, rightPr, rightDb
+}'
+
+SINK="@DEFAULT_SINK@"
+if [ -n "$1" ]; then
+  SINK="$1"
+fi
+pactl get-sink-volume "$SINK" | grep "Volume:" | awk -F'/' "$awkcmd"

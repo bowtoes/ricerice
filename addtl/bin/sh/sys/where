@@ -1,0 +1,7 @@
+#!/usr/bin/env sh
+
+if [ -n "$(command -v "$1")" ]; then
+  dirname "$(which "$1")"
+else
+  exit 1
+fi

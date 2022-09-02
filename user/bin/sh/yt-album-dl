@@ -1,3 +1,0 @@
-#!/bin/sh
-
-youtube-dl --verbose -cix --audio-format mp3 -o "%(playlist_index)s - %(title)s.%(ext)s" $1
